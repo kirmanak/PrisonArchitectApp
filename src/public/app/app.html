@@ -1,0 +1,24 @@
+<header>
+    <ul>
+        <li>
+            <a ng-click="app.setPage(0)" href>Статистика</a>
+        </li>
+        <li>
+            <a ng-click="app.setPage(1)" href>Заключённый</a>
+        </li>
+        <li>
+            <a ng-click="app.setPage(2)" href>Персонал</a>
+        </li>
+        <!-- 
+        <li>
+            <a ng-click="app.toggleLogin()" href>Вход</a>
+        </li>
+        -->
+    </ul>
+</header>
+<main>
+    <tables ng-show="app.isSet(0)"></tables>
+    <prisoner ng-show="app.isSet(1)"></prisoner>
+    <staff ng-show="app.isSet(2)"></staff>
+    <!-- <login ng-show="app.isLogin()"></login> -->
+</main>

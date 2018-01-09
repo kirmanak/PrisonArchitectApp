@@ -1,0 +1,23 @@
+{
+  "name": "coursework",
+  "version": "0.0.1",
+  "description": "ITMO University IAD coursework",
+  "main": "src/server.js",
+  "dependencies": {
+    "amqplib": "^0.5.2",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "pg": "^7.4.1",
+    "pg-native": "^2.2.0",
+    "sequelize": "^4.29.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "author": "Kamakin Kirill",
+  "license": "ISC"
+}
