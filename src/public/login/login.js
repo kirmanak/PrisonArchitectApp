@@ -1,15 +1,9 @@
 (function () {
-	var login = angular.module('login', []);
+	var login = angular.module('login', ['ngRoute', 'menu']);
 
-	login.directive('login', function() {
-		return {
-    		restrict: 'E',
-    		templateUrl: 'login/login.html',
-    		controller: 'loginController',
-    		controllerAs: 'login'
-    	};
-	});
-
-	login.controller('loginController', [function() {
+	login.controller('loginController', ['$scope', '$routeParams', 
+            function($scope, $routeParams) {
+                $scope.name = 'loginController';
+                $scope.$routeParams = $routeParams;
 	}]);
 })();

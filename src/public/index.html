@@ -1,16 +1,26 @@
 <!DOCTYPE html>
 <html ng-app="myApp">
 <head>
+    <base href="/">
     <meta charset="utf-8">
     <title>Coursework</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
-    <script src="app/app.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular-route.min.js"></script>
+    <script src="app.js"></script>
     <script src="prisoner/prisoner.js"></script>
     <script src="staff/staff.js"></script>
     <script src="tables/tables.js"></script>
     <script src="login/login.js"></script>
+    <script src="elements/menu.js"></script>
 </head>
 <body>
-    <app></app>
+    <div ng-controller="AppController">
+        <div ng-view></div>
+        <pre>$location.path() = {{$location.path()}}</pre>
+        <pre>$route.current.templateUrl = {{$route.current.templateUrl}}</pre>
+        <pre>$route.current.params = {{$route.current.params}}</pre>
+        <pre>$route.current.scope.name = {{$route.current.scope.name}}</pre>
+        <pre>$routeParams = {{$routeParams}}</pre>
+    </div>
 </body>
 </html>

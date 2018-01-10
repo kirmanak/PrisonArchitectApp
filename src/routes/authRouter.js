@@ -2,12 +2,9 @@ module.exports = (router, passport, users) => {
     router.route('/login')
         .post(passport.authenticate('local', 
             { 
-                successRedirect: '/',
-                failureRedirect: '/login'
-            }))
-        .get((req, res) => {
-            res.send('Incorrect password?');
-        });
+                successRedirect: '#/main',
+                failureRedirect: '#/login'
+            }));
 
     router.route('/register')
         .post((req, res) => {
@@ -17,7 +14,7 @@ module.exports = (router, passport, users) => {
                     password: req.body.password
                 }
             ).then(() => { 
-                res.redirect('/'); 
+                res.redirect('#/login'); 
             });
         });
 

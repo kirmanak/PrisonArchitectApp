@@ -1,16 +1,11 @@
 (function() {
-    var tables = angular.module('tables', []);
+    var tables = angular.module('tables', ['ngRoute', 'menu']);
 
-    tables.directive('tables', function() {
-        return {
-    	    restrict: 'E',
-    	    templateUrl: 'tables/tables.html',
-    	    controller: 'tablesController',
-    	    controllerAs: 'tables'
-    	};
-    });
+    tables.controller('tablesController', ['$http', '$log', '$scope',
+        '$routeParams', function($http, $log, $scope, $routeParams) {
+        $scope.name = 'tablesController';
+        $scope.params = $routeParams;
 
-    tables.controller('tablesController', ['$http', '$log', function($http, $log) {
         var store = this;
         store.prisoners = {
             count: 0

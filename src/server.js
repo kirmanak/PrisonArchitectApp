@@ -34,14 +34,19 @@ db.sync();
 
 auth(passport, dbConn.models.user);
 
+// routes
 authRouter(app, passport, dbConn.models.user);
 prisonerRouter(app, dbConn.models.prisoner);
 staffRouter(app, dbConn.models.staff);
 objectsRouter(app, dbConn.models.object);
 roomsRouter(app, dbConn.models.room);
+app.use(express.static(__dirname + '/public'));
+
+// the last chance
+app.use('*', (req, res) => {
+  res.sendFile(__dirname + '/public/index.html');
+});
 
 // rabbitmq(config);
-
-app.use(express.static(__dirname + '/public'));
 
 app.listen(config.port, () => console.log('Server running at http://localhost:' + config.port + '/'));
