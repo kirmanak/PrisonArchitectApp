@@ -41,7 +41,6 @@ staffRouter(app, dbConn.models.staff);
 objectsRouter(app, dbConn.models.object);
 roomsRouter(app, dbConn.models.room);
 app.use(express.static(__dirname + '/public'));
-
 // the last chance
 app.use('*', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');

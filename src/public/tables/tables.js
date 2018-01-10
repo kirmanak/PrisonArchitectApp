@@ -1,5 +1,5 @@
 (function() {
-    var tables = angular.module('tables', ['ngRoute', 'menu']);
+    var tables = angular.module('tables', ['ngRoute']);
 
     tables.controller('tablesController', ['$http', '$log', '$scope',
         '$routeParams', function($http, $log, $scope, $routeParams) {

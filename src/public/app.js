@@ -15,11 +15,18 @@
             $routeProvider
                 .when('/login', {
                     templateUrl: 'login/login.html',
-                    controller: 'loginController'
+                    controller: 'loginController',
+                    controllerAs: 'login'
+                })
+                .when('/crud/prisoner', {
+                    templateUrl: 'prisoner/prisoner.html',
+                    controller: 'prisonerController',
+                    controllerAs: 'prisoner'
                 })
                 .when('/', {
                     templateUrl: 'tables/tables.html',
-                    controller: 'tablesController'
+                    controller: 'tablesController',
+                    controllerAs: 'tables'
                 })
                 .otherwise({
                     redirectTo: '/'

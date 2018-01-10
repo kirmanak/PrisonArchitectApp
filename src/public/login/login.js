@@ -1,5 +1,5 @@
 (function () {
-	var login = angular.module('login', ['ngRoute', 'menu']);
+	var login = angular.module('login', ['ngRoute']);
 
 	login.controller('loginController', ['$scope', '$routeParams', 
             function($scope, $routeParams) {

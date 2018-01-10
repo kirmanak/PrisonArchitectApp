@@ -1,7 +1,7 @@
-<form name="CRUDForm" novalidate ng-submit="CRUDForm.$valid && prisoner.send()">
+<form name="CRUDForm" novalidate ng-submit="CRUDForm.$valid && prisonerController.ontroller.send()">
     <label for="fullName">Фамилия Имя Отчество: </label>
-    <input type="text" name="fullName" ng-model="prisoner.data.fullName" required></input><br>
+    <input type="text" name="fullName" ng-model="prisonerController.data.fullName" required></input><br>
     <label for="fullName">Срок(дней): </label>
-    <input type="text" name="fullName" ng-model="prisoner.data.fullName" required></input><br>
+    <input type="text" name="fullName" ng-model="prisonerController.data.fullName" required></input><br>
     <input type="submit" value="Submit"></input>
 </form>
