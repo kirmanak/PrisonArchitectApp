@@ -5,11 +5,15 @@ module.exports = (router, prisoner) => {
     };
 
     router.route('/prisoner')
-            .get(isLoggedIn, (req, res) => {
+            .get((req, res) => {
                 prisoner.count()
                     .then((data) => { res.json(data); });
-            }).post((req, res) => {
-                prisoner.create(req.body)
-                    .then(() => { console.log("Successfully saved!"); });
+            }).post(isLoggedIn, (req, res) => {
+                prisoner.create(req.body).then(
+                    () => { console.log("Successfully saved!"); },
+                    (error) => {
+                        res.sendStatus(500);
+                        console.log(error);
+                    });
             });
 };

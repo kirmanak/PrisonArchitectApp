@@ -4,15 +4,15 @@ const Sequelize = require('sequelize'),
 const db = new Sequelize(config.database, config.dbUser, config.dbPass, 
     {
         host: config.dbHost,
-	dialect: 'postgres',
+		dialect: 'postgres',
         native: true,
         define: { timestamps: false},
-	pool: {
+		pool: {
             max: 5,
-	    min: 0,
+	    	min: 0,
             acquire: 30000,
-	    idle: 10000
-	},
+	    	idle: 10000
+		},
         operatorsAliases: false
     }
 );
@@ -43,63 +43,62 @@ module.exports = {
     // db synchronization
     sync: () => {
         appointment.hasMany(staff, {foreignKey: 'appointment'});
-	inventory.hasOne(appointment, {foreignKey: 'inventory'});
-	room.hasMany(staff, {foreignKey: 'office'});
-	room.hasMany(prisoner, {foreignKey: 'ward'});
-	room.hasMany(object, {foreignKey: 'room'});
-	room.hasOne(program, {foreignKey: 'room'});
-	access.hasMany(room, {foreignKey: 'access'});
-	access.hasOne(accessRegime, {foreignKey: 'access'});
-	staff.hasMany(contraband, {foreignKey: 'discovered_by'});
-	prisoner.hasMany(contraband, {foreignKey: 'owner'});
-	object.hasMany(contraband, {foreignKey: 'object'});
+		inventory.hasOne(appointment, {foreignKey: 'inventory'});
+		room.hasMany(staff, {foreignKey: 'office'});
+		room.hasMany(prisoner, {foreignKey: 'ward'});
+		room.hasMany(object, {foreignKey: 'room'});
+		room.hasOne(program, {foreignKey: 'room'});
+		access.hasMany(room, {foreignKey: 'access'});
+		access.hasOne(accessRegime, {foreignKey: 'access'});
+		staff.hasMany(contraband, {foreignKey: 'discovered_by'});
+		prisoner.hasMany(contraband, {foreignKey: 'owner'});
+		object.hasMany(contraband, {foreignKey: 'object'});
         regime.belongsTo(prisoner, {foreignKey: 'regime'});
-	// prisoner.hasOne(regime, {foreignKey: 'regime'});
-	regime.hasOne(accessRegime, {foreignKey: 'regime'});
-	staff.hasOne(program, {foreignKey: 'teacher'});
-	program.hasMany(prisonerProgram, {foreignKey: 'program'});
-	prisoner.hasMany(prisonerProgram, {foreignKey: 'prisoner'});
-	prisoner.hasMany(reputationPrisoner, {foreignKey: 'prisoner'});
-	reputation.hasMany(reputationPrisoner, {foreignKey: 'reputation'});
-	thingType.hasMany(object, {foreignKey: 'thing_type'});
-	thingType.hasMany(inventoryContents, {foreignKey: 'thing_type'});
-	inventory.hasMany(inventoryContents, {foreignKey: 'inventory'});
-	appointment.sync();
-	inventory.sync();
-	inventoryContents.sync();
-	thingType.sync();
-	reputation.sync();
-	object.sync();
-	reputationPrisoner.sync();
-	staff.sync();
-	prisoner.sync();
-	prisonerProgram.sync();
-	program.sync();
-	regime.sync();
-	contraband.sync();
-	accessRegime.sync();
-	access.sync();
-	room.sync();
+		regime.hasOne(accessRegime, {foreignKey: 'regime'});
+		staff.hasOne(program, {foreignKey: 'teacher'});
+		program.hasMany(prisonerProgram, {foreignKey: 'program'});
+		prisoner.hasMany(prisonerProgram, {foreignKey: 'prisoner'});
+		prisoner.hasMany(reputationPrisoner, {foreignKey: 'prisoner'});
+		reputation.hasMany(reputationPrisoner, {foreignKey: 'reputation'});
+		thingType.hasMany(object, {foreignKey: 'thing_type'});
+		thingType.hasMany(inventoryContents, {foreignKey: 'thing_type'});
+		inventory.hasMany(inventoryContents, {foreignKey: 'inventory'});
+		appointment.sync();
+		inventory.sync();
+		inventoryContents.sync();
+		thingType.sync();
+		reputation.sync();
+		object.sync();
+		reputationPrisoner.sync();
+		staff.sync();
+		prisoner.sync();
+		prisonerProgram.sync();
+		program.sync();
+		regime.sync();
+		contraband.sync();
+		accessRegime.sync();
+		access.sync();
+		room.sync();
         gamer.sync();
     },
     // drop db
     drop: () => {
-	appointment.drop();
-	inventory.drop();
-	inventoryContents.drop();
-	thingType.drop();
-	reputation.drop();
-	object.drop();
-	reputationPrisoner.drop();
-	staff.drop();
-	prisoner.drop();
-	prisonerProgram.drop();
-	program.drop();
-	regime.drop();
-	contraband.drop();
-	accessRegime.drop();
-	access.drop();
-	room.drop();
+		appointment.drop();
+		inventory.drop();
+		inventoryContents.drop();
+		thingType.drop();
+		reputation.drop();
+		object.drop();
+		reputationPrisoner.drop();
+		staff.drop();
+		prisoner.drop();
+		prisonerProgram.drop();
+		program.drop();
+		regime.drop();
+		contraband.drop();
+		accessRegime.drop();
+		access.drop();
+		room.drop();
         gamer.drop();
     }
 };

@@ -48,4 +48,5 @@ app.use('*', (req, res) => {
 
 // rabbitmq(config);
 
+app.use(require('compression'));
 app.listen(config.port, () => console.log('Server running at http://localhost:' + config.port + '/'));
