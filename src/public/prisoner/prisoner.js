@@ -30,22 +30,16 @@
             };
             store.loadPrograms = function() {
                 $http.post('/prisoner/programs', store.data.regime).then(function (res) {
-                    res.data.forEach(function (program) {
-                        store.programs.push(program);
-                    })
-                    $log.log(res);
                     store.programs = res.data;
                 });
             };
             store.loadWards = function () {
                 $http.post('/prisoner/wards', store.data.regime).then(function (res) {
-                    store.wards = res.data[0].rooms;
+                    store.wards = res.data;
                 });
             };
             $http.get('/prisoner/regimes').then(function (res) {
                 store.regimes = res.data;
-                store.data.regime = res.data[0];
-                $scope.changeRegime();
             });
 	});
 })();

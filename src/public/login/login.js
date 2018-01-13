@@ -2,12 +2,13 @@
     var login = angular.module('login', ['ngRoute']);
 
     login.controller('loginController', function($http, $log, $location) {
-        this.data = {
+    	var store = this;
+        store.data = {
 	    	login: '',
 			password: ''
 		};
-		this.login = function() {
-		    $http.post('/login', this.data).then(
+		store.login = function() {
+		    $http.post('/login', store.data).then(
 		        function () {
 		            $location.url('/');
 				},
@@ -16,10 +17,10 @@
                 }
 			);
 		};
-		this.register = function () {
-			$http.post('/register', this.data).then(
+		store.register = function () {
+			$http.post('/register', store.data).then(
 				function () {
-					this.login();
+					store.login();
                 }, function (err) {
 					$log.log(err);
                 }

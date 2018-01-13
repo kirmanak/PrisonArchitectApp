@@ -12,28 +12,29 @@ module.exports = (router, models) => {
                     },
                 (error) => {
                     res.sendStatus(500);
-                    console.error(error);
                 });
         });
 
     router.route('/prisoner/wards')
         .post((req, res) => {
-            models.access.findAll({
+            models.room.findAll({
+                required: true,
+                where: { assignment: 'Камера' },
                 include: [
                     {
-                        model: models.regime,
-                        where: { id: req.body.id }
-                    },
-                    {
-                        model: models.room,
-                        where: { assignment: 'Камера'}
+                        model: models.access,
+                        required: true,
+                        include: [{
+                            model: models.regime,
+                            required: true,
+                            where: { id: req.body.id }
+                        }]
                     }]
             }).then((resultsArray) => {
                     res.send(resultsArray);
                 },
                 (error) => {
                     res.sendStatus(500);
-                    console.error(error);
                 });
         });
 
@@ -45,33 +46,29 @@ module.exports = (router, models) => {
                 },
                 (error) => {
                     res.sendStatus(500);
-                    console.error(error);
                 });
         });
 
     router.route('/prisoner/programs')
         .post((req, res) => {
-            models.regime.findAll({
+            models.program.findAll({
                 include: [{
-                    model: models.access,
-                    include: [
-                        {
-                            model: models.room,
-                            include: [
-                                {
-                                    model: models.program
-                                }
-                            ]
-                        }
-                    ]
+                    model: models.room,
+                    include: [{
+                        model: models.access,
+                        include: [{
+                            model: models.regime,
+                            where: { id: req.body.id },
+                            required: true
+                        }],
+                        required: true
+                    }],
+                    required: true
                 }],
-                where: {
-                    id: req.body.id
-                }
+                required: true,
             }).then((results) => {
                 res.send(results);
             }, (err) => {
-                console.error(err);
                 res.sendStatus(500);
             });
         });
@@ -84,30 +81,29 @@ module.exports = (router, models) => {
                 });
         })
         .post(isLoggedIn, (req, res) => {
-            console.log(req.body);
             models.prisoner.create({
                     fullname: req.body.fullName,
                     arrivement: req.body.arrivement,
                     freedom: req.body.freedom,
-                    ward: JSON.parse(req.body.ward).id,
-                    regime: JSON.parse(req.body.regime).id
+                    ward_fk: JSON.parse(req.body.ward).id,
+                    regime_fk: JSON.parse(req.body.regime).id
                 }).then(
                 (prisoner) => {
                     req.body.programs.forEach((program) => {
                         models.prisoner_program.create({
-                            prisoner: prisoner.dataValues.id,
-                            program: JSON.parse(program).id
-                        }).then(() => {}, (err) => {
-                            console.error(err);
-                            res.sendStatus(500);
-                        });
-                    });
-                    req.body.reputations.forEach((reputation) => {
-                        models.reputation_prisoner.create({
-                            prisoner: prisoner.dataValues.id,
-                            reputation: JSON.parse(reputation).id
-                        }).then(() => {}, (err) => {
-                            console.error(err);
+                            prisoner_fk: prisoner.dataValues.id,
+                            program_fk: JSON.parse(program).id
+                        }).then(() => {
+                            req.body.reputations.forEach((reputation) => {
+                                models.reputation_prisoner.create({
+                                    prisoner_fk: prisoner.dataValues.id,
+                                    reputation_fk: JSON.parse(reputation).id
+                                }).then(() => {}, (err) => {
+                                    res.sendStatus(500);
+                                });
+                            });
+
+                        }, (err) => {
                             res.sendStatus(500);
                         });
                     });

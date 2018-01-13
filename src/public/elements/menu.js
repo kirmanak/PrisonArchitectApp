@@ -10,7 +10,9 @@
         };
     });
 
-    menu.controller('MenuController', [function () {
-
-    }]);
+    menu.controller('MenuController', function ($http) {
+        this.logout = function() {
+            $http.get('/logout');
+        }
+    });
 }) ();

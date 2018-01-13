@@ -1,7 +1,7 @@
 module.exports = (router, passport, gamers) => {
     router.route('/logout')
         .get((req) => {
-            req.logout();
+            req.session.destroy();
         });
 
     router.route('/login')

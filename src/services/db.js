@@ -35,42 +35,17 @@ module.exports = (config) => {
     const prisonerProgram = db.import('../models/prisoner_program.js');
 
     // associations
-    appointment.hasMany(staff, {foreignKey: 'appointment'});
-    inventory.hasOne(appointment, {foreignKey: 'inventory'});
-    room.hasMany(staff, {foreignKey: 'office'});
-    room.hasMany(prisoner, {foreignKey: 'ward'});
-    room.hasMany(object, {foreignKey: 'room'});
-    room.hasOne(program, {foreignKey: 'room'});
-    access.hasMany(room, {foreignKey: 'access'});
+    program.belongsTo(room, { foreignKey: 'room_fk' });
+    room.belongsTo(access, { foreignKey: 'access_fk'});
+    access.hasMany(room, {foreignKey: 'access_fk'});
     access.belongsToMany(regime, {
         through: accessRegime,
-        foreignKey: 'access'
+        foreignKey: 'access_fk'
     });
-    access.hasMany(accessRegime, {foreignKey: 'access'});
-    regime.hasMany(accessRegime, {foreignKey: 'regime'});
     regime.belongsToMany(access, {
         through: accessRegime,
-        foreignKey: 'regime'
+        foreignKey: 'regime_fk'
     });
-    regime.hasMany(prisoner, {foreignKey: 'regime'});
-    staff.hasOne(program, {foreignKey: 'teacher'});
-    staff.hasMany(contraband, {foreignKey: 'discovered_by'});
-    prisoner.hasMany(contraband, {foreignKey: 'owner'});
-    object.hasMany(contraband, {foreignKey: 'object'});
-    room.hasMany(program, {foreignKey: 'room'});
-    program.belongsToMany(prisoner, {
-        through: prisonerProgram,
-        foreignKey: 'program'
-    });
-    prisoner.belongsToMany(program, {
-        through: prisonerProgram,
-        foreignKey: 'prisoner'
-    });
-    prisoner.hasMany(reputationPrisoner, {foreignKey: 'prisoner'});
-    reputation.hasMany(reputationPrisoner, {foreignKey: 'reputation'});
-    thingType.hasMany(object, {foreignKey: 'thing_type'});
-    thingType.hasMany(inventoryContents, {foreignKey: 'thing_type'});
-    inventory.hasMany(inventoryContents, {foreignKey: 'inventory'});
 
     // synchronize
     appointment.sync();
