@@ -32,10 +32,10 @@ app.use(passport.session());
 const dbConn = db.initialize();
 db.sync();
 
-auth(passport, dbConn.models.user);
+auth(passport, dbConn.models.gamer);
 
 // routes
-authRouter(app, passport, dbConn.models.user);
+authRouter(app, passport, dbConn.models.gamer);
 prisonerRouter(app, dbConn.models.prisoner);
 staffRouter(app, dbConn.models.staff);
 objectsRouter(app, dbConn.models.object);

@@ -1,9 +1,12 @@
 module.exports = (router, prisoner) => {
+    const isLoggedIn = (req, res, next) => {
+        if (req.isAuthenticated()) next();
+        else res.sendStatus(403);
+    };
+
     router.route('/prisoner')
-            .get((req, res) => {
-                if (!req.isAuthenticated())
-                    res.redirect('/login');
-                else prisoner.count()
+            .get(isLoggedIn, (req, res) => {
+                prisoner.count()
                     .then((data) => { res.json(data); });
             }).post((req, res) => {
                 prisoner.create(req.body)

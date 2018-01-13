@@ -1,4 +1,4 @@
-module.exports = (router, passport, users) => {
+module.exports = (router, passport, gamers) => {
     router.route('/login')
         .post(passport.authenticate('local', 
             { 
@@ -8,7 +8,7 @@ module.exports = (router, passport, users) => {
 
     router.route('/register')
         .post((req, res) => {
-            models.user.create(
+            gamers.create(
                 {
                     username: req.body.username,
                     password: req.body.password

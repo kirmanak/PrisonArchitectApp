@@ -1,12 +1,12 @@
 const LocalStrategy = require('passport-local').Strategy;
 
-module.exports = (passport, userModel) => {
+module.exports = (passport, gamer) => {
     passport.serializeUser((user, done) => {
         done(null, user.id);
     });
 
     passport.deserializeUser((id, done) => {
-        userModel.findById(id).then((user) => {
+        gamer.findById(id).then((user) => {
             done(null, user);
         }).catch((err) => {
             done(err, false);
@@ -14,7 +14,7 @@ module.exports = (passport, userModel) => {
     });
     
     passport.use(new LocalStrategy((username, password, done) => {
-        userModel.findOne({where: {username: username}}).then((user) => {
+        gamer.findOne({where: {username: username}}).then((user) => {
             if (!user) {
                 return done(null, false, { message: 'Incorrect username.' });
             } else if (password != user.password) {
