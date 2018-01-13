@@ -1,14 +1,14 @@
-<form name="loginForm" action="login" method="POST">
-    <label for="username">Login: </label>
-    <input name="username" ng-model="username" type="text"></input><br>
-    <label for="password">Password: </label>
-    <input name="password" ng-model="password" type="password"></input><br>
-    <input type="submit">Submit</input>
+<form name="loginForm" ng-submit="loginForm.$valid && login.login()" novalidate>
+    <label for="logUser">Логин: </label>
+    <input id="logUser" name="logUser" ng-model="login.data.username" type="text" required></input><br>
+    <label for="logPass">Пароль: </label>
+    <input id="logPass" name="logPass" ng-model="login.data.password" type="password" required></input><br>
+    <input type="submit" value="Войти"></input>
 </form>
-<form name="regForm" action="register" method="POST">
-    <label for="username">Login: </label>
-    <input name="username" ng-model="username" type="text"></input><br>
-    <label for="password">Password: </label>
-    <input name="password" ng-model="password" type="password"></input><br>
-    <input type="submit">Submit</input>
+<form name="regForm" ng-submit="regForm.$valid && login.register()" novalidate>
+    <label for="username">Логин: </label>
+    <input id="username" name="username" ng-model="login.data.username" type="text" required></input><br>
+    <label for="password">Пароль: </label>
+    <input id="password" name="password" ng-model="login.data.password" type="password" required></input><br>
+    <input type="submit" value="Submit"></input>
 </form>

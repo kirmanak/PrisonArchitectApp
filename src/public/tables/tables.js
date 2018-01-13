@@ -2,10 +2,7 @@
     var tables = angular.module('tables', ['ngRoute']);
 
     tables.controller('tablesController', 
-        function($http, $log, $scope, $routeParams, $location) {
-        $scope.name = 'tablesController';
-        $scope.params = $routeParams;
-
+        function($http, $log, $location) {
         var store = this;
         store.prisoners = {
             count: 0
@@ -27,11 +24,11 @@
             store.prisoners = {
                 count: res.data
             };
-        }, function (error) { 
-            if (error.status === 403) {
+        }, function (res) {
+            if (res.status === 403) {
                 $location.url('/login');
             } else {
-                $log.error(error);
+                $log.error(res);
             }
         });
 

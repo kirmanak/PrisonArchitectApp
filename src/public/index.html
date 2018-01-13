@@ -15,13 +15,8 @@
 </head>
 <body>
     <div ng-controller="AppController">
-        <menu></menu>
-        <div ng-view></div>
-        <pre>$location.path() = {{$location.path()}}</pre>
-        <pre>$route.current.templateUrl = {{$route.current.templateUrl}}</pre>
-        <pre>$route.current.params = {{$route.current.params}}</pre>
-        <pre>$route.current.scope.name = {{$route.current.scope.name}}</pre>
-        <pre>$routeParams = {{$routeParams}}</pre>
+        <menu>Loading...</menu>
+        <ng-view>Loading..</ng-view>
     </div>
 </body>
 </html>

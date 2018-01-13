@@ -11,10 +11,10 @@ const express = require('express'),
     objectsRouter = require('./routes/objectsRouter.js'),
     roomsRouter = require('./routes/roomsRouter.js'),
     // services
-    db = require('./services/db.js'),
     auth = require('./services/passport.js'),
     rabbitmq = require('./services/rabbitmq.js'),
-    config = require('./config/config.json');
+    config = require('./config/config.json'),
+    db = require('./services/db.js')(config);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -28,18 +28,14 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// db initialization
-const dbConn = db.initialize();
-db.sync();
-
-auth(passport, dbConn.models.gamer);
+auth(passport, db.models.gamer);
 
 // routes
-authRouter(app, passport, dbConn.models.gamer);
-prisonerRouter(app, dbConn.models.prisoner);
-staffRouter(app, dbConn.models.staff);
-objectsRouter(app, dbConn.models.object);
-roomsRouter(app, dbConn.models.room);
+authRouter(app, passport, db.models.gamer);
+prisonerRouter(app, db.models);
+staffRouter(app, db.models.staff);
+objectsRouter(app, db.models.object);
+roomsRouter(app, db.models.room);
 app.use(express.static(__dirname + '/public'));
 // the last chance
 app.use('*', (req, res) => {
