@@ -4,13 +4,14 @@
     <input id="logUser" name="logUser" ng-model="login.data.username" type="text" required></input><br>
     <label for="logPass">Пароль: </label>
     <input id="logPass" name="logPass" ng-model="login.data.password" type="password" required></input><br>
-    <input type="submit" value="Войти"></input>
+    <input type="submit" value="Войти">
 </form>
+{{login.error}}<br>
 Ещё нет аккаунта? Зарегистрируйтесь:
 <form name="regForm" ng-submit="regForm.$valid && login.register()" novalidate>
     <label for="username">Логин: </label>
     <input id="username" name="username" ng-model="login.data.username" type="text" required></input><br>
     <label for="password">Пароль: </label>
     <input id="password" name="password" ng-model="login.data.password" type="password" required></input><br>
-    <input type="submit" value="Submit"></input>
+    <input type="submit" value="Submit">
 </form>

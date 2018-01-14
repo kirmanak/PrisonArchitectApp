@@ -25,9 +25,8 @@ module.exports = (router, passport, gamers) => {
                 () => {
                     res.sendStatus(200);
                 },
-                (err) => {
-                    console.err(err);
-                    res.sendStatus(500);
+                () => {
+                    res.sendStatus(401);
                 });
         });
 
