@@ -1,3 +1,4 @@
+Уже зарегистрированы? Войдите:
 <form name="loginForm" ng-submit="loginForm.$valid && login.login()" novalidate>
     <label for="logUser">Логин: </label>
     <input id="logUser" name="logUser" ng-model="login.data.username" type="text" required></input><br>
@@ -5,6 +6,7 @@
     <input id="logPass" name="logPass" ng-model="login.data.password" type="password" required></input><br>
     <input type="submit" value="Войти"></input>
 </form>
+Ещё нет аккаунта? Зарегистрируйтесь:
 <form name="regForm" ng-submit="regForm.$valid && login.register()" novalidate>
     <label for="username">Логин: </label>
     <input id="username" name="username" ng-model="login.data.username" type="text" required></input><br>

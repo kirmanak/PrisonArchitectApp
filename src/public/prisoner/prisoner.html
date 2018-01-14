@@ -1,13 +1,17 @@
 <form name="CRUDForm" novalidate ng-submit="CRUDForm.$valid && prisoner.send()">
-    <label for="fullName">Фамилия Имя Отчество: </label>
-    <input type="text" id="fullName" name="fullName" ng-model="prisoner.data.fullName" required></input><br>
+    <label for="surname">Фамилия: </label>
+    <input type="text" id="surname" name="surname" ng-model="prisoner.data.surname" required><br>
+    <label for="name">Имя: </label>
+    <input type="text" id="name" name="name" ng-model="prisoner.data.name" required><br>
+    <label for="patronymic">Отчество: </label>
+    <input type="text" id="patronymic" name="patronymic" ng-model="prisoner.data.patronymic" required><br>
     <label for="arrivement">Дата прибытия: </label>
-    <input type="date" id="arrivement" name="arrivement" ng-model="prisoner.data.arrivement" required></input><br>
+    <input type="date" id="arrivement" name="arrivement" ng-model="prisoner.data.arrivement" required><br>
     <label for="freedom">Дата освобождения: </label>
-    <input type="date" id="freedom" name="freedom" ng-model="prisoner.data.freedom" required></input><br>
+    <input type="date" id="freedom" name="freedom" ng-model="prisoner.data.freedom" required><br>
     <label for="regime">Режим: </label>
     <select id="regime" name="regime" required
-            ng-change="changeRegime()"
+            ng-change="regimeChanged()"
             ng-model="prisoner.data.regime">
         <option ng-repeat="regime in prisoner.regimes"
             value="{{regime}}">
@@ -15,7 +19,7 @@
         </option>
     </select><br>
     <label for="reputations">Репутации: </label>
-    <select id="reputations" name="reputations" required size="2"
+    <select id="reputations" name="reputations" size="2"
             ng-model="prisoner.data.reputations" multiple>
         <option ng-repeat="reputation in prisoner.reputations"
                 value="{{reputation}}"
@@ -24,7 +28,7 @@
         </option>
     </select><br>
     <label for="programs">Программы: </label>
-    <select id="programs" name="programs" required size="2"
+    <select id="programs" name="programs" size="2"
             ng-model="prisoner.data.programs" multiple>
         <option ng-repeat="program in prisoner.programs"
                 value="{{program}}">
@@ -39,10 +43,13 @@
             {{ward.id}}
         </option>
     </select><br>
-    <input type="submit" value="Добавить"></input>
+    <b ng-hide="isLoggedIn">Только авторизованные пользователи могут добавлять новые данные!</b>
+    <input ng-show="isLoggedIn" type="submit" value="Добавить">
 </form>
 Новый заключённый: <br>
-ФИО: {{prisoner.data.fullName}}<br>
+Фамилия: {{prisoner.data.surname}}<br>
+Имя: {{prisoner.data.name}}<br>
+Отчество: {{prisoner.data.patronymic}}<br>
 Дата прибытия: {{prisoner.data.arrivement}}<br>
 Освобождение: {{prisoner.data.freedom}}<br>
 Репутации: {{prisoner.data.reputations}}<br>

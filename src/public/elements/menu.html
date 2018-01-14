@@ -5,13 +5,13 @@
     <tr>
         <td><a href="/crud/prisoner">Заключённый</a></td>
     </tr>
-    <tr>
+    <tr ng-hide="isLoggedIn">
         <td><a href="/login">Войти</a></td>
     </tr>
-    <tr>
+    <tr ng-hide="isLoggedIn">
         <td><a href="/login">Регистрация</a></td>
     </tr>
-    <tr>
-        <td><a ng-click="menu.logout()" href>Выйти</a></td>
+    <tr ng-show="isLoggedIn">
+        <td><a href ng-click="menu.logout()">Выйти</a></td>
     </tr>
 </table>

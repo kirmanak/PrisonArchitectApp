@@ -1,7 +1,14 @@
 module.exports = (router, passport, gamers) => {
+    router.route('/loggedin')
+        .get((req, res) => {
+            res.sendStatus(req.isAuthenticated() ? 200 : 401)
+        });
+
     router.route('/logout')
-        .get((req) => {
+        .get((req, res) => {
             req.session.destroy();
+            req.logout();
+            res.sendStatus(401);
         });
 
     router.route('/login')
@@ -16,7 +23,7 @@ module.exports = (router, passport, gamers) => {
                 }
             ).then(
                 () => {
-                    res.redirect('#/login')
+                    res.sendStatus(200);
                 },
                 (err) => {
                     console.err(err);

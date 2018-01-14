@@ -1,5 +1,5 @@
 (function () {
-	var prisoner = angular.module('prisoner', ['ngRoute']);
+	var prisoner = angular.module('prisoner', ['menu', 'ngRoute']);
 
 	prisoner.controller('prisonerController',
             function($http, $log, $location, $scope) {
@@ -10,13 +10,15 @@
             store.wards = [];
             store.regimes = [];
             store.send = function () {
+                store.data.fullName = store.data.surname + ' ' +
+                    store.data.name + ' ' + store.data.patronymic;
                 $http.post('/prisoner', store.data).then(
                     function () {},
-                    function (res) {
-                        if (res.status === 403) {
+                    function (error) {
+                        if (error.status === 403) {
                             $location.url('/login');
                         } else {
-                            $log.error(res);
+                            $log.error(error);
                         }
                     }
                 );
@@ -24,7 +26,7 @@
             $http.get('/prisoner/reputations').then(function (res) {
                 store.reputations = res.data;
             });
-            $scope.changeRegime = function () {
+            $scope.regimeChanged = function () {
                 store.loadPrograms();
                 store.loadWards();
             };
@@ -40,6 +42,8 @@
             };
             $http.get('/prisoner/regimes').then(function (res) {
                 store.regimes = res.data;
+                store.data.regime = res.data[0];
+                $scope.regimeChanged();
             });
 	});
 })();

@@ -13,11 +13,11 @@ module.exports = (passport, gamer) => {
         });
     });
     
-    passport.use(new LocalStrategy((username, password, done) => {
-        gamer.findOne({where: {username: username}}).then((user) => {
+    passport.use(new LocalStrategy({}, (username, password, done) => {
+        gamer.findOne({ where: { username: username } }).then((user) => {
             if (!user) {
                 return done(null, false, { message: 'Incorrect username.' });
-            } else if (password != user.password) {
+            } else if (password !== user.password) {
                 return done(null, false, { message: 'Incorrect password.' });
             } else {
                 done(null, user);

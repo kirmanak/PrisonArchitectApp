@@ -1,7 +1,7 @@
 (function () {
-    var login = angular.module('login', ['ngRoute']);
+    var login = angular.module('login', ['ngRoute', 'menu']);
 
-    login.controller('loginController', function($http, $log, $location) {
+    login.controller('loginController', function($http, $log, $location, $rootScope) {
     	var store = this;
         store.data = {
 	    	login: '',
@@ -10,6 +10,7 @@
 		store.login = function() {
 		    $http.post('/login', store.data).then(
 		        function () {
+		        	$rootScope.$broadcast('login');
 		            $location.url('/');
 				},
 				function (err) {
