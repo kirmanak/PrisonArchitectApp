@@ -1,4 +1,5 @@
-const LocalStrategy = require('passport-local').Strategy;
+const LocalStrategy = require('passport-local').Strategy,
+    bcrypt = require('bcrypt');
 
 module.exports = (passport, gamer) => {
     passport.serializeUser((user, done) => {
@@ -15,13 +16,11 @@ module.exports = (passport, gamer) => {
     
     passport.use(new LocalStrategy({}, (username, password, done) => {
         gamer.findOne({ where: { username: username } }).then((user) => {
-            if (!user) {
-                return done(null, false, { message: 'Incorrect username.' });
-            } else if (password !== user.password) {
-                return done(null, false, { message: 'Incorrect password.' });
-            } else {
-                done(null, user);
-            }
+            if (!user) return done(null, false, { message: 'Incorrect username.' });
+            bcrypt.compare(password, user.password, (err, res) => {
+                if (res) return done(null, user);
+                else return done(null, false, { message: 'Incorrect password.' });
+            });
         });
     }));
 };

@@ -1,3 +1,6 @@
+const bcrypt = require('bcrypt'),
+    SALT_ROUNDS = 10;
+
 module.exports = (router, passport, gamers) => {
     router.route('/loggedin')
         .get((req, res) => {
@@ -16,18 +19,17 @@ module.exports = (router, passport, gamers) => {
 
     router.route('/register')
         .post((req, res) => {
-            gamers.create(
-                {
-                    username: req.body.username,
-                    password: req.body.password
+            bcrypt.hash(req.body.password, SALT_ROUNDS, (err, hash) => {
+                if (err) {
+                    res.sendStatus(500);
+                    return;
                 }
-            ).then(
-                () => {
-                    res.sendStatus(200);
-                },
-                () => {
-                    res.sendStatus(401);
-                });
+                gamers.create({
+                    username: req.body.username,
+                    password: hash
+                }).then(() => {res.sendStatus(200); },
+                    () => { res.sendStatus(400); });
+            });
         });
 
 

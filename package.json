@@ -5,6 +5,7 @@
   "main": "src/server.js",
   "dependencies": {
     "amqplib": "^0.5.2",
+    "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "compression": "^1.7.1",
     "express": "^4.16.2",
