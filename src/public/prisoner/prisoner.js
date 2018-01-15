@@ -4,21 +4,31 @@
 	prisoner.controller('prisonerController',
             function($http, $log, $location, $scope) {
             var store = this;
+            store.maxArrivement = new Date();
+            store.minFreedom = new Date();
             store.data = {};
             store.reputations = [];
             store.programs = [];
             store.wards = [];
             store.regimes = [];
+            store.status = '';
             store.send = function () {
-                store.data.fullName = store.data.surname + ' ' +
-                    store.data.name + ' ' + store.data.patronymic;
+                store.data.fullName =
+                    store.data.surname + ' ' +
+                    store.data.name + ' ' +
+                    store.data.patronymic;
+                store.status = 'Общаемся с сервером...';
                 $http.post('/prisoner', store.data).then(
-                    function () {},
+                    function () {
+                        store.status = 'Успешно добавлен новый заключённый.';
+                    },
                     function (error) {
-                        if (error.status === 403) {
+                        if (status.status === 403) {
+                            store.status = 'Вы не авторизованы!';
                             $location.url('/login');
                         } else {
-                            $log.error(error);
+                            store.status = 'Что-то пошло не так...';
+                            $log.status(status);
                         }
                     }
                 );
@@ -42,8 +52,9 @@
             };
             $http.get('/prisoner/regimes').then(function (res) {
                 store.regimes = res.data;
-                store.data.regime = res.data[0];
-                $scope.regimeChanged();
             });
+            $scope.minFree = function () {
+                store.minFreedom = store.data.arrivement;
+            };
 	});
 })();
