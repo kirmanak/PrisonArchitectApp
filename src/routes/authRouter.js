@@ -31,12 +31,12 @@ module.exports = (bcrypt, router, passport, gamers) => {
             });
         });
 
-    router.route('/login/vkontakte/callback')
+    router.route('/vkontakte/callback')
         .get(passport.authenticate('vkontakte', {
             successRedirect: '/',
             failureRedirect: '/login'
         }));
 
-    router.route('/login/vkontakte')
+    router.route('/vkontakte')
         .get(passport.authenticate('vkontakte'));
 };

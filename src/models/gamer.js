@@ -14,8 +14,7 @@ module.exports = function(sequelize, DataTypes) {
         unique: true
     },
     password: {
-      type: DataTypes.STRING,
-      allowNull: false
+      type: DataTypes.STRING
     }
   }, {
     tableName: 'gamer'

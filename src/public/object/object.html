@@ -1,0 +1,22 @@
+<b ng-hide="isLoggedIn">Только авторизованные пользователи могут добавлять новые данные!</b>
+<div ng-show="isLoggedIn">
+    <form name="CRUDForm" novalidate ng-submit="CRUDForm.$valid && object.send()">
+        <label  for="type">Тип вещи: </label>
+        <select id="type" name="type" ng-model="object.data.type" required>
+            <option ng-repeat="type in object.types"
+                    value="{{type}}">
+                {{type.name}}
+            </option>
+        </select><br>
+        <label ng-show="CRUDForm.type.$valid" for="room">Комната: </label>
+        <select ng-show="CRUDForm.type.$valid" id="room" name="room" ng-model="object.data.room" required>
+            <option ng-repeat="room in object.rooms"
+                    title="{{room.id}}"
+                    value="{{room}}">
+                {{room.assignment}}
+            </option>
+        </select><br>
+        <input ng-show="CRUDForm.$valid" type="submit" value="Добавить">
+    </form>
+    {{object.status}}
+</div>

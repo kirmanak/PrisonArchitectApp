@@ -38,7 +38,7 @@
             };
         }, function (error) { $log.status(status); });
 
-        $http.get('/objects').then(function(res) { 
+        $http.get('/object').then(function(res) {
             store.objects = {
                 count: res.data
             };

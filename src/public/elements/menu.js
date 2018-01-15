@@ -14,11 +14,8 @@
         var store = this;
         $rootScope.isLoggedIn = false;
         store.logout = function() {
-            $http.get('/logout').then(function(res) {
-                console.log(res);
-            }, function () {
-                store.check();
-            });
+            $http.get('/logout').then(function(res) {},
+                function () { store.check(); });
         };
         store.check = function() {
             $http.get('/loggedin').then(function () {

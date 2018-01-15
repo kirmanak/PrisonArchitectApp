@@ -16,6 +16,10 @@ const express = require('express'),
     config = require('./config/config.json'),
     db = require('./services/db.js')(config);
 
+if (!process.env.VK_ID || !process.env.VK_SECURE) {
+    throw new Error('You have to specify vk app id and secret');
+}
+
 app.use(require('cookie-parser')());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -35,7 +39,7 @@ auth(bcrypt, passport, db.models.gamer);
 authRouter(bcrypt, app, passport, db.models.gamer);
 staffRouter(app, db.models);
 prisonerRouter(app, db.models);
-objectsRouter(app, db.models.object);
+objectsRouter(app, db.models);
 roomsRouter(app, db.models.room);
 app.use(express.static(__dirname + '/public'));
 // the last chance

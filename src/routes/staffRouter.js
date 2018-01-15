@@ -10,7 +10,6 @@ module.exports = (router, models) => {
                 res.send(results);
             }, (error) => {
                 res.sendStatus(500);
-                console.error(error);
             });
         });
 
@@ -20,7 +19,6 @@ module.exports = (router, models) => {
                 res.send(results);
             }, (error) => {
                 res.sendStatus(500);
-                console.error(error);
             });
         });
 
@@ -32,13 +30,11 @@ module.exports = (router, models) => {
                 models.staff.create({
                     fullname: req.body.fullName,
                     appointment: JSON.parse(req.body.appointment).id,
-                    office: JSON.parse(req.body.office).id
+                    office_fk: JSON.parse(req.body.office).id
                 }).then(() => {
                         res.sendStatus(200);
-                        console.log("Successfully saved!");
                     }, (error) => {
                         res.sendStatus(500);
-                        console.error(error);
                     });
             });
 };

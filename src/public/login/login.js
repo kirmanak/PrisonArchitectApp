@@ -3,10 +3,14 @@
 
     login.controller('loginController', function($http, $log, $location, $rootScope) {
     	var store = this;
-        store.data = {
-	    	login: '',
-			password: ''
-		};
+    	store.vk = function () {
+    	    $http.get('/vkontakte').then(function (res) {
+    	        $log.log(res);
+            }, function (error) {
+                $log.error(error);
+            });
+        };
+        store.data = {};
         store.status = '';
 		store.login = function() {
 		    $http.post('/login', store.data).then(

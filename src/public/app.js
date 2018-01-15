@@ -1,6 +1,6 @@
 (function() {
     var app = angular.module('myApp', ['ngRoute', 'tables', 
-        'prisoner', 'login', 'staff', 'menu']);
+        'prisoner', 'login', 'staff', 'menu', 'object']);
 
     app.controller('AppController',
         function() {
@@ -22,6 +22,11 @@
                     templateUrl: 'staff/staff.html',
                     controller: 'staffController',
                     controllerAs: 'staff'
+                })
+                .when('/crud/object', {
+                    templateUrl: 'object/object.html',
+                    controller: 'objectController',
+                    controllerAs: 'object'
                 })
                 .when('/', {
                     templateUrl: 'tables/tables.html',
