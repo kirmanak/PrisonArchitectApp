@@ -1,21 +1,5 @@
-<style>
-   .form input.ng-invalid.ng-touched {
-       border-color: red;
-   }
-
-   .form input.ng-valid.ng-touched {
-       border-color: green;
-   }
-
-   .form select.ng-invalid.ng-touched {
-       border-color: red;
-   }
-
-    .form select.ng-valid.ng-touched {
-        border-color: green;
-    }
-</style>
-
+<b ng-hide="isLoggedIn">Только авторизованные пользователи могут добавлять новые данные!</b>
+<div ng-show="isLoggedIn">
 <form class="form" name="CRUDForm" novalidate ng-submit="CRUDForm.$valid && prisoner.send()">
     <label for="surname">Фамилия: </label>
     <input type="text" id="surname" name="surname" ng-model="prisoner.data.surname" required><br>
@@ -65,8 +49,7 @@
             {{ward.id}}
         </option>
     </select><br>
-    <b ng-hide="isLoggedIn">Только авторизованные пользователи могут добавлять новые данные!</b>
     <input ng-show="CRUDForm.$valid && isLoggedIn" type="submit" value="Добавить">
 </form>
 {{prisoner.status}}
-
+</div>

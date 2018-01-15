@@ -2,7 +2,6 @@
 const express = require('express'),
     passport = require('passport'),
     bodyParser = require('body-parser'),
-    session = require('express-session'),
     bcrypt = require('bcrypt'),
     app = express(),
     // routes
@@ -17,11 +16,12 @@ const express = require('express'),
     config = require('./config/config.json'),
     db = require('./services/db.js')(config);
 
+app.use(require('cookie-parser')());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // passport configs
-app.use(session({
+app.use(require('express-session')({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: false
@@ -33,8 +33,8 @@ auth(bcrypt, passport, db.models.gamer);
 
 // routes
 authRouter(bcrypt, app, passport, db.models.gamer);
+staffRouter(app, db.models);
 prisonerRouter(app, db.models);
-staffRouter(app, db.models.staff);
 objectsRouter(app, db.models.object);
 roomsRouter(app, db.models.room);
 app.use(express.static(__dirname + '/public'));

@@ -1,5 +1,5 @@
 (function () {
-	var prisoner = angular.module('prisoner', ['menu', 'ngRoute']);
+	var prisoner = angular.module('prisoner', ['menu']);
 
 	prisoner.controller('prisonerController',
             function($http, $log, $location, $scope) {

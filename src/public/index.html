@@ -11,7 +11,25 @@
     <script src="staff/staff.js"></script>
     <script src="tables/tables.js"></script>
     <script src="login/login.js"></script>
+    <script src="objects/objects.js"></script>
     <script src="elements/menu.js"></script>
+    <style>
+        input.ng-invalid.ng-touched {
+            border-color: red;
+        }
+
+        input.ng-valid.ng-touched {
+            border-color: green;
+        }
+
+        select.ng-invalid.ng-touched {
+            border-color: red;
+        }
+
+        select.ng-valid.ng-touched {
+            border-color: green;
+        }
+    </style>
 </head>
 <body>
     <div ng-controller="AppController">

@@ -18,6 +18,11 @@
                     controller: 'prisonerController',
                     controllerAs: 'prisoner'
                 })
+                .when('/crud/staff', {
+                    templateUrl: 'staff/staff.html',
+                    controller: 'staffController',
+                    controllerAs: 'staff'
+                })
                 .when('/', {
                     templateUrl: 'tables/tables.html',
                     controller: 'tablesController',
