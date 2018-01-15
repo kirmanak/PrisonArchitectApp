@@ -1,7 +1,6 @@
-const LocalStrategy = require('passport-local').Strategy,
-    bcrypt = require('bcrypt');
+const LocalStrategy = require('passport-local').Strategy;
 
-module.exports = (passport, gamer) => {
+module.exports = (bcrypt, passport, gamer) => {
     passport.serializeUser((user, done) => {
         done(null, user.id);
     });

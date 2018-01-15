@@ -7,26 +7,26 @@
 	    	login: '',
 			password: ''
 		};
-        store.error = '';
+        store.status = '';
 		store.login = function() {
 		    $http.post('/login', store.data).then(
 		        function () {
-                    store.error = '';
+                    store.status = '';
 		        	$rootScope.$broadcast('login');
 		            $location.url('/');
 				},
 				function () {
-                    store.error = 'Неправильный логин или пароль!';
+                    store.status = 'Неправильный логин или пароль!';
                 }
 			);
 		};
 		store.register = function () {
 			$http.post('/register', store.data).then(
 				function () {
-					store.error = '';
+					store.status = '';
 					store.login();
                 }, function () {
-				    store.error = 'Логин занят!';
+				    store.status = 'Логин занят!';
                 }
 			);
         };

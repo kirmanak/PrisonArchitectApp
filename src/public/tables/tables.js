@@ -28,7 +28,7 @@
             if (res.status === 403) {
                 $location.url('/login');
             } else {
-                $log.error(res);
+                $log.status(res);
             }
         });
 
@@ -36,18 +36,18 @@
             store.staff = {
                 count: res.data
             };
-        }, function (error) { $log.error(error); });
+        }, function (error) { $log.status(status); });
 
         $http.get('/objects').then(function(res) { 
             store.objects = {
                 count: res.data
             };
-        }, function (error) { $log.error(error); });
+        }, function (error) { $log.status(status); });
 
         $http.get('/rooms').then(function(res) { 
             store.rooms = {
                 count: res.data
             };
-        }, function (error) { $log.error(error); });
+        }, function (error) { $log.status(status); });
     }
 })();

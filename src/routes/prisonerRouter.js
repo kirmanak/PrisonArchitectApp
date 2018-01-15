@@ -98,7 +98,9 @@ module.exports = (router, models) => {
                                 models.reputation_prisoner.create({
                                     prisoner_fk: prisoner.dataValues.id,
                                     reputation_fk: JSON.parse(reputation).id
-                                }).then(() => {}, (err) => {
+                                }).then(() => {
+                                    res.sendStatus(200);
+                                }, (err) => {
                                     res.sendStatus(500);
                                 });
                             });

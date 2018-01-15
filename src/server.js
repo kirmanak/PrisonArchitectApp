@@ -3,6 +3,7 @@ const express = require('express'),
     passport = require('passport'),
     bodyParser = require('body-parser'),
     session = require('express-session'),
+    bcrypt = require('bcrypt'),
     app = express(),
     // routes
     authRouter = require('./routes/authRouter.js'),
@@ -28,10 +29,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-auth(passport, db.models.gamer);
+auth(bcrypt, passport, db.models.gamer);
 
 // routes
-authRouter(app, passport, db.models.gamer);
+authRouter(bcrypt, app, passport, db.models.gamer);
 prisonerRouter(app, db.models);
 staffRouter(app, db.models.staff);
 objectsRouter(app, db.models.object);

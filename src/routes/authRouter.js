@@ -1,7 +1,6 @@
-const bcrypt = require('bcrypt'),
-    SALT_ROUNDS = 10;
+const SALT_ROUNDS = 10;
 
-module.exports = (router, passport, gamers) => {
+module.exports = (bcrypt, router, passport, gamers) => {
     router.route('/loggedin')
         .get((req, res) => {
             res.sendStatus(req.isAuthenticated() ? 200 : 401)
