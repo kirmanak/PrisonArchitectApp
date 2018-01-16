@@ -1,14 +1,10 @@
 (function () {
     var login = angular.module('login', ['ngRoute', 'menu']);
 
-    login.controller('loginController', function($http, $log, $location, $rootScope) {
+    login.controller('loginController', function($http, $log, $location, $rootScope, $window) {
     	var store = this;
     	store.vk = function () {
-    	    $http.get('/vkontakte').then(function (res) {
-    	        $log.log(res);
-            }, function (error) {
-                $log.error(error);
-            });
+    	    $window.location.assign('/vkontakte');
         };
         store.data = {};
         store.status = '';

@@ -3,14 +3,13 @@ const LocalStrategy = require('passport-local').Strategy,
 
 module.exports = (bcrypt, passport, gamer) => {
     passport.serializeUser((user, done) => {
-        console.log(user);
         done(null, user.id);
     });
 
     passport.deserializeUser((id, done) => {
         gamer.findById(id).then((user) => {
             done(null, user);
-        }).catch((err) => {
+        }, (err) => {
             done(err, false);
         });
     });
@@ -36,9 +35,9 @@ module.exports = (bcrypt, passport, gamer) => {
     }, (accessToken, refreshToken, params, profile, done) => {
         gamer.findOrCreate({ where: {
             username: profile.id.toString()
-        }}).then((result) => {
-            done(null, result);
-        }, (error) => {
+        }}).spread((gamer, created) => {
+            done(null, gamer);
+        }).catch((error) => {
             console.error(error);
             done(null, false);
         });
