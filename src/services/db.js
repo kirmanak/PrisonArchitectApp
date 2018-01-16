@@ -46,6 +46,23 @@ module.exports = (config) => {
         through: accessRegime,
         foreignKey: 'regime_fk'
     });
+    prisoner.belongsTo(regime, { foreignKey: 'regime_fk'});
+    prisoner.belongsToMany(program, {
+        through: prisonerProgram,
+        foreignKey: 'prisoner_fk',
+    });
+    program.belongsToMany(prisoner, {
+        through: prisonerProgram,
+        foreignKey: 'program_fk'
+    });
+    prisoner.belongsToMany(reputation, {
+        through: reputationPrisoner,
+        foreignKey: 'prisoner_fk'
+    });
+    reputation.belongsToMany(prisoner, {
+        through: reputationPrisoner,
+        foreignKey: 'reputation_fk'
+    });
 
     // synchronize
     appointment.sync();

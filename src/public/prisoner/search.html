@@ -1,0 +1,45 @@
+<a href="/crud/prisoner">Добавить нового</a>
+Поиск:
+<form name="searchForm" novalidate ng-submit="searchForm.$valid && search.search()">
+    <label for="surname">Фамилия: </label>
+    <input type="text" id="surname" name="surname" ng-model="search.data.surname" required><br>
+    <label ng-show="searchForm.surname.$valid" for="name">Имя: </label>
+    <input ng-show="searchForm.surname.$valid" type="text" id="name" name="name"
+           ng-model="search.data.name" required><br>
+    <label ng-show="searchForm.name.$valid" for="patronymic">Отчество: </label>
+    <input ng-show="searchForm.name.$valid" type="text" id="patronymic" name="patronymic"
+           ng-model="search.data.patronymic" required><br>
+    <input type="submit" value="Поиск" ng-show="searchForm.$valid">
+</form>
+<table ng-hide="search.results.length === 0">
+    <thead>
+        <tr>
+            <td>ФИО</td>
+            <td>Программы</td>
+            <td>Репутации</td>
+            <td>Режим</td>
+            <td>Дата прибытия</td>
+            <td>Дата освобождения</td>
+            <td>Обновить</td>
+            <td>Удалить</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="prisoner in search.results">
+            <td>{{prisoner.fullname}}</td>
+            <td>
+                <div ng-repeat="program in prisoner.programs">
+                    {{program.name}}
+                </div>
+            </td>
+            <td>
+                <div ng-repeat="reputation in prisoner.reputations">
+                    {{reputation.name}}
+                </div>
+            <td>{{prisoner.regime.name}}</td>
+            <td>{{prisoner.arrivement | date}}</td>
+            <td>{{prisoner.freedom | date}}</td>
+        </tr>
+    </tbody>
+</table>
+

@@ -1,22 +1,24 @@
+<a href="/crud/prisoner/search">Поиск</a>
 <b ng-hide="isLoggedIn">Только авторизованные пользователи могут добавлять новые данные!</b>
 <div ng-show="isLoggedIn">
-<form class="form" name="CRUDForm" novalidate ng-submit="CRUDForm.$valid && prisoner.send()">
+    Добавление данных:
+<form name="createForm" novalidate ng-submit="createForm.$valid && prisoner.send()">
     <label for="surname">Фамилия: </label>
     <input type="text" id="surname" name="surname" ng-model="prisoner.data.surname" required><br>
-    <label ng-show="CRUDForm.surname.$valid" for="name">Имя: </label>
-    <input ng-show="CRUDForm.surname.$valid" type="text" id="name" name="name"
+    <label ng-show="createForm.surname.$valid" for="name">Имя: </label>
+    <input ng-show="createForm.surname.$valid" type="text" id="name" name="name"
            ng-model="prisoner.data.name" required><br>
-    <label ng-show="CRUDForm.name.$valid" for="patronymic">Отчество: </label>
-    <input ng-show="CRUDForm.name.$valid" type="text" id="patronymic" name="patronymic"
+    <label ng-show="createForm.name.$valid" for="patronymic">Отчество: </label>
+    <input ng-show="createForm.name.$valid" type="text" id="patronymic" name="patronymic"
            ng-model="prisoner.data.patronymic" required><br>
-    <label ng-show="CRUDForm.patronymic.$valid" for="arrivement">Дата прибытия: </label>
-    <input ng-show="CRUDForm.patronymic.$valid" type="date" id="arrivement" name="arrivement" ng-change="minFree()"
+    <label ng-show="createForm.patronymic.$valid" for="arrivement">Дата прибытия: </label>
+    <input ng-show="createForm.patronymic.$valid" type="date" id="arrivement" name="arrivement" ng-change="minFree()"
            ng-model="prisoner.data.arrivement" required max="{{prisoner.maxArrivement}}"><br>
-    <label ng-show="CRUDForm.arrivement.$valid" for="freedom">Дата освобождения: </label>
-    <input ng-show="CRUDForm.arrivement.$valid" type="date" id="freedom" name="freedom"
+    <label ng-show="createForm.arrivement.$valid" for="freedom">Дата освобождения: </label>
+    <input ng-show="createForm.arrivement.$valid" type="date" id="freedom" name="freedom"
            ng-model="prisoner.data.freedom" required min="{{prisoner.minFreedom}}"><br>
-    <label ng-show="CRUDForm.freedom.$valid" for="reputations">Репутации: </label>
-    <select ng-show="CRUDForm.freedom.$valid" id="reputations" name="reputations" size="2"
+    <label ng-show="createForm.freedom.$valid" for="reputations">Репутации: </label>
+    <select ng-show="createForm.freedom.$valid" id="reputations" name="reputations" size="2"
             ng-model="prisoner.data.reputations" multiple>
         <option ng-repeat="reputation in prisoner.reputations"
                 value="{{reputation}}"
@@ -24,8 +26,8 @@
             {{reputation.name}}
         </option>
     </select><br>
-    <label ng-show="CRUDForm.freedom.$valid" for="regime">Режим: </label>
-    <select ng-show="CRUDForm.freedom.$valid" id="regime" name="regime" required
+    <label ng-show="createForm.freedom.$valid" for="regime">Режим: </label>
+    <select ng-show="createForm.freedom.$valid" id="regime" name="regime" required
             ng-change="regimeChanged()"
             ng-model="prisoner.data.regime">
         <option ng-repeat="regime in prisoner.regimes"
@@ -33,23 +35,23 @@
             {{regime.name}}
         </option>
     </select><br>
-    <label ng-show="CRUDForm.regime.$valid" for="programs">Программы: </label>
-    <select ng-show="CRUDForm.regime.$valid" id="programs" name="programs" size="2"
+    <label ng-show="createForm.regime.$valid" for="programs">Программы: </label>
+    <select ng-show="createForm.regime.$valid" id="programs" name="programs" size="2"
             ng-model="prisoner.data.programs" multiple>
         <option ng-repeat="program in prisoner.programs"
                 value="{{program}}">
             {{program.name}}
         </option>
     </select><br>
-    <label ng-show="CRUDForm.regime.$valid" for="ward">Камера: </label>
-    <select ng-show="CRUDForm.regime.$valid" id="ward" name="ward" required
+    <label ng-show="createForm.regime.$valid" for="ward">Камера: </label>
+    <select ng-show="createForm.regime.$valid" id="ward" name="ward" required
             ng-model="prisoner.data.ward">
         <option ng-repeat="ward in prisoner.wards"
             value="{{ward}}">
             {{ward.id}}
         </option>
     </select><br>
-    <input ng-show="CRUDForm.$valid && isLoggedIn" type="submit" value="Добавить">
+    <input ng-show="createForm.$valid && isLoggedIn" type="submit" value="Добавить">
 </form>
 {{prisoner.status}}
 </div>

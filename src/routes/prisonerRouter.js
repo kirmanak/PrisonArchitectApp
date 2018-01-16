@@ -114,4 +114,21 @@ module.exports = (router, models) => {
                     res.sendStatus(500);
                 });
         });
+
+    router.route('/prisoner/search')
+        .post((req, res) => {
+            models.prisoner.findAll({
+                where: {fullname: req.body.fullname},
+                include: [
+                    models.regime,
+                    models.program,
+                    models.reputation
+                ]
+            }).then((results) => {
+                res.send(results);
+            }, (error) => {
+                console.error(error);
+                res.sendStatus(500);
+            });
+        });
 };
