@@ -91,62 +91,95 @@ module.exports = (router, models) => {
             // noinspection JSCheckFunctionSignatures
             // noinspection Annotator
             models.prisoner.create({
-                fullname: req.body.fullName,
+                fullname: req.body.fullname,
                 arrivement: req.body.arrivement,
                 freedom: req.body.freedom,
-                ward_fk: JSON.parse(req.body.ward).id,
-                regime_fk: JSON.parse(req.body.regime).id
-            }).then(
-                (prisoner) => {
-                    req.body.programs.forEach((program) => {
-                        // noinspection Annotator
-                        models.prisoner_program.create({
-                            prisoner_fk: prisoner.dataValues.id,
-                            program_fk: JSON.parse(program).id
-                        }).then(() => {
-                            req.body.reputations.forEach((reputation) => {
-                                // noinspection Annotator
-                                models.reputation_prisoner.create({
-                                    prisoner_fk: prisoner.dataValues.id,
-                                    reputation_fk: JSON.parse(reputation).id
-                                }).then(() => {
-                                    res.sendStatus(200);
-                                }, (error) => {
-                                    console.error(error);
-                                    res.sendStatus(500);
-                                });
-                            });
-
-                        }, (error) => {
-                            console.error(error);
-                            res.sendStatus(500);
-                        });
+                ward_fk: req.body.ward_fk,
+                regime_fk: req.body.regime_fk
+            }).then((prisoner) => {
+                req.body.programs.forEach((program_fk) => {
+                    // noinspection Annotator
+                    models.prisoner_program.create({
+                        prisoner_fk: prisoner.dataValues.id,
+                        program_fk: program_fk
+                    }).then(() => {}, (error) => {
+                        console.error(error);
+                        res.sendStatus(500);
                     });
-                },
-                (error) => {
-                    console.error(error);
-                    res.sendStatus(500);
                 });
+                req.body.reputations.forEach((reputation_fk) => {
+                    // noinspection Annotator
+                    models.reputation_prisoner.create({
+                        prisoner_fk: prisoner.dataValues.id,
+                        reputation_fk: reputation_fk
+                    }).then(() => {}, (error) => {
+                        console.error(error);
+                        res.sendStatus(500);
+                    });
+                });
+                res.sendStatus(200);
+            }, (error) => {
+                console.error(error);
+                res.sendStatus(500);
+            });
         })
         .post((req, res) => {
-            console.log(req.body);
             // noinspection Annotator
-            models.prisoner.destroy({where: {id: req.body.data.id}})
-                .then((result) => {
-                    console.log(result);
+            models.prisoner.destroy( { where: { id: req.body.id } }).then((result) => {
                     res.sendStatus(200);
                 }, (error) => {
                     console.error(error);
                     res.sendStatus(500);
                 });
+        })
+        .patch(isLoggedIn, (req, res) => {
+            // noinspection Annotator
+            // noinspection JSCheckFunctionSignatures
+            // noinspection Annotator
+            models.prisoner.update({
+                fullname: req.body.fullname,
+                arrivement: req.body.arrivement,
+                freedom: req.body.freedom,
+                ward_fk: req.body.ward_fk,
+                regime_fk: req.body.regime_fk
+            }, {
+                where: { id: req.body.id }
+            }).then((prisoner) => {
+                models.prisoner_program.destroy({ where: { prisoner_fk: req.body.id } });
+                models.reputation_prisoner.destroy({ where: { prisoner_fk: req.body.id } });
+                req.body.programs.forEach((program_fk) => {
+                    // noinspection Annotator
+                    models.prisoner_program.create({
+                        prisoner_fk: req.body.id,
+                        program_fk: program_fk
+                    }).then(() => {}, (error) => {
+                        console.error(error);
+                        res.sendStatus(500);
+                    });
+                });
+                req.body.reputations.forEach((reputation_fk) => {
+                    // noinspection Annotator
+                    models.reputation_prisoner.create({
+                        prisoner_fk: req.body.id,
+                        reputation_fk: reputation_fk
+                    }).then(() => {}, (error) => {
+                        console.error(error);
+                        res.sendStatus(500);
+                    });
+                });
+                res.sendStatus(200);
+            }, (error) => {
+                console.error(error);
+                res.sendStatus(500);
+            });
+
         });
 
     router.route('/prisoner/search')
         .post((req, res) => {
             // noinspection Annotator
-            // noinspection Annotator
             models.prisoner.findAll({
-                where: {fullname: req.body.fullname},
+                where: { fullname: req.body.fullname },
                 include: [
                     models.regime,
                     models.program,

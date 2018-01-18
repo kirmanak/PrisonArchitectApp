@@ -6,7 +6,7 @@
     <input id="logPass" name="logPass" ng-model="login.data.password" type="password" required><br>
     <input type="submit" value="Войти">
 </form>
-{{login.error}}<br>
+{{status}}<br>
 Ещё нет аккаунта? Зарегистрируйтесь:
 <form name="regForm" ng-submit="regForm.$valid && login.register()" novalidate>
     <label for="username">Логин: </label>

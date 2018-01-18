@@ -2,17 +2,17 @@
 <div ng-show="isLoggedIn">
     <form name="CRUDForm" novalidate ng-submit="CRUDForm.$valid && object.send()">
         <label  for="type">Тип вещи: </label>
-        <select id="type" name="type" ng-model="object.data.type" required>
+        <select id="type" name="type" ng-model="object.data.thing_type_fk" required>
             <option ng-repeat="type in object.types"
-                    value="{{type}}">
+                    value="{{type.id}}">
                 {{type.name}}
             </option>
         </select><br>
         <label ng-show="CRUDForm.type.$valid" for="room">Комната: </label>
-        <select ng-show="CRUDForm.type.$valid" id="room" name="room" ng-model="object.data.room" required>
+        <select ng-show="CRUDForm.type.$valid" id="room" name="room" ng-model="object.data.room_fk" required>
             <option ng-repeat="room in object.rooms"
                     title="{{room.id}}"
-                    value="{{room}}">
+                    value="{{room.id}}">
                 {{room.assignment}}
             </option>
         </select><br>

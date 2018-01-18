@@ -1,32 +1,37 @@
 (function () {
     const login = angular.module('login', ['ngRoute']);
 
-    login.controller('loginController', function ($http, $log, $location, $rootScope, $window) {
+    login.controller('loginController', function ($http, $scope, $location, $rootScope, $window) {
         const store = this;
         store.vk = function () {
             $window.location.assign('/vkontakte');
         };
         store.data = {};
-        store.status = '';
+        $scope.status = '';
         store.login = function () {
-            $http.post('/login', store.data).then(
+            $http.post('/login', {
+                username: store.data.username,
+                password: store.data.password
+            }).then(
                 function () {
-                    store.status = '';
+                    $scope.status = '';
                     $rootScope.$broadcast('login');
                     $location.url('/');
                 },
                 function () {
-                    store.status = 'Неправильный логин или пароль!';
+                    $scope.status = 'Неправильный логин или пароль!';
                 }
             );
         };
         store.register = function () {
-            $http.post('/register', store.data).then(
-                function () {
-                    store.status = '';
+            $http.post('/register', {
+                username: store.data.username,
+                password: store.data.password
+            }).then(function () {
+                    $scope.status = '';
                     store.login();
-                }, function () {
-                    store.status = 'Логин занят!';
+                }, function (error) {
+                    $scope.status = 'Логин занят!';
                 }
             );
         };

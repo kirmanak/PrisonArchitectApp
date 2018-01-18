@@ -13,8 +13,16 @@
                 store.data.name + ' ' +
                 store.data.patronymic;
 	        store.status = 'Общаемся с сервером...';
-	        $http.post('/staff', store.data).then(function () {
+	        $http.post('/staff', {
+	            fullname:
+                    store.data.surname + ' ' +
+                    store.data.name + ' ' +
+                    store.data.patronymic,
+                appointment_fk: store.data.appointment_fk,
+                office_fk: store.data.office_fk
+            }).then(function () {
 	            store.status = 'Новый сотрудник успешно добавлен';
+	            store.data = {};
 			}, function (error) {
 	            if (error.status = 403) {
 	                store.status = 'Вы не авторизованы';

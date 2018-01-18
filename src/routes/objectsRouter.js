@@ -32,10 +32,14 @@ module.exports = (router, models) => {
                     res.json(data);
                 });
         }).post(isLoggedIn, (req, res) => {
+        if (!req.body.room_fk || req.body.thing_type_fk) {
+            res.sendStatus(400);
+            return;
+        }
         // noinspection JSCheckFunctionSignatures
         models.object.create({
-            thing_type_fk: JSON.parse(req.body.type).id,
-            room_fk: JSON.parse(req.body.room).id
+            thing_type_fk: req.body.thing_type_fk,
+            room_fk: req.body.room_fk
         }).then(() => {
             res.sendStatus(200);
         }, (error) => {

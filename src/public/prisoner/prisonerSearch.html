@@ -1,17 +1,18 @@
 <a href="/crud/prisoner/create">Добавить нового</a><br>
 Поиск:
-<form name="searchForm" novalidate ng-submit="searchForm.$valid && search.search()">
+<form name="searchForm" novalidate ng-submit="searchForm.$valid && searchPrisoners()">
     <label for="surname">Фамилия: </label>
-    <input type="text" id="surname" name="surname" ng-model="search.data.surname" required><br>
+    <input type="text" id="surname" name="surname" ng-model="data.surname" required><br>
     <label ng-show="searchForm.surname.$valid" for="name">Имя: </label>
     <input ng-show="searchForm.surname.$valid" type="text" id="name" name="name"
-           ng-model="search.data.name" required><br>
+           ng-model="data.name" required><br>
     <label ng-show="searchForm.name.$valid" for="patronymic">Отчество: </label>
     <input ng-show="searchForm.name.$valid" type="text" id="patronymic" name="patronymic"
-           ng-model="search.data.patronymic" required><br>
+           ng-model="data.patronymic" required><br>
     <input type="submit" value="Поиск" ng-show="searchForm.$valid">
 </form>
-<table ng-hide="search.results.length === 0">
+{{status}}
+<table ng-hide="results.length === 0">
     <thead>
         <tr>
             <td>Номер</td>
@@ -21,12 +22,13 @@
             <td>Режим</td>
             <td>Дата прибытия</td>
             <td>Дата освобождения</td>
+            <td>Камера</td>
             <td ng-show="isLoggedIn">Обновить</td>
             <td ng-show="isLoggedIn">Удалить</td>
         </tr>
     </thead>
-    <tbody>
-        <tr ng-repeat="prisoner in search.results">
+    <tbody ng-hide="isLoggedIn">
+        <tr ng-repeat="prisoner in results">
             <td>{{prisoner.id}}</td>
             <td>{{prisoner.fullname}}</td>
             <td>
@@ -42,9 +44,41 @@
             <td>{{prisoner.regime.name}}</td>
             <td>{{prisoner.arrivement | date}}</td>
             <td>{{prisoner.freedom | date}}</td>
-            <td ng-show="isLoggedIn"><a href ng-click="">Обновить</a></td>
-            <td ng-show="isLoggedIn"><a href ng-click="search.delete(prisoner)">Удалить</a></td>
+            <td>{{prisoner.ward_fk}}</td>
         </tr>
+    </tbody>
+    <tbody ng-show="isLoggedIn">
+    <tr ng-repeat="prisoner in results">
+        <form name="updateForm" novalidate ng-submit="updateForm.$valid && update(prisoner)">
+            <td>{{prisoner.id}}</td>
+            <td>{{prisoner.fullname}}</td>
+            <td><select size="2" ng-model="prisoner.programs" multiple>
+                <option ng-repeat="program in prisoner.availablePrograms" value="{{program.id}}">
+                    {{program.name}}
+                </option>
+            </select></td>
+            <td><select size="2" ng-model="prisoner.reputations" multiple>
+                <!--suppress Annotator -->
+                <option ng-repeat="reputation in reputations" value="{{reputation.id}}" title="{{reputation.effect}}">
+                    {{reputation.name}}
+                </option>
+            </select></td>
+            <td><select required ng-change="regimeChanged(prisoner)" ng-model="prisoner.regime_fk">
+                <option ng-repeat="regime in regimes" value="{{regime.id}}">
+                    {{regime.name}}
+                </option>
+            </select></td>
+            <td>{{prisoner.arrivement | date}}</td>
+            <td><input type="date" ng-model="prisoner.freedom" required min="{{prisoner.arrivement}}"></td>
+            <td><select required ng-model="prisoner.ward_fk">
+                <option ng-repeat="ward in prisoner.availableWards" value="{{ward.id}}">
+                    {{ward.id}}
+                </option>
+            </select></td>
+            <td><input type="submit" value="Обновить" ng-click="update(prisoner)"></td>
+            <td><a href type="submit" ng-click="delete(prisoner)">Удалить</a></td>
+        </form>
+    </tr>
     </tbody>
 </table>
 

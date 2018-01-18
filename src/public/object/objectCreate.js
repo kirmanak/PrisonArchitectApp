@@ -9,8 +9,12 @@
         store.status = '';
         store.send = function() {
             store.status = 'Общаемся с сервером...';
-            $http.post('/object', store.data).then(function () {
+            $http.post('/object', {
+                thing_type_fk: store.data.thing_type_fk,
+                room_fk: store.data.room_fk
+            }).then(function () {
                 store.status = 'Новый объект успешно добавлен';
+                store.data = {};
             }, function (error) {
                 if (error.status = 403) {
                     store.status = 'Вы не авторизованы';

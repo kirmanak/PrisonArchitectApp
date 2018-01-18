@@ -1,28 +1,28 @@
-<a href="/crud/prisoner/search">Поиск</a><br>
+<a href="/crud/search">Поиск</a><br>
 <b ng-hide="isLoggedIn">Только авторизованные пользователи могут добавлять новые данные!</b>
 <div ng-show="isLoggedIn">
     Добавление данных:
-<form name="createForm" novalidate ng-submit="createForm.$valid && prisoner.send()">
+<form name="createForm" novalidate ng-submit="createForm.$valid && send()">
     <label for="surname">Фамилия: </label>
-    <input type="text" id="surname" name="surname" ng-model="prisoner.data.surname" required><br>
+    <input type="text" id="surname" name="surname" ng-model="data.surname" required><br>
     <label ng-show="createForm.surname.$valid" for="name">Имя: </label>
     <input ng-show="createForm.surname.$valid" type="text" id="name" name="name"
-           ng-model="prisoner.data.name" required><br>
+           ng-model="data.name" required><br>
     <label ng-show="createForm.name.$valid" for="patronymic">Отчество: </label>
     <input ng-show="createForm.name.$valid" type="text" id="patronymic" name="patronymic"
-           ng-model="prisoner.data.patronymic" required><br>
+           ng-model="data.patronymic" required><br>
     <label ng-show="createForm.patronymic.$valid" for="arrivement">Дата прибытия: </label>
     <input ng-show="createForm.patronymic.$valid" type="date" id="arrivement" name="arrivement" ng-change="minFree()"
-           ng-model="prisoner.data.arrivement" required max="{{prisoner.maxArrivement}}"><br>
+           ng-model="data.arrivement" required max="{{maxArrivement}}"><br>
     <label ng-show="createForm.arrivement.$valid" for="freedom">Дата освобождения: </label>
     <input ng-show="createForm.arrivement.$valid" type="date" id="freedom" name="freedom"
-           ng-model="prisoner.data.freedom" required min="{{prisoner.minFreedom}}"><br>
+           ng-model="data.freedom" required min="{{minFreedom}}"><br>
     <label ng-show="createForm.freedom.$valid" for="reputations">Репутации: </label>
     <select ng-show="createForm.freedom.$valid" id="reputations" name="reputations" size="2"
-            ng-model="prisoner.data.reputations" multiple>
+            ng-model="data.reputations" multiple>
         <!--suppress Annotator -->
-        <option ng-repeat="reputation in prisoner.reputations"
-                value="{{reputation}}"
+        <option ng-repeat="reputation in reputations"
+                value="{{reputation.id}}"
                 title="{{reputation.effect}}">
             {{reputation.name}}
         </option>
@@ -30,29 +30,29 @@
     <label ng-show="createForm.freedom.$valid" for="regime">Режим: </label>
     <select ng-show="createForm.freedom.$valid" id="regime" name="regime" required
             ng-change="regimeChanged()"
-            ng-model="prisoner.data.regime">
-        <option ng-repeat="regime in prisoner.regimes"
-            value="{{regime}}">
+            ng-model="data.regime_fk">
+        <option ng-repeat="regime in regimes"
+            value="{{regime.id}}">
             {{regime.name}}
         </option>
     </select><br>
     <label ng-show="createForm.regime.$valid" for="programs">Программы: </label>
     <select ng-show="createForm.regime.$valid" id="programs" name="programs" size="2"
-            ng-model="prisoner.data.programs" multiple>
-        <option ng-repeat="program in prisoner.programs"
-                value="{{program}}">
+            ng-model="data.programs" multiple>
+        <option ng-repeat="program in programs"
+                value="{{program.id}}">
             {{program.name}}
         </option>
     </select><br>
     <label ng-show="createForm.regime.$valid" for="ward">Камера: </label>
     <select ng-show="createForm.regime.$valid" id="ward" name="ward" required
-            ng-model="prisoner.data.ward">
-        <option ng-repeat="ward in prisoner.wards"
-            value="{{ward}}">
+            ng-model="data.ward_fk">
+        <option ng-repeat="ward in wards"
+            value="{{ward.id}}">
             {{ward.id}}
         </option>
     </select><br>
     <input ng-show="createForm.$valid && isLoggedIn" type="submit" value="Добавить">
 </form>
-{{prisoner.status}}
+{{status}}
 </div>

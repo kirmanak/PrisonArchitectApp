@@ -18,6 +18,10 @@ module.exports = (bcrypt, router, passport, gamers) => {
 
     router.route('/register')
         .post((req, res) => {
+            if (!req.body.password || !req.body.username) {
+                res.sendStatus(400);
+                return;
+            }
             bcrypt.hash(req.body.password, SALT_ROUNDS, (err, hash) => {
                 if (err) {
                     res.sendStatus(500);
@@ -27,11 +31,10 @@ module.exports = (bcrypt, router, passport, gamers) => {
                     username: req.body.username,
                     password: hash
                 }).then(() => {
-                        res.sendStatus(200);
-                    },
-                    () => {
-                        res.sendStatus(400);
-                    });
+                    res.sendStatus(200);
+                }, (error) => {
+                    res.sendStatus(400);
+                });
             });
         });
 

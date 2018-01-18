@@ -32,11 +32,16 @@ module.exports = (sendToMQ, router, models) => {
                     res.json(data);
                 });
         }).post(isLoggedIn, (req, res) => {
+        if (!req.body.fullname || req.body.appointment_fk ||
+            req.body.office_fk) {
+            res.sendStatus(400);
+            return;
+        }
         // noinspection JSCheckFunctionSignatures
         models.staff.create({
-            fullname: req.body.fullName,
-            appointment_fk: JSON.parse(req.body.appointment).id,
-            office_fk: JSON.parse(req.body.office).id
+            fullname: req.body.fullname,
+            appointment_fk: req.body.appointment_fk,
+            office_fk: req.body.office_fk
         }).then((result) => {
             res.sendStatus(200);
             sendToMQ(new Buffer('Пользователем ' + req.user.username +
