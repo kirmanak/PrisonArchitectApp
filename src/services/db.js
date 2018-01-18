@@ -1,3 +1,4 @@
+// noinspection NpmUsedModulesInstalled
 const Sequelize = require('sequelize');
 
 module.exports = (config) => {

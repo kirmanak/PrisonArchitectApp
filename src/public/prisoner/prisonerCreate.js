@@ -23,6 +23,7 @@
                         store.status = 'Успешно добавлен новый заключённый.';
                     },
                     function (error) {
+                        console.error(error);
                         if (status.status === 403) {
                             store.status = 'Вы не авторизованы!';
                             $location.url('/login');

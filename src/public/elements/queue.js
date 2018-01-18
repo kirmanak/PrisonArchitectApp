@@ -12,6 +12,7 @@
 
     queue.controller('queueController', function ($scope) {
         $scope.message = '';
+        // noinspection ES6ModulesDependencies
         const client = Stomp.client('ws://localhost:15674/ws');
         client.connect('guest', 'guest', function() {
             client.subscribe('/exchange/staffEx', function (message) {

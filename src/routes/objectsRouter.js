@@ -10,6 +10,7 @@ module.exports = (router, models) => {
             models.thing_type.findAll().then((results) => {
                 res.send(results);
             }, (error) => {
+                console.error(error);
                 res.sendStatus(500);
             });
         });
@@ -19,6 +20,7 @@ module.exports = (router, models) => {
             models.room.findAll().then((results) => {
                 res.send(results);
             }, (error) => {
+                console.error(error);
                 res.sendStatus(500);
             });
         });
@@ -30,12 +32,14 @@ module.exports = (router, models) => {
                     res.json(data);
                 });
         }).post(isLoggedIn, (req, res) => {
+        // noinspection JSCheckFunctionSignatures
         models.object.create({
             thing_type_fk: JSON.parse(req.body.type).id,
             room_fk: JSON.parse(req.body.room).id
         }).then(() => {
             res.sendStatus(200);
         }, (error) => {
+            console.error(error);
             res.sendStatus(500);
         });
     });

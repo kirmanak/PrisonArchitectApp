@@ -1,3 +1,5 @@
+// noinspection NpmUsedModulesInstalled
+// noinspection NpmUsedModulesInstalled
 const LocalStrategy = require('passport-local').Strategy,
     VKStrategy = require('passport-vkontakte').Strategy;
 
@@ -15,6 +17,7 @@ module.exports = (bcrypt, passport, gamer) => {
     });
 
     passport.use(new LocalStrategy({}, (username, password, done) => {
+        // noinspection JSCheckFunctionSignatures
         gamer.findOne({ where: { username: username } }).then((result) => {
             if (!result) return done(null, false);
             // noinspection Annotator
@@ -37,7 +40,7 @@ module.exports = (bcrypt, passport, gamer) => {
         // noinspection Annotator
         gamer.findOrCreate({ where: {
             username: profile.id.toString()
-        }}).spread((gamer, created) => {
+        }}).spread((gamer) => {
             done(null, gamer);
         }).catch((error) => {
             console.error(error);

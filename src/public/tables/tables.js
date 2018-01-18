@@ -20,34 +20,34 @@
     });
 
     function load($http, $log, $location, store) {
+        const errorLog = function (error) {
+            $log.error(error);
+        };
+
         $http.get('/prisoner').then(function(res) {
-            store.prisoners = {
-                count: res.data
-            };
+            store.prisoners = { count: res.data };
         }, function (res) {
-            if (res.status === 403) {
-                $location.url('/login');
-            } else {
-                $log.status(res);
-            }
+            if (res.status === 403) { $location.url('/login'); }
+            else { errorLog(res); }
         });
+
 
         $http.get('/staff').then(function(res) {
             store.staff = {
                 count: res.data
             };
-        }, function (error) { $log.status(status); });
+        }, errorLog);
 
         $http.get('/object').then(function(res) {
             store.objects = {
                 count: res.data
             };
-        }, function (error) { $log.status(status); });
+        }, errorLog);
 
         $http.get('/rooms').then(function(res) {
             store.rooms = {
                 count: res.data
             };
-        }, function (error) { $log.status(status); });
+        }, errorLog);
     }
 })();

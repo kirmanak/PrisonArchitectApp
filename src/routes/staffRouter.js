@@ -9,6 +9,7 @@ module.exports = (sendToMQ, router, models) => {
             models.appointment.findAll().then((results) => {
                 res.send(results);
             }, (error) => {
+                console.error(error);
                 res.sendStatus(500);
             });
         });
@@ -18,17 +19,20 @@ module.exports = (sendToMQ, router, models) => {
             models.room.findAll().then((results) => {
                 res.send(results);
             }, (error) => {
+                console.error(error);
                 res.sendStatus(500);
             });
         });
 
     router.route('/staff')
         .get((req, res) => {
+            // noinspection Annotator
             models.staff.count()
                 .then((data) => {
                     res.json(data);
                 });
         }).post(isLoggedIn, (req, res) => {
+        // noinspection JSCheckFunctionSignatures
         models.staff.create({
             fullname: req.body.fullName,
             appointment_fk: JSON.parse(req.body.appointment).id,
@@ -38,6 +42,7 @@ module.exports = (sendToMQ, router, models) => {
             sendToMQ(new Buffer('Пользователем ' + req.user.username +
                 ' добавлен сотрудник с id ' + result.dataValues.id));
         }, (error) => {
+            console.error(error);
             res.sendStatus(500);
         });
     });

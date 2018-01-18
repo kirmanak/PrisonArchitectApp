@@ -17,7 +17,7 @@
         };
         store.delete = function(prisoner) {
             $log.log(prisoner);
-            $http.post('/prisoner', { data: prisoner } ).then(function (res) {
+            $http.post('/prisoner', { data: prisoner } ).then(function () {
                 store.search();
             }, function (error) {
                 $log.error(error);

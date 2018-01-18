@@ -12,6 +12,7 @@ module.exports = (router, models) => {
                     res.send(reputations);
                 },
                 (error) => {
+                    console.error(error);
                     res.sendStatus(500);
                 });
         });
@@ -35,6 +36,7 @@ module.exports = (router, models) => {
                     res.send(resultsArray);
                 },
                 (error) => {
+                    console.error(error);
                     res.sendStatus(500);
                 });
         });
@@ -46,6 +48,7 @@ module.exports = (router, models) => {
                     res.send(regimes);
                 },
                 (error) => {
+                    console.error(error);
                     res.sendStatus(500);
                 });
         });
@@ -69,7 +72,8 @@ module.exports = (router, models) => {
                 required: true,
             }).then((results) => {
                 res.send(results);
-            }, (err) => {
+            }, (error) => {
+                console.error(error);
                 res.sendStatus(500);
             });
         });
@@ -83,6 +87,8 @@ module.exports = (router, models) => {
                 });
         })
         .put(isLoggedIn, (req, res) => {
+            // noinspection Annotator
+            // noinspection JSCheckFunctionSignatures
             // noinspection Annotator
             models.prisoner.create({
                 fullname: req.body.fullName,
@@ -105,17 +111,20 @@ module.exports = (router, models) => {
                                     reputation_fk: JSON.parse(reputation).id
                                 }).then(() => {
                                     res.sendStatus(200);
-                                }, (err) => {
+                                }, (error) => {
+                                    console.error(error);
                                     res.sendStatus(500);
                                 });
                             });
 
-                        }, (err) => {
+                        }, (error) => {
+                            console.error(error);
                             res.sendStatus(500);
                         });
                     });
                 },
                 (error) => {
+                    console.error(error);
                     res.sendStatus(500);
                 });
         })
