@@ -1,9 +1,9 @@
 {
-    "port": 3000,
-    "database": "coursework",
-    "dbUser": "coursework",
-    "dbPass": "coursework",
-    "dbHost": "localhost",
-    "rabbitQueue": "staffCreation",
-    "rabbitHost": "amqp://localhost"
+  "port": 3000,
+  "database": "coursework",
+  "dbUser": "coursework",
+  "dbPass": "coursework",
+  "dbHost": "localhost",
+  "rabbitEx": "staffEx",
+  "rabbitHost": "amqp://localhost"
 }

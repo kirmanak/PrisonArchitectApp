@@ -26,8 +26,12 @@ module.exports = (bcrypt, router, passport, gamers) => {
                 gamers.create({
                     username: req.body.username,
                     password: hash
-                }).then(() => {res.sendStatus(200); },
-                    () => { res.sendStatus(400); });
+                }).then(() => {
+                        res.sendStatus(200);
+                    },
+                    () => {
+                        res.sendStatus(400);
+                    });
             });
         });
 

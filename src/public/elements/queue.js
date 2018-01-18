@@ -10,14 +10,12 @@
         };
     });
 
-    queue.controller('queueController', function () {
-        var store = this;
-        store.MQ = [];
-
+    queue.controller('queueController', function ($scope) {
+        $scope.MQ = '';
         var client = Stomp.client('ws://localhost:15674/ws');
         client.connect('guest', 'guest', function() {
-            client.subscribe('staffCreation', function (message) {
-                store.MQ.push(message);
+            client.subscribe('/exchange/staffEx', function (message) {
+                $scope.MQ = message.body;
             });
         });
     });

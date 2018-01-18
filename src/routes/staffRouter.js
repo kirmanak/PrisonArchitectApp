@@ -23,19 +23,22 @@ module.exports = (sendToMQ, router, models) => {
         });
 
     router.route('/staff')
-            .get((req, res) => {
-                    models.staff.count()
-                        .then((data) => { res.json(data); });
-            }).post(isLoggedIn, (req, res) => {
-                models.staff.create({
-                    fullname: req.body.fullName,
-                    appointment_fk: JSON.parse(req.body.appointment).id,
-                    office_fk: JSON.parse(req.body.office).id
-                }).then((result) => {
-                    res.sendStatus(200);
-                    sendToMQ(new Buffer('Добавлен новый сотрудник с id' + result.dataValues.id));
-                    }, (error) => {
-                        res.sendStatus(500);
-                    });
-            });
-};
+        .get((req, res) => {
+            models.staff.count()
+                .then((data) => {
+                    res.json(data);
+                });
+        }).post(isLoggedIn, (req, res) => {
+        models.staff.create({
+            fullname: req.body.fullName,
+            appointment_fk: JSON.parse(req.body.appointment).id,
+            office_fk: JSON.parse(req.body.office).id
+        }).then((result) => {
+            res.sendStatus(200);
+            sendToMQ(new Buffer('Пользователем ' + req.user.username +
+                ' добавлен сотрудник с id ' + result.dataValues.id));
+        }, (error) => {
+            res.sendStatus(500);
+        });
+    });
+}

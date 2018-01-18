@@ -42,10 +42,10 @@ roomsRouter(app, db.models.room);
 
 require('amqplib').connect(config.rabbitHost).then((conn) => {
     conn.createChannel().then((ch) => {
-        ch.assertQueue(config.rabbitQueue);
+        ch.assertExchange(config.rabbitEx, 'fanout', { durable: false});
 
         // the last entity route
-        staffRouter((buff) => { ch.sendToQueue(config.rabbitQueue, buff); }, app, db.models);
+        staffRouter((buff) => { ch.publish(config.rabbitEx, '', buff); }, app, db.models);
 
         app.use(express.static(__dirname + '/public'));
         app.use('*', (req, res) => {

@@ -9,7 +9,7 @@ module.exports = (router, models) => {
             models.reputation.findAll().then(
                 (reputations) => {
                     res.send(reputations);
-                    },
+                },
                 (error) => {
                     res.sendStatus(500);
                 });
@@ -19,7 +19,7 @@ module.exports = (router, models) => {
         .post((req, res) => {
             models.room.findAll({
                 required: true,
-                where: { assignment: 'Камера' },
+                where: {assignment: 'Камера'},
                 include: [
                     {
                         model: models.access,
@@ -27,7 +27,7 @@ module.exports = (router, models) => {
                         include: [{
                             model: models.regime,
                             required: true,
-                            where: { id: req.body.id }
+                            where: {id: req.body.id}
                         }]
                     }]
             }).then((resultsArray) => {
@@ -58,7 +58,7 @@ module.exports = (router, models) => {
                         model: models.access,
                         include: [{
                             model: models.regime,
-                            where: { id: req.body.id },
+                            where: {id: req.body.id},
                             required: true
                         }],
                         required: true
@@ -82,12 +82,12 @@ module.exports = (router, models) => {
         })
         .put(isLoggedIn, (req, res) => {
             models.prisoner.create({
-                    fullname: req.body.fullName,
-                    arrivement: req.body.arrivement,
-                    freedom: req.body.freedom,
-                    ward_fk: JSON.parse(req.body.ward).id,
-                    regime_fk: JSON.parse(req.body.regime).id
-                }).then(
+                fullname: req.body.fullName,
+                arrivement: req.body.arrivement,
+                freedom: req.body.freedom,
+                ward_fk: JSON.parse(req.body.ward).id,
+                regime_fk: JSON.parse(req.body.regime).id
+            }).then(
                 (prisoner) => {
                     req.body.programs.forEach((program) => {
                         models.prisoner_program.create({
@@ -116,14 +116,14 @@ module.exports = (router, models) => {
         })
         .post((req, res) => {
             console.log(req.body);
-            models.prisoner.destroy({ where: { id: req.body.data.id } })
+            models.prisoner.destroy({where: {id: req.body.data.id}})
                 .then((result) => {
-                console.log(result);
-                res.sendStatus(200);
-            }, (error) => {
-                console.error(result);
-                res.sendStatus(500);
-            });
+                    console.log(result);
+                    res.sendStatus(200);
+                }, (error) => {
+                    console.error(result);
+                    res.sendStatus(500);
+                });
         });
 
     router.route('/prisoner/search')

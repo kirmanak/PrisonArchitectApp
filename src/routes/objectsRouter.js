@@ -25,7 +25,9 @@ module.exports = (router, models) => {
     router.route('/object')
         .get((req, res) => {
             models.object.count()
-                .then((data) => { res.json(data); });
+                .then((data) => {
+                    res.json(data);
+                });
         }).post(isLoggedIn, (req, res) => {
         models.object.create({
             thing_type_fk: JSON.parse(req.body.type).id,
