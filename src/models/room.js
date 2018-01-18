@@ -14,7 +14,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     access_fk: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: 'access',
         key: 'id'

@@ -23,7 +23,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     regime_fk: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: 'regime',
         key: 'id'
@@ -31,7 +31,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     ward_fk: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: 'room',
         key: 'id'

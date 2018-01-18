@@ -15,7 +15,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     inventory_fk: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: 'inventory',
         key: 'id'

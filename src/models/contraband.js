@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     object_fk: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: 'object',
         key: 'id'
@@ -18,7 +18,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     owner_fk: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: 'prisoner',
         key: 'id'
@@ -26,7 +26,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     discovered_by_fk: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: 'staff',
         key: 'id'

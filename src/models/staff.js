@@ -14,7 +14,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     appointment_fk: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: 'appointment',
         key: 'id'
@@ -22,7 +22,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     office_fk: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: 'room',
         key: 'id'

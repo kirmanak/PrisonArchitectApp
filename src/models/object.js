@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     thing_type_fk: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: 'thing_type',
         key: 'id'
@@ -18,7 +18,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     room_fk: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: 'room',
         key: 'id'

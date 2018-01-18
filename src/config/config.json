@@ -4,5 +4,6 @@
     "dbUser": "coursework",
     "dbPass": "coursework",
     "dbHost": "localhost",
+    "rabbitQueue": "staffCreation",
     "rabbitHost": "amqp://localhost"
 }

@@ -80,7 +80,7 @@ module.exports = (router, models) => {
                     res.json(data);
                 });
         })
-        .post(isLoggedIn, (req, res) => {
+        .put(isLoggedIn, (req, res) => {
             models.prisoner.create({
                     fullname: req.body.fullName,
                     arrivement: req.body.arrivement,
@@ -113,6 +113,17 @@ module.exports = (router, models) => {
                 (error) => {
                     res.sendStatus(500);
                 });
+        })
+        .post((req, res) => {
+            console.log(req.body);
+            models.prisoner.destroy({ where: { id: req.body.data.id } })
+                .then((result) => {
+                console.log(result);
+                res.sendStatus(200);
+            }, (error) => {
+                console.error(result);
+                res.sendStatus(500);
+            });
         });
 
     router.route('/prisoner/search')

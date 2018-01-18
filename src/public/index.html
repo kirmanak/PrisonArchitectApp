@@ -4,8 +4,9 @@
     <base href="/">
     <meta charset="utf-8">
     <title>Coursework</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular-route.min.js"></script>
+    <script src="scripts/angular.min.js"></script>
+    <script src="scripts/angular-route.min.js"></script>
+    <script src="scripts/stomp.min.js"></script>
     <script src="app.js"></script>
     <script src="prisoner/prisoner.js"></script>
     <script src="prisoner/search.js"></script>
@@ -14,6 +15,7 @@
     <script src="login/login.js"></script>
     <script src="object/object.js"></script>
     <script src="elements/menu.js"></script>
+    <script src="elements/queue.js"></script>
     <style>
         input.ng-invalid.ng-touched {
             border-color: red;
@@ -36,6 +38,7 @@
     <div ng-controller="AppController">
         <menu>Loading...</menu>
         <ng-view>Loading..</ng-view>
+        <queue>Loading...</queue>
     </div>
 </body>
 </html>

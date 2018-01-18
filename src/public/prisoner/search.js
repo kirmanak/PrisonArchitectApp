@@ -10,9 +10,16 @@
                 store.data.name + ' ' +
                 store.data.patronymic;
             $http.post('/prisoner/search', store.data).then(function (res) {
-                $log.log(res);
                 store.results = res.data;
             }, function(error) {
+                $log.error(error);
+            })
+        };
+        store.delete = function(prisoner) {
+            $log.log(prisoner);
+            $http.post('/prisoner', { data: prisoner } ).then(function (res) {
+                store.search();
+            }, function (error) {
                 $log.error(error);
             })
         };

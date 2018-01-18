@@ -14,6 +14,7 @@
 <table ng-hide="search.results.length === 0">
     <thead>
         <tr>
+            <td>Номер</td>
             <td>ФИО</td>
             <td>Программы</td>
             <td>Репутации</td>
@@ -26,6 +27,7 @@
     </thead>
     <tbody>
         <tr ng-repeat="prisoner in search.results">
+            <td>{{prisoner.id}}</td>
             <td>{{prisoner.fullname}}</td>
             <td>
                 <div ng-repeat="program in prisoner.programs">
@@ -39,6 +41,8 @@
             <td>{{prisoner.regime.name}}</td>
             <td>{{prisoner.arrivement | date}}</td>
             <td>{{prisoner.freedom | date}}</td>
+            <td><a href ng-click="">Обновить</a></td>
+            <td><a href ng-click="search.delete(prisoner)">Удалить</a></td>
         </tr>
     </tbody>
 </table>

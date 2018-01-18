@@ -18,7 +18,7 @@
                     store.data.name + ' ' +
                     store.data.patronymic;
                 store.status = 'Общаемся с сервером...';
-                $http.post('/prisoner', store.data).then(
+                $http.put('/prisoner', store.data).then(
                     function () {
                         store.status = 'Успешно добавлен новый заключённый.';
                     },

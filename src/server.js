@@ -12,7 +12,6 @@ const express = require('express'),
     roomsRouter = require('./routes/roomsRouter.js'),
     // services
     auth = require('./services/passport.js'),
-    rabbitmq = require('./services/rabbitmq.js'),
     config = require('./config/config.json'),
     db = require('./services/db.js')(config);
 
@@ -37,17 +36,28 @@ auth(bcrypt, passport, db.models.gamer);
 
 // routes
 authRouter(bcrypt, app, passport, db.models.gamer);
-staffRouter(app, db.models);
 prisonerRouter(app, db.models);
 objectsRouter(app, db.models);
 roomsRouter(app, db.models.room);
-app.use(express.static(__dirname + '/public'));
-// the last chance
-app.use('*', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
+
+require('amqplib').connect(config.rabbitHost).then((conn) => {
+    conn.createChannel().then((ch) => {
+        ch.assertQueue(config.rabbitQueue);
+
+        // the last entity route
+        staffRouter((buff) => { ch.sendToQueue(config.rabbitQueue, buff); }, app, db.models);
+
+        app.use(express.static(__dirname + '/public'));
+        app.use('*', (req, res) => {
+            res.sendFile(__dirname + '/public/index.html');
+        });
+
+        app.use(require('compression'));
+        app.listen(config.port, () => console.log('Server running at http://localhost:' + config.port + '/'));
+    }, (error) => {
+        throw new Error(error);
+    });
+}, (error) => {
+    throw new Error(error);
 });
 
-// rabbitmq(config);
-
-app.use(require('compression'));
-app.listen(config.port, () => console.log('Server running at http://localhost:' + config.port + '/'));

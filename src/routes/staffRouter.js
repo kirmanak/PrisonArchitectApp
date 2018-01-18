@@ -1,4 +1,4 @@
-module.exports = (router, models) => {
+module.exports = (sendToMQ, router, models) => {
     const isLoggedIn = (req, res, next) => {
         if (req.isAuthenticated()) next();
         else res.sendStatus(403);
@@ -29,10 +29,11 @@ module.exports = (router, models) => {
             }).post(isLoggedIn, (req, res) => {
                 models.staff.create({
                     fullname: req.body.fullName,
-                    appointment: JSON.parse(req.body.appointment).id,
+                    appointment_fk: JSON.parse(req.body.appointment).id,
                     office_fk: JSON.parse(req.body.office).id
-                }).then(() => {
-                        res.sendStatus(200);
+                }).then((result) => {
+                    res.sendStatus(200);
+                    sendToMQ(new Buffer('Добавлен новый сотрудник с id' + result.dataValues.id));
                     }, (error) => {
                         res.sendStatus(500);
                     });
