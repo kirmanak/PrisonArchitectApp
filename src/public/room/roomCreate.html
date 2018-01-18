@@ -1,0 +1,21 @@
+<b ng-hide="isLoggedIn">Только авторизованный пользователь может добавлять новые данные</b>
+<form name="createForm" novalidate ng-submit="createForm.$valid && send()" ng-show="isLoggedIn">
+    <label for="assignment">Назначение: </label>
+    <input name="assignment" id="assignment" type="text" required ng-model="data.assignment"><br>
+    <label ng-show="createForm.assignment.$valid" for="access">Доступ: </label>
+    <select id="access" name="access" ng-show="createForm.assignment.$valid" ng-model="data.access_fk" required ng-show="createForm.assignment.$valid">
+        <option ng-repeat="access in accesses" value="{{access.id}}">
+            {{access.name}}
+        </option>
+    </select><br>
+    <label ng-show="createForm.access.$valid" for="area">Площадь: </label>
+    <input id="area" name="area" type="number" min="1" max="1000" ng-show="createForm.access.$valid"
+           required ng-model="data.area"><br>
+    <p ng-show="createForm.area.$valid">Уличное помещение?</p>
+    <label ng-show="createForm.area.$valid" for="yes">Да</label>
+    <input id="yes" name="street" type="radio" value="true" ng-model="data.street" ng-show="createForm.area.$valid" required>
+    <label ng-show="createForm.area.$valid" for="no">Нет</label>
+    <input id="no" name="street" type="radio" value="false" ng-model="data.street" ng-show="createForm.area.$valid" required><br>
+    <input type="submit" value="Отправить" ng-show="createForm.$valid"><br>
+</form>
+{{status}}

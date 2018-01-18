@@ -19,6 +19,10 @@ module.exports = (router, models) => {
 
     router.route('/prisoner/wards')
         .post((req, res) => {
+            if (!req.body.id) {
+                res.sendStatus(400);
+                return;
+            }
             models.room.findAll({
                 required: true,
                 where: {assignment: 'Камера'},
@@ -55,6 +59,10 @@ module.exports = (router, models) => {
 
     router.route('/prisoner/programs')
         .post((req, res) => {
+            if (!req.body.id) {
+                res.sendStatus(400);
+                return;
+            }
             models.program.findAll({
                 include: [{
                     model: models.room,
@@ -87,6 +95,12 @@ module.exports = (router, models) => {
                 });
         })
         .put(isLoggedIn, (req, res) => {
+            if (!req.body.fullname || !req.body.arrivement ||
+            !req.body.freedom || !req.body.ward_fk || !req.body.regime_fk ||
+            !req.body.reputations || !req.body.programs) {
+                res.sendStatus(400);
+                return;
+            }
             // noinspection Annotator
             // noinspection JSCheckFunctionSignatures
             // noinspection Annotator
@@ -124,6 +138,10 @@ module.exports = (router, models) => {
             });
         })
         .post((req, res) => {
+            if (!req.body.id) {
+                res.sendStatus(400);
+                return;
+            }
             // noinspection Annotator
             models.prisoner.destroy( { where: { id: req.body.id } }).then((result) => {
                     res.sendStatus(200);
@@ -133,6 +151,12 @@ module.exports = (router, models) => {
                 });
         })
         .patch(isLoggedIn, (req, res) => {
+            if (!req.body.id || !req.body.fullname || !req.body.arrivement ||
+                !req.body.freedom || !req.body.ward_fk || !req.body.regime_fk ||
+                !req.body.reputations || !req.body.programs) {
+                res.sendStatus(400);
+                return;
+            }
             // noinspection Annotator
             // noinspection JSCheckFunctionSignatures
             // noinspection Annotator
@@ -177,6 +201,10 @@ module.exports = (router, models) => {
 
     router.route('/prisoner/search')
         .post((req, res) => {
+            if (!req.body.fullname) {
+                res.sendStatus(400);
+                return;
+            }
             // noinspection Annotator
             models.prisoner.findAll({
                 where: { fullname: req.body.fullname },

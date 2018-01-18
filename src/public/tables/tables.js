@@ -44,7 +44,7 @@
             };
         }, errorLog);
 
-        $http.get('/rooms').then(function(res) {
+        $http.get('/room').then(function(res) {
             store.rooms = {
                 count: res.data
             };
