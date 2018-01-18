@@ -151,7 +151,7 @@ module.exports = (router, models) => {
                 });
         })
         .patch(isLoggedIn, (req, res) => {
-            if (!req.body.id || !req.body.fullname || !req.body.arrivement ||
+            if (!req.body.id || !req.body.arrivement ||
                 !req.body.freedom || !req.body.ward_fk || !req.body.regime_fk ||
                 !req.body.reputations || !req.body.programs) {
                 res.sendStatus(400);
@@ -161,7 +161,6 @@ module.exports = (router, models) => {
             // noinspection JSCheckFunctionSignatures
             // noinspection Annotator
             models.prisoner.update({
-                fullname: req.body.fullname,
                 arrivement: req.body.arrivement,
                 freedom: req.body.freedom,
                 ward_fk: req.body.ward_fk,

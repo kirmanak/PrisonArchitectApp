@@ -1,6 +1,6 @@
 (function() {
     const app = angular.module('myApp', ['ngRoute', 'tables',
-        'prisoner', 'prisonerSearch', 'login', 'staff',
+        'prisoner', 'prisonerSearch', 'login', 'staff', 'staffSearch',
         'room', 'roomSearch', 'menu', 'object', 'queue']);
 
     app.controller('AppController',
@@ -27,6 +27,11 @@
                 .when('/crud/staff/create', {
                     templateUrl: 'staff/staffCreate.html',
                     controller: 'staffController',
+                    controllerAs: 'staff'
+                })
+                .when('/crud/staff/search', {
+                    templateUrl: 'staff/staffSearch.html',
+                    controller: 'staffSearchCtrl',
                     controllerAs: 'staff'
                 })
                 .when('/crud/object/create', {

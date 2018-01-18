@@ -51,5 +51,57 @@ module.exports = (sendToMQ, router, models) => {
                 console.error(error);
                 res.sendStatus(500);
             });
+        })
+        .patch(isLoggedIn, (req, res) => {
+            if (!req.body.id || !req.body.appointment_fk || !req.body.office_fk) {
+                res.sendStatus(400);
+                return;
+            }
+
+            models.staff.update({
+                appointment_fk: req.body.appointment_fk,
+                office_fk: req.body.office_fk
+            }, {
+                where: { id: req.body.id }
+            }).then((results) => {
+                res.sendStatus(200);
+            }, (error) => {
+                console.error(error);
+                res.sendStatus(500);
+            })
+        })
+        .post(isLoggedIn, (req, res) => {
+            if (!req.body.id) {
+                res.sendStatus(400);
+                return;
+            }
+
+            models.staff.destroy({ where: { id: req.body.id }}).then((results) => {
+                res.sendStatus(200);
+            }, (error) => {
+                console.error(error);
+                res.sendStatus(500);
+            });
+        });
+
+    router.route('/staff/search')
+        .post((req, res) => {
+            if (!req.body.fullname) {
+                res.sendStatus(400);
+                return;
+            }
+
+            models.staff.findAll({
+                where: { fullname: req.body.fullname },
+                include: [
+                    models.room, models.appointment
+                ]
+            }).then((results) => {
+                res.send(results);
+            }, (error) => {
+                console.error(error);
+                res.sendStatus(500);
+
+            });
         });
 };

@@ -1,0 +1,57 @@
+<a href="/crud/staff/create">Добавление сотрудников</a><br>
+<form name="searchForm" novalidate ng-submit="searchForm.$valid && searchStaff()">
+    <label for="surname">Фамилия: </label>
+    <input type="text" id="surname" name="surname" ng-model="data.surname" required><br>
+    <label ng-show="searchForm.surname.$valid" for="name">Имя: </label>
+    <input ng-show="searchForm.surname.$valid" type="text" id="name" name="name"
+           ng-model="data.name" required><br>
+    <label ng-show="searchForm.name.$valid" for="patronymic">Отчество: </label>
+    <input ng-show="searchForm.name.$valid" type="text" id="patronymic" name="patronymic"
+           ng-model="data.patronymic" required><br>
+    <input type="submit" value="Поиск" ng-show="searchForm.$valid">
+</form>
+{{status}}
+<table ng-hide="results.length === 0">
+    <thead>
+    <tr>
+        <td>Номер</td>
+        <td>ФИО</td>
+        <td>Должность</td>
+        <td>Рабочее место</td>
+        <td ng-show="isLoggedIn">Обновить</td>
+        <td ng-show="isLoggedIn">Удалить</td>
+    </tr>
+    </thead>
+    <tbody ng-hide="isLoggedIn">
+    <tr ng-repeat="staff in results">
+        <td>{{staff.id}}</td>
+        <td>{{staff.fullname}}</td>
+        <td>{{staff.appointment.name}}</td>
+        <td>{{staff.room.assignment}}</td>
+    </tr>
+    </tbody>
+    <tbody ng-show="isLoggedIn">
+    <tr ng-repeat="staff in results">
+        <form name="updateForm" novalidate>
+            <td>{{staff.id}}</td>
+            <td>{{staff.fullname}}</td>
+            <td>
+                <select ng-model="staff.appointment_fk" required>
+                    <option ng-repeat="appointment in appointments" value="{{appointment.id}}">
+                        {{appointment.name}}
+                    </option>
+                </select>
+            </td>
+            <td>
+                <select ng-model="staff.office_fk" required>
+                    <option ng-repeat="office in offices" value="{{office.id}}">
+                        {{office.assignment}}
+                    </option>
+                </select>
+            </td>
+            <td><input type="submit" ng-click="updateForm.$valid && update(staff)" value="Обновить"></td>
+            <td><input type="submit" ng-click="delete(staff)" value="Удалить"></td>
+        </form>
+    </tr>
+    </tbody>
+</table>

@@ -73,7 +73,6 @@
         $scope.update = function (prisoner) {
             $http.patch('/prisoner', {
                 id: prisoner.id,
-                fullname: prisoner.fullname,
                 arrivement: prisoner.arrivement,
                 freedom: prisoner.freedom,
                 ward_fk: prisoner.ward_fk,

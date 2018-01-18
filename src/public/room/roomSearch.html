@@ -1,4 +1,4 @@
-<a href="/crud/room/create">Добавить помещение</a>
+<a href="/crud/room/create">Добавить помещение</a><br>
 <form name="searchForm" ng-submit="searchForm.$valid && searchRoom()">
     <label for="assignment">Назначение: </label>
     <input name="assignment" id="assignment" type="text" required ng-model="query.assignment"><br>
@@ -34,7 +34,7 @@
     </tbody>
     <tbody ng-show="isLoggedIn">
         <tr ng-repeat="room in results">
-            <form name="updateForm" ng-submit="updateForm.$valid && update(room)">
+            <form name="updateForm" novalidate>
                 <td>{{room.id}}</td>
                 <td><input type="text" ng-model="room.assignment" required></td>
                 <td>
@@ -51,8 +51,8 @@
                     <label for="{{room.id + 'ST'}}">Нет</label>
                     <input id="{{room.id + 'SF'}}" type="radio" value="false" name="{{room.id + 'street'}}" required ng-model="room.street">
                 </td>
-                <td><input type="submit" value="Обновить"></td>
-                <td><a href ng-click="delete(room)">Удалить</a></td>
+                <td><input type="submit" ng-click="updateForm.$valid && update(room)" value="Обновить"></td>
+                <td><input type="submit" ng-click="delete(room)" value="Удалить"></td>
             </form>
         </tr>
     </tbody>

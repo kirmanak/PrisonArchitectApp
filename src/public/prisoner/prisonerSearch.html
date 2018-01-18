@@ -49,7 +49,7 @@
     </tbody>
     <tbody ng-show="isLoggedIn">
     <tr ng-repeat="prisoner in results">
-        <form name="updateForm" novalidate ng-submit="updateForm.$valid && update(prisoner)">
+        <form name="updateForm" novalidate>
             <td>{{prisoner.id}}</td>
             <td>{{prisoner.fullname}}</td>
             <td><select size="2" ng-model="prisoner.programs" multiple>
@@ -75,8 +75,8 @@
                     {{ward.id}}
                 </option>
             </select></td>
-            <td><input type="submit" value="Обновить" ng-click="update(prisoner)"></td>
-            <td><a href type="submit" ng-click="delete(prisoner)">Удалить</a></td>
+            <td><input type="submit" value="Обновить" ng-click="updateForm.$valid && update(prisoner)"></td>
+            <td><input type="submit" value="Удалить" ng-click="delete(prisoner)"></td>
         </form>
     </tr>
     </tbody>
