@@ -1,7 +1,7 @@
-module.exports = (router, rooms) => {
+module.exports = (router, models) => {
     router.route('/rooms')
             .get((req, res) => {
-                    rooms.count()
+                    models.room.count()
                         .then((data) => { res.json(data); });
             });
 };

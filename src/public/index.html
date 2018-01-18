@@ -4,7 +4,7 @@
     <base href="/">
     <meta charset="utf-8">
     <title>Coursework</title>
-    <script src="scripts/angular.min.js"></script>
+    <script src="scripts/angular.js"></script>
     <script src="scripts/angular-route.min.js"></script>
     <script src="scripts/stomp.min.js"></script>
     <script src="app.js"></script>
@@ -16,6 +16,7 @@
     <script src="object/objectCreate.js"></script>
     <script src="elements/menu.js"></script>
     <script src="elements/queue.js"></script>
+    <!--suppress CssUnusedSymbol -->
     <style>
         input.ng-invalid.ng-touched {
             border-color: red;
@@ -37,7 +38,7 @@
 <body>
     <div ng-controller="AppController">
         <menu>Loading...</menu>
-        <ng-view>Loading..</ng-view>
+        <div ng-view>Loading..</div>
         <queue>Loading...</queue>
     </div>
 </body>

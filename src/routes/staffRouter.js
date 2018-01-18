@@ -41,4 +41,4 @@ module.exports = (sendToMQ, router, models) => {
             res.sendStatus(500);
         });
     });
-}
+};

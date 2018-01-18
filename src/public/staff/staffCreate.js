@@ -1,9 +1,9 @@
 (function () {
-	var staff = angular.module('staff', ['menu']);
+    const staff = angular.module('staff', []);
 
-	staff.controller('staffController', function($http, $log) {
-	    var store = this;
-	    store.data = {};
+    staff.controller('staffController', function($http, $log, $location) {
+        const store = this;
+        store.data = {};
 	    store.appointments = [];
         store.offices = [];
 	    store.status = '';

@@ -1,5 +1,5 @@
 (function() {
-    var queue = angular.module('queue', []);
+    const queue = angular.module('queue', []);
 
     queue.directive('queue', function() {
         return {
@@ -11,11 +11,12 @@
     });
 
     queue.controller('queueController', function ($scope) {
-        $scope.MQ = '';
-        var client = Stomp.client('ws://localhost:15674/ws');
+        $scope.message = '';
+        const client = Stomp.client('ws://localhost:15674/ws');
         client.connect('guest', 'guest', function() {
             client.subscribe('/exchange/staffEx', function (message) {
-                $scope.MQ = message.body;
+                $scope.message = message.body;
+                $scope.$apply();
             });
         });
     });

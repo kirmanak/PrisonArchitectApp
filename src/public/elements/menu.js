@@ -1,5 +1,5 @@
 (function() {
-    var menu = angular.module('menu', ['login']);
+    const menu = angular.module('menu', ['login']);
 
     menu.directive('menu', function() {
         return {
@@ -11,7 +11,7 @@
     });
 
     menu.controller('MenuController', function ($http, $rootScope) {
-        var store = this;
+        const store = this;
         $rootScope.isLoggedIn = false;
         store.logout = function() {
             $http.get('/logout').then(function(res) {},

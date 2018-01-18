@@ -1,8 +1,8 @@
 (function () {
-    var object = angular.module('object', ['menu']);
+    const object = angular.module('object', []);
 
-    object.controller('objectController', function($http, $log) {
-        var store = this;
+    object.controller('objectController', function($http, $log, $location) {
+        const store = this;
         store.data = {};
         store.types = [];
         store.rooms = [];

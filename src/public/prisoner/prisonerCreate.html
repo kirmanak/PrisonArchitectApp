@@ -20,6 +20,7 @@
     <label ng-show="createForm.freedom.$valid" for="reputations">Репутации: </label>
     <select ng-show="createForm.freedom.$valid" id="reputations" name="reputations" size="2"
             ng-model="prisoner.data.reputations" multiple>
+        <!--suppress Annotator -->
         <option ng-repeat="reputation in prisoner.reputations"
                 value="{{reputation}}"
                 title="{{reputation.effect}}">

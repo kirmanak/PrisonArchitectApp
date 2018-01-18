@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 
 module.exports = (config) => {
     // db synchronization
+    // noinspection Annotator
     const db = new Sequelize(config.database, config.dbUser, config.dbPass, {
         host: config.dbHost,
         dialect: 'postgres',

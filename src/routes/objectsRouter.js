@@ -6,6 +6,7 @@ module.exports = (router, models) => {
 
     router.route('/object/types')
         .get((req, res) => {
+            // noinspection Annotator
             models.thing_type.findAll().then((results) => {
                 res.send(results);
             }, (error) => {

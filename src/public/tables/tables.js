@@ -1,10 +1,10 @@
 (function() {
-    var tables = angular.module('tables', ['ngRoute']);
+    const tables = angular.module('tables', ['ngRoute']);
 
-    tables.controller('tablesController', 
+    tables.controller('tablesController',
         function($http, $log, $location) {
-        var store = this;
-        store.prisoners = {
+            const store = this;
+            store.prisoners = {
             count: 0
         };
         store.staff = {
@@ -20,7 +20,7 @@
     });
 
     function load($http, $log, $location, store) {
-        $http.get('/prisoner').then(function(res) { 
+        $http.get('/prisoner').then(function(res) {
             store.prisoners = {
                 count: res.data
             };
@@ -32,7 +32,7 @@
             }
         });
 
-        $http.get('/staff').then(function(res) { 
+        $http.get('/staff').then(function(res) {
             store.staff = {
                 count: res.data
             };
@@ -44,7 +44,7 @@
             };
         }, function (error) { $log.status(status); });
 
-        $http.get('/rooms').then(function(res) { 
+        $http.get('/rooms').then(function(res) {
             store.rooms = {
                 count: res.data
             };

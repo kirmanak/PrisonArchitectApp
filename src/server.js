@@ -29,16 +29,24 @@ app.use(require('express-session')({
     resave: false,
     saveUninitialized: false
 }));
+// noinspection Annotator
 app.use(passport.initialize());
+// noinspection Annotator
 app.use(passport.session());
 
+// noinspection Annotator
 auth(bcrypt, passport, db.models.gamer);
 
 // routes
+// noinspection Annotator
+// noinspection Annotator
 authRouter(bcrypt, app, passport, db.models.gamer);
+// noinspection Annotator
 prisonerRouter(app, db.models);
+// noinspection Annotator
 objectsRouter(app, db.models);
-roomsRouter(app, db.models.room);
+// noinspection Annotator
+roomsRouter(app, db.models);
 
 require('amqplib').connect(config.rabbitHost).then((conn) => {
     conn.createChannel().then((ch) => {

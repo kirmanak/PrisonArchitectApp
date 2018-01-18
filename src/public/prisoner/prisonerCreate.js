@@ -1,10 +1,10 @@
 (function () {
-	var prisoner = angular.module('prisoner', ['menu']);
+    const prisoner = angular.module('prisoner', []);
 
-	prisoner.controller('prisonerController',
+    prisoner.controller('prisonerController',
             function($http, $log, $location, $scope) {
-            var store = this;
-            store.maxArrivement = new Date();
+                const store = this;
+                store.maxArrivement = new Date();
             store.minFreedom = new Date();
             store.data = {};
             store.reputations = [];

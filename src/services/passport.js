@@ -17,6 +17,7 @@ module.exports = (bcrypt, passport, gamer) => {
     passport.use(new LocalStrategy({}, (username, password, done) => {
         gamer.findOne({ where: { username: username } }).then((result) => {
             if (!result) return done(null, false);
+            // noinspection Annotator
             bcrypt.compare(password, result.password, (err, res) => {
                 if (res) return done(null, result);
                 else return done(null, false);
@@ -33,6 +34,7 @@ module.exports = (bcrypt, passport, gamer) => {
         callbackURL: '/vkontakte/callback',
         apiVersion: '5.69'
     }, (accessToken, refreshToken, params, profile, done) => {
+        // noinspection Annotator
         gamer.findOrCreate({ where: {
             username: profile.id.toString()
         }}).spread((gamer, created) => {

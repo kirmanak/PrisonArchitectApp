@@ -6,6 +6,7 @@ module.exports = (router, models) => {
 
     router.route('/prisoner/reputations')
         .get((req, res) => {
+            // noinspection Annotator
             models.reputation.findAll().then(
                 (reputations) => {
                     res.send(reputations);
@@ -75,12 +76,14 @@ module.exports = (router, models) => {
 
     router.route('/prisoner')
         .get((req, res) => {
+            // noinspection Annotator
             models.prisoner.count().then(
                 (data) => {
                     res.json(data);
                 });
         })
         .put(isLoggedIn, (req, res) => {
+            // noinspection Annotator
             models.prisoner.create({
                 fullname: req.body.fullName,
                 arrivement: req.body.arrivement,
@@ -90,11 +93,13 @@ module.exports = (router, models) => {
             }).then(
                 (prisoner) => {
                     req.body.programs.forEach((program) => {
+                        // noinspection Annotator
                         models.prisoner_program.create({
                             prisoner_fk: prisoner.dataValues.id,
                             program_fk: JSON.parse(program).id
                         }).then(() => {
                             req.body.reputations.forEach((reputation) => {
+                                // noinspection Annotator
                                 models.reputation_prisoner.create({
                                     prisoner_fk: prisoner.dataValues.id,
                                     reputation_fk: JSON.parse(reputation).id
@@ -116,18 +121,21 @@ module.exports = (router, models) => {
         })
         .post((req, res) => {
             console.log(req.body);
+            // noinspection Annotator
             models.prisoner.destroy({where: {id: req.body.data.id}})
                 .then((result) => {
                     console.log(result);
                     res.sendStatus(200);
                 }, (error) => {
-                    console.error(result);
+                    console.error(error);
                     res.sendStatus(500);
                 });
         });
 
     router.route('/prisoner/search')
         .post((req, res) => {
+            // noinspection Annotator
+            // noinspection Annotator
             models.prisoner.findAll({
                 where: {fullname: req.body.fullname},
                 include: [

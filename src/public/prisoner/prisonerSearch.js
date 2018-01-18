@@ -1,8 +1,8 @@
 (function () {
-    var search = angular.module('prisonerSearch', ['menu']);
+    const search = angular.module('prisonerSearch', []);
 
     search.controller('prisonerSearchController', function($log, $http) {
-        var store = this;
+        const store = this;
         store.data = {};
         store.results = [];
         store.search = function() {
