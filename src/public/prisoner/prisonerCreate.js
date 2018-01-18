@@ -15,7 +15,7 @@
         // functions
         const errorLog = function (error) { $log.error(error); };
 
-        $scope.send = function () {
+        $scope.sendPrisoner = function () {
             $scope.status = 'Общаемся с сервером...';
             $http.put('/prisoner', {
                 fullname:

@@ -1,5 +1,5 @@
 (function () {
-    var room = angular.module('room', []);
+    const room = angular.module('room', []);
 
     room.controller('roomCreate', function ($http, $log, $scope) {
         const errorLog = function (error) { $log.log(error); };
@@ -10,8 +10,8 @@
         $http.get('/room/accesses').then(function (res) {
             $scope.accesses = res.data;
         }, errorLog);
-        $scope.send = function () {
-            $http.post('/room', {
+        $scope.sendRoom = function () {
+            $http.put('/room', {
                 assignment: $scope.data.assignment,
                 access_fk: $scope.data.access_fk,
                 area: $scope.data.area,

@@ -1,9 +1,10 @@
+<a href="/crud/room/search">Поиск помещения</a>
 <b ng-hide="isLoggedIn">Только авторизованный пользователь может добавлять новые данные</b>
-<form name="createForm" novalidate ng-submit="createForm.$valid && send()" ng-show="isLoggedIn">
+<form name="createForm" novalidate ng-submit="createForm.$valid && sendRoom()" ng-show="isLoggedIn">
     <label for="assignment">Назначение: </label>
     <input name="assignment" id="assignment" type="text" required ng-model="data.assignment"><br>
     <label ng-show="createForm.assignment.$valid" for="access">Доступ: </label>
-    <select id="access" name="access" ng-show="createForm.assignment.$valid" ng-model="data.access_fk" required ng-show="createForm.assignment.$valid">
+    <select id="access" name="access" ng-show="createForm.assignment.$valid" ng-model="data.access_fk" required>
         <option ng-repeat="access in accesses" value="{{access.id}}">
             {{access.name}}
         </option>

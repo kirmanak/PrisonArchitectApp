@@ -50,9 +50,11 @@
                     prisoner.arrivement = new Date(prisoner.arrivement);
                     prisoner.freedom = new Date(prisoner.freedom);
                     prisoner.programs.forEach(function (program) {
+                        // noinspection JSUnusedAssignment
                         program = program.id;
                     });
                     prisoner.reputations.forEach(function (reputation) {
+                        // noinspection JSUnusedAssignment
                         reputation = reputation.id;
                     });
                     $scope.loadPrograms(prisoner);
@@ -64,6 +66,7 @@
         $scope.delete = function (prisoner) {
             $http.post('/prisoner', {id: prisoner.id}).then(function () {
                 $scope.searchPrisoners();
+                $scope.status = 'Данные о заключённом удалены';
             }, errorLog);
         };
 

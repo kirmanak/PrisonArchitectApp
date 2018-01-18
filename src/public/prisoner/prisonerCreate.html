@@ -1,8 +1,8 @@
-<a href="/crud/search">Поиск</a><br>
+<a href="/crud/prisoner/search">Поиск</a><br>
 <b ng-hide="isLoggedIn">Только авторизованные пользователи могут добавлять новые данные!</b>
 <div ng-show="isLoggedIn">
     Добавление данных:
-<form name="createForm" novalidate ng-submit="createForm.$valid && send()">
+<form name="createForm" novalidate ng-submit="createForm.$valid && sendPrisoner()">
     <label for="surname">Фамилия: </label>
     <input type="text" id="surname" name="surname" ng-model="data.surname" required><br>
     <label ng-show="createForm.surname.$valid" for="name">Имя: </label>

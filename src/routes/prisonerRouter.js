@@ -137,7 +137,7 @@ module.exports = (router, models) => {
                 res.sendStatus(500);
             });
         })
-        .post((req, res) => {
+        .post(isLoggedIn, (req, res) => {
             if (!req.body.id) {
                 res.sendStatus(400);
                 return;
@@ -169,7 +169,9 @@ module.exports = (router, models) => {
             }, {
                 where: { id: req.body.id }
             }).then((prisoner) => {
+                // noinspection Annotator
                 models.prisoner_program.destroy({ where: { prisoner_fk: req.body.id } });
+                // noinspection Annotator
                 models.reputation_prisoner.destroy({ where: { prisoner_fk: req.body.id } });
                 req.body.programs.forEach((program_fk) => {
                     // noinspection Annotator

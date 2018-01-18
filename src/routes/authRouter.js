@@ -3,12 +3,15 @@ const SALT_ROUNDS = 10;
 module.exports = (bcrypt, router, passport, gamers) => {
     router.route('/loggedin')
         .get((req, res) => {
+            // noinspection Annotator
             res.sendStatus(req.isAuthenticated() ? 200 : 401)
         });
 
     router.route('/logout')
         .get((req, res) => {
+            // noinspection Annotator
             req.session.destroy();
+            // noinspection Annotator
             req.logout();
             res.sendStatus(401);
         });

@@ -31,24 +31,25 @@ module.exports = (sendToMQ, router, models) => {
                 .then((data) => {
                     res.json(data);
                 });
-        }).post(isLoggedIn, (req, res) => {
-        if (!req.body.fullname || req.body.appointment_fk ||
-            req.body.office_fk) {
-            res.sendStatus(400);
-            return;
-        }
-        // noinspection JSCheckFunctionSignatures
-        models.staff.create({
-            fullname: req.body.fullname,
-            appointment_fk: req.body.appointment_fk,
-            office_fk: req.body.office_fk
-        }).then((result) => {
-            res.sendStatus(200);
-            sendToMQ(new Buffer('Пользователем ' + req.user.username +
-                ' добавлен сотрудник с id ' + result.dataValues.id));
-        }, (error) => {
-            console.error(error);
-            res.sendStatus(500);
+        })
+        .put(isLoggedIn, (req, res) => {
+            if (!req.body.fullname || !req.body.appointment_fk || !req.body.office_fk) {
+                res.sendStatus(400);
+                return;
+            }
+            // noinspection JSCheckFunctionSignatures
+            models.staff.create({
+                fullname: req.body.fullname,
+                appointment_fk: req.body.appointment_fk,
+                office_fk: req.body.office_fk
+            }).then((result) => {
+                res.sendStatus(200);
+                // noinspection Annotator
+                sendToMQ(new Buffer('Пользователем ' + req.user.username +
+                    ' добавлен сотрудник с id ' + result.dataValues.id));
+            }, (error) => {
+                console.error(error);
+                res.sendStatus(500);
+            });
         });
-    });
 };

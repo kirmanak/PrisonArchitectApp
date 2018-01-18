@@ -2,16 +2,15 @@
     const login = angular.module('login', ['ngRoute']);
 
     login.controller('loginController', function ($http, $scope, $location, $rootScope, $window) {
-        const store = this;
-        store.vk = function () {
+        $scope.vk = function () {
             $window.location.assign('/vkontakte');
         };
-        store.data = {};
+        $scope.data = {};
         $scope.status = '';
-        store.login = function () {
+        $scope.authorize = function () {
             $http.post('/login', {
-                username: store.data.username,
-                password: store.data.password
+                username: $scope.data.username,
+                password: $scope.data.password
             }).then(
                 function () {
                     $scope.status = '';
@@ -23,13 +22,13 @@
                 }
             );
         };
-        store.register = function () {
+        $scope.register = function () {
             $http.post('/register', {
-                username: store.data.username,
-                password: store.data.password
+                username: $scope.data.username,
+                password: $scope.data.password
             }).then(function () {
                     $scope.status = '';
-                    store.login();
+                    $scope.login();
                 }, function (error) {
                     $scope.status = 'Логин занят!';
                 }
