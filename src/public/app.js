@@ -13,23 +13,23 @@
                     controller: 'loginController',
                     controllerAs: 'login'
                 })
-                .when('/crud/prisoner', {
-                    templateUrl: 'prisoner/prisoner.html',
+                .when('/crud/prisoner/create', {
+                    templateUrl: 'prisoner/prisonerCreate.html',
                     controller: 'prisonerController',
                     controllerAs: 'prisoner'
                 })
                 .when('/crud/prisoner/search', {
-                    templateUrl: 'prisoner/search.html',
+                    templateUrl: 'prisoner/prisonerSearch.html',
                     controller: 'prisonerSearchController',
                     controllerAs: 'search'
                 })
-                .when('/crud/staff', {
-                    templateUrl: 'staff/staff.html',
+                .when('/crud/staff/create', {
+                    templateUrl: 'staff/staffCreate.html',
                     controller: 'staffController',
                     controllerAs: 'staff'
                 })
-                .when('/crud/object', {
-                    templateUrl: 'object/object.html',
+                .when('/crud/object/create', {
+                    templateUrl: 'object/objectCreate.html',
                     controller: 'objectController',
                     controllerAs: 'object'
                 })
