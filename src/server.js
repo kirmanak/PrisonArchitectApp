@@ -13,6 +13,7 @@ const express = require('express'),
     staffRouter = require('./routes/staffRouter.js'),
     objectsRouter = require('./routes/objectsRouter.js'),
     roomsRouter = require('./routes/roomsRouter.js'),
+    contrabandRouter = require('./routes/contrabandRouter.js'),
     // services
     auth = require('./services/passport.js'),
     config = require('./config/config.json'),
@@ -52,6 +53,8 @@ prisonerRouter(app, db.models);
 objectsRouter(app, db.models);
 // noinspection Annotator
 roomsRouter(app, db.models);
+// noinspection Annotator
+contrabandRouter(app, db.models);
 
 // noinspection NpmUsedModulesInstalled
 require('amqplib').connect(config.rabbitHost).then((conn) => {
