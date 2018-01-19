@@ -37,6 +37,8 @@ module.exports = (config) => {
     const prisonerProgram = db.import('../models/prisoner_program.js');
 
     // associations
+    object.belongsTo(thingType, { foreignKey: 'thing_type_fk' });
+    object.belongsTo(room, { foreignKey: 'room_fk' });
     staff.belongsTo(appointment, { foreignKey: 'appointment_fk' });
     staff.belongsTo(room, { foreignKey: 'office_fk' });
     program.belongsTo(room, { foreignKey: 'room_fk' });

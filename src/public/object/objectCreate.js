@@ -9,7 +9,7 @@
 
         $scope.sendObject = function() {
             $scope.status = 'Общаемся с сервером...';
-            $http.post('/object', {
+            $http.put('/object', {
                 thing_type_fk: $scope.data.thing_type_fk,
                 room_fk: $scope.data.room_fk
             }).then(function () {

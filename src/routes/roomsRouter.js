@@ -57,7 +57,7 @@ module.exports = (router, models) => {
             }, (error) => {
                 console.error(error);
                 res.sendStatus(500);
-            })
+            });
         })
         .post(isLoggedIn, (req, res) => {
             if (!req.body.id) {
@@ -69,7 +69,7 @@ module.exports = (router, models) => {
             }, (error) => {
                 console.error(error);
                 res.sendStatus(500);
-            })
+            });
         });
 
     router.route('/room/search')

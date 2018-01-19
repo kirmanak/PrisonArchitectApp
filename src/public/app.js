@@ -1,7 +1,7 @@
 (function() {
     const app = angular.module('myApp', ['ngRoute', 'tables',
         'prisoner', 'prisonerSearch', 'login', 'staff', 'staffSearch',
-        'room', 'roomSearch', 'menu', 'object', 'queue']);
+        'objectSearch', 'room', 'roomSearch', 'menu', 'object', 'queue']);
 
     app.controller('AppController',
         function() {
@@ -37,6 +37,11 @@
                 .when('/crud/object/create', {
                     templateUrl: 'object/objectCreate.html',
                     controller: 'objectController',
+                    controllerAs: 'object'
+                })
+                .when('/crud/object/search', {
+                    templateUrl: 'object/objectSearch.html',
+                    controller: 'objectSearchCtrl',
                     controllerAs: 'object'
                 })
                 .when('/crud/room/create', {

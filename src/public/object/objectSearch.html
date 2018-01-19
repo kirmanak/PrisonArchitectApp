@@ -1,0 +1,52 @@
+<a href="/crud/object/create">Добавление объектов</a>
+<form name="searchForm" novalidate ng-submit="searchForm.$valid && searchObjects()">
+    <label  for="type">Тип вещи: </label>
+    <select id="type" name="type" ng-model="data.thing_type_fk" required>
+        <option ng-repeat="type in types" value="{{type.id}}">
+            {{type.name}}
+        </option>
+    </select><br>
+    <label ng-show="searchForm.type.$valid" for="room">Комната: </label>
+    <select ng-show="searchForm.type.$valid" id="room" name="room" ng-model="data.room_fk" required>
+        <option ng-repeat="room in rooms" value="{{room.id}}">
+            {{room.assignment}}
+        </option>
+    </select><br>
+    <input type="submit" value="Поиск" ng-show="searchForm.$valid">
+</form>
+{{status}}
+<table ng-hide="results.length === 0">
+    <thead>
+    <tr>
+        <td>Номер</td>
+        <td>Тип вещи</td>
+        <td>Помещение</td>
+        <td ng-show="isLoggedIn">Обновить</td>
+        <td ng-show="isLoggedIn">Удалить</td>
+    </tr>
+    </thead>
+    <tbody ng-hide="isLoggedIn">
+    <tr ng-repeat="object in results">
+        <td>{{object.id}}</td>
+        <td>{{object.thing_type.name}}</td>
+        <td>{{object.room.assignment}}</td>
+    </tr>
+    </tbody>
+    <tbody ng-show="isLoggedIn">
+    <tr ng-repeat="object in results">
+        <form name="updateForm" novalidate>
+            <td>{{object.id}}</td>
+            <td>{{object.thing_type.name}}</td>
+            <td>
+                <select ng-model="object.room_fk" required>
+                    <option ng-repeat="room in rooms" value="{{room.id}}">
+                        {{room.assignment}}
+                    </option>
+                </select>
+            </td>
+            <td><input type="submit" ng-click="updateForm.$valid && update(object)" value="Обновить"></td>
+            <td><input type="submit" ng-click="delete(object)" value="Удалить"></td>
+        </form>
+    </tr>
+    </tbody>
+</table>

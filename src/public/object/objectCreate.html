@@ -1,3 +1,4 @@
+<a href="/crud/object/search">Поиск</a>
 <b ng-hide="isLoggedIn">Только авторизованные пользователи могут добавлять новые данные!</b>
 <div ng-show="isLoggedIn">
     <form name="CRUDForm" novalidate ng-submit="CRUDForm.$valid && sendObject()">
@@ -10,9 +11,7 @@
         </select><br>
         <label ng-show="CRUDForm.type.$valid" for="room">Комната: </label>
         <select ng-show="CRUDForm.type.$valid" id="room" name="room" ng-model="data.room_fk" required>
-            <option ng-repeat="room in rooms"
-                    title="{{room.id}}"
-                    value="{{room.id}}">
+            <option ng-repeat="room in rooms" value="{{room.id}}">
                 {{room.assignment}}
             </option>
         </select><br>
