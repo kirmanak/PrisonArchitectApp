@@ -6,6 +6,7 @@
             $log.error(error);
         };
 
+        $scope.maxDate = (new Date()).toISOString();
         $scope.data = {};
         $scope.staff = [];
         $scope.prisoners = [];

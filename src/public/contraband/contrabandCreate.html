@@ -22,7 +22,7 @@
             </option>
         </select><br>
         <label ng-show="CRUDForm.staff.$valid" for="date">Дата обнаружения: </label>
-        <input ng-show="CRUDForm.staff.$valid"  name="date" id="date" type="date" ng-model="data.discovered_on" max="{{Date.now()}}" required><br>
+        <input ng-show="CRUDForm.staff.$valid"  name="date" id="date" type="date" ng-model="data.discovered_on" max="{{maxDate}}" required><br>
         <input ng-show="CRUDForm.$valid" type="submit" value="Добавить">
     </form>
     {{status}}

@@ -102,7 +102,7 @@ module.exports = (router, models) => {
                 return;
             }
 
-            models.object.findAll({
+            models.contraband.findAll({
                 where: {
                     owner_fk: req.body.owner_fk
                 }, include: [

@@ -1,0 +1,52 @@
+<a href="/crud/contraband/create">Добавление объектов</a>
+<form name="searchForm" novalidate ng-submit="searchForm.$valid && searchContraband()">
+    <label  for="owner">Владелец: </label>
+    <select id="owner" name="owner" ng-model="data.owner_fk" required>
+        <option ng-repeat="prisoner in prisoners" value="{{prisoner.id}}">
+            {{prisoner.fullname}}
+        </option>
+    </select><br>
+    <input type="submit" value="Поиск" ng-show="searchForm.$valid">
+</form>
+{{status}}
+<table ng-hide="results.length === 0">
+    <thead>
+    <tr>
+        <td>Номер</td>
+        <td>Владелец</td>
+        <td>Обнаружил</td>
+        <td>Дата обнаружения</td>
+        <td>Вещь</td>
+        <td ng-show="isLoggedIn">Обновить</td>
+        <td ng-show="isLoggedIn">Удалить</td>
+    </tr>
+    </thead>
+    <tbody ng-hide="isLoggedIn">
+    <tr ng-repeat="contraband in results">
+        <td>{{contraband.id}}</td>
+        <td>{{contraband.prisoner.fullname}}</td>
+        <td>{{contraband.staff.fullname}}</td>
+        <td>{{contraband.discovered_on | date}}</td>
+        <td>{{contraband.object.thing_type.name}}</td>
+    </tr>
+    </tbody>
+    <tbody ng-show="isLoggedIn">
+    <tr ng-repeat="contraband in results">
+        <form name="updateForm" novalidate>
+            <td>{{contraband.id}}</td>
+            <td>
+                <select required ng-model="contraband.owner_fk">
+                    <option ng-repeat="prisoner in prisoners" value="{{prisoner.id}}">
+                        {{prisoner.fullname}}
+                    </option>
+                </select>
+            </td>
+            <td>{{contraband.staff.fullname}}</td>
+            <td>{{contraband.discovered_on | date}}</td>
+            <td>{{contraband.object.thing_type.name}}</td>
+            <td><input type="submit" ng-click="updateForm.$valid && update(contraband)" value="Обновить"></td>
+            <td><input type="submit" ng-click="delete(contraband)" value="Удалить"></td>
+        </form>
+    </tr>
+    </tbody>
+</table>
