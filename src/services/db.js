@@ -11,7 +11,7 @@ module.exports = (config) => {
         define: { timestamps: false},
         pool: {
             max: 20,
-            min: 0,
+            min: 0
         },
         operatorsAliases: false
     });

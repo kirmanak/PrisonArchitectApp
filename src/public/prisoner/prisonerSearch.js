@@ -39,12 +39,14 @@
         };
 
         $scope.searchPrisoners = function () {
+            $scope.status = 'Выполняю поиск...';
             $http.post('/prisoner/search', {
                 fullname:
                     $scope.data.surname + ' ' +
                     $scope.data.name + ' ' +
                     $scope.data.patronymic
             }).then(function (res) {
+                $scope.status = 'Поиск завершён!';
                 $scope.results = res.data;
                 $scope.results.forEach(function (prisoner) {
                     prisoner.arrivement = new Date(prisoner.arrivement);
@@ -64,6 +66,7 @@
         };
 
         $scope.delete = function (prisoner) {
+            $scope.status = 'Отправляю данные...';
             $http.post('/prisoner', {id: prisoner.id}).then(function () {
                 $scope.searchPrisoners();
                 $scope.status = 'Данные о заключённом удалены';
@@ -71,6 +74,7 @@
         };
 
         $scope.update = function (prisoner) {
+            $scope.status = 'Отправляю данные...';
             $http.patch('/prisoner', {
                 id: prisoner.id,
                 arrivement: prisoner.arrivement,
@@ -80,7 +84,7 @@
                 programs: prisoner.programs,
                 reputations: prisoner.reputations
             }).then(function(res) {
-                $log.log(res);
+                $scope.searchPrisoners();
                 $scope.status = 'Данные успешно обновлены!';
             }, errorLog);
         }
