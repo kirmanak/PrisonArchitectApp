@@ -35,12 +35,28 @@
                 }
 			});
 		};
-        $http.get('/staff/offices').then(function (res) {
-            $scope.offices = res.data;
-        }, serverError);
+        $scope.loadOffices = function() {
+            return new Promise(function (resolve, reject) {
+                $http.get('/staff/offices').then(function (res) {
+                    $scope.offices = res.data;
+                    resolve();
+                }, function(error) {
+                    serverError(error);
+                    reject();
+                });
+            });
+        };
 
-	    $http.get('/staff/appointments').then(function (res) {
-	        $scope.appointments = res.data;
-        }, serverError);
+	    $scope.loadAppointments = function() {
+	        return new Promise(function (resolve, reject) {
+                $http.get('/staff/appointments').then(function (res) {
+                    $scope.appointments = res.data;
+                    resolve();
+                }, function(error) {
+                    serverError(error);
+                    reject();
+                });
+            });
+        };
 	});
 })();

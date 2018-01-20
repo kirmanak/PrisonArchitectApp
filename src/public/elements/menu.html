@@ -1,29 +1,14 @@
-<table>
-    <tr>
-        <td><a href="/">Статистика</a></td>
-    </tr>
-    <tr>
-        <td><a href="/crud/prisoner/search">Заключённый</a></td>
-    </tr>
-    <tr>
-        <td><a href="/crud/staff/search">Персонал</a></td>
-    </tr>
-    <tr>
-        <td><a href="/crud/object/search">Объект</a></td>
-    </tr>
-    <tr>
-        <td><a href="/crud/room/search">Помещение</a></td>
-    </tr>
-    <tr>
-        <td><a href="/crud/contraband/search">Контрабанда</a></td>
-    </tr>
-    <tr ng-hide="isLoggedIn">
-        <td><a href="/login">Войти</a></td>
-    </tr>
-    <tr ng-hide="isLoggedIn">
-        <td><a href="/login">Регистрация</a></td>
-    </tr>
-    <tr ng-show="isLoggedIn">
-        <td><a href ng-click="menu.logout()">Выйти</a></td>
-    </tr>
-</table>
+<div ng-cloak>
+    <md-content class="md-padding">
+        <md-nav-bar md-selected-nav-item="currentPage">
+            <md-nav-item md-nav-href="/" name="tables">Статистика</md-nav-item>
+            <md-nav-item md-nav-href="/crud/prisoner/search" name="prisoner">Заключённый</md-nav-item>
+            <md-nav-item md-nav-href="/crud/staff/search" name="staff">Персонал</md-nav-item>
+            <md-nav-item md-nav-href="/crud/contraband/search" name="contraband">Контрабанда</md-nav-item>
+            <md-nav-item md-nav-href="/crud/room/search" name="room">Помещение</md-nav-item>
+            <md-nav-item md-nav-href="/crud/object/search" name="object">Объект</md-nav-item>
+            <md-nav-item md-nav-href="/login" name="login" ng-hide="isLoggedIn">Авторизация</md-nav-item>
+            <md-nav-item md-nav-click="menu.logout()" name="logout" ng-show="isLoggedIn">Выход</md-nav-item>
+        </md-nav-bar>
+    </md-content>
+</div>

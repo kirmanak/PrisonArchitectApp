@@ -32,7 +32,7 @@
             <div>
                 <md-input-container>
                     <label>Должность</label>
-                    <md-select title="Должность" ng-model="data.appointment_fk" required name="appointment">
+                    <md-select title="Должность" ng-model="data.appointment_fk" required name="appointment" md-on-open="loadAppointments()">
                         <md-option ng-repeat="appointment in appointments" ng-value="appointment.id">
                             {{appointment.name}}
                         </md-option>
@@ -43,7 +43,7 @@
                 </md-input-container>
                 <md-input-container>
                     <label>Рабочее место</label>
-                    <md-select title="Рабочее место" ng-model="data.office_fk" required name="office">
+                    <md-select title="Рабочее место" ng-model="data.office_fk" required name="office" md-on-open="loadOffices()">
                         <md-option ng-repeat="office in offices" ng-value="office.id">
                             {{office.assignment}}
                         </md-option>
