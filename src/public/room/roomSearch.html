@@ -47,9 +47,9 @@
                 <td><input type="number" min="1" max="1000" required ng-model="room.area"></td>
                 <td>
                     <label for="{{room.id + 'ST'}}">Да</label>
-                    <input id="{{room.id + 'ST'}}" type="radio" value="true" name="{{room.id + 'street'}}" required ng-model="room.street">
-                    <label for="{{room.id + 'ST'}}">Нет</label>
-                    <input id="{{room.id + 'SF'}}" type="radio" value="false" name="{{room.id + 'street'}}" required ng-model="room.street">
+                    <input id="{{room.id + 'ST'}}" type="radio" ng-value="true" name="{{room.id + 'street'}}" required ng-model="room.street">
+                    <label for="{{room.id + 'SF'}}">Нет</label>
+                    <input id="{{room.id + 'SF'}}" type="radio" ng-value="false" name="{{room.id + 'street'}}" required ng-model="room.street">
                 </td>
                 <td><input type="submit" ng-click="updateForm.$valid && update(room)" value="Обновить"></td>
                 <td><input type="submit" ng-click="delete(room)" value="Удалить"></td>
