@@ -70,7 +70,6 @@
                 $scope.query = {};
                 $scope.searchForm.$setPristine();
                 $scope.searchForm.$setUntouched();
-                showSuccess('Найдено ' + res.data.length + ' записей');
                 const promises = [];
                 promises.push($scope.loadAppointments());
                 promises.push($scope.loadOffices());
@@ -87,14 +86,13 @@
                 office_fk: staff.office_fk,
             }).then(function (res) {
                 showSuccess('Данные успешно обновлены');
-                $scope.searchStaff();
             }, serverError);
         };
 
-        $scope.delete = function (staff) {
+        $scope.delete = function (staff, index) {
             $http.post('/staff', { id: staff.id }).then(function (res) {
                 showSuccess('Запись успешно удалена');
-                $scope.searchStaff();
+                $scope.results.splice(index, 1);
             }, serverError);
         };
         $scope.loadOffices = function () {

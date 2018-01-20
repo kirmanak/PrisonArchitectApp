@@ -45,46 +45,38 @@
                             </thead>
                             <tbody md-body>
                                 <tr md-row ng-repeat="staff in results">
-                                    <form name="updateForm" ng-submit="updateForm.$valid && update(staff)">
-                                        <td md-cell>{{staff.id}}</td>
-                                        <td md-cell>{{staff.fullname}}</td>
-                                        <td md-cell>
-                                            <md-input-container>
-                                                <md-select title="Должность" ng-model="staff.appointment_fk" required
-                                                           name="appointment" md-on-open="loadAppointments()" ng-disabled="!isLoggedIn">
-                                                    <md-option ng-repeat="appointment in appointments" ng-value="appointment.id">
-                                                        {{appointment.name}}
-                                                    </md-option>
-                                                </md-select>
-                                                <div ng-messages="updateForm.appointment.$error">
-                                                    <div ng-message="required">Выберите должность</div>
-                                                </div>
-                                            </md-input-container>
-                                        </td>
-                                        <td md-cell>
-                                            <md-input-container>
-                                                <md-select title="Рабочее место" ng-model="staff.office_fk" required
-                                                           name="office" md-on-open="loadOffices()" ng-disabled="!isLoggedIn">
-                                                    <md-option ng-repeat="office in offices" ng-value="office.id">
-                                                        {{office.assignment}}
-                                                    </md-option>
-                                                </md-select>
-                                                <div ng-messages="updateForm.office.$error">
-                                                    <div ng-message="required">Выберите рабочее место</div>
-                                                </div>
-                                            </md-input-container>
-                                        </td>
-                                        <td md-cell ng-show="isLoggedIn">
-                                            <md-input-container>
-                                                <md-button type="submit">Обновить</md-button>
-                                            </md-input-container>
-                                        </td>
-                                        <td md-cell ng-show="isLoggedIn">
-                                            <md-input-container>
-                                                <md-button type="submit">Удалить</md-button>
-                                            </md-input-container>
-                                        </td>
-                                    </form>
+                                    <td md-cell>{{staff.id}}</td>
+                                    <td md-cell>{{staff.fullname}}</td>
+                                    <td md-cell>
+                                        <md-input-container>
+                                            <md-select title="Должность" ng-model="staff.appointment_fk" required
+                                                       name="appointment" ng-disabled="!isLoggedIn">
+                                                <md-option ng-repeat="appointment in appointments" ng-value="appointment.id">
+                                                    {{appointment.name}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </td>
+                                    <td md-cell>
+                                        <md-input-container>
+                                            <md-select title="Рабочее место" ng-model="staff.office_fk" required
+                                                       name="office" ng-disabled="!isLoggedIn">
+                                                <md-option ng-repeat="office in offices" ng-value="office.id">
+                                                    {{office.assignment}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </td>
+                                    <td md-cell ng-show="isLoggedIn">
+                                        <md-input-container>
+                                            <md-button ng-click="update(staff)">Обновить</md-button>
+                                        </md-input-container>
+                                    </td>
+                                    <td md-cell ng-show="isLoggedIn">
+                                        <md-input-container>
+                                            <md-button ng-click="delete(staff, $index)">Удалить</md-button>
+                                        </md-input-container>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
