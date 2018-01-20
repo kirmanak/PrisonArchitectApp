@@ -1,0 +1,158 @@
+<div ng-cloak>
+    <md-content>
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="Поиск">
+                <md-content class="md-padding">
+                    <form name="searchForm" novalidate ng-submit="searchForm.$valid && searchStaff()">
+                        <md-content layout-gt-sm="row" layout-padding>
+                            <div>
+                                <md-input-container>
+                                    <label>Фамилия</label>
+                                    <input title="Фамилия" ng-model="query.surname" required name="surname">
+                                    <div ng-messages="searchForm.surname.$error">
+                                        <div ng-message="required">Введите фамилию</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container>
+                                    <label>Имя</label>
+                                    <input title="Имя" ng-model="query.name" required name="name">
+                                    <div ng-messages="searchForm.name.$error">
+                                        <div ng-message="required">Введите имя</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container>
+                                    <label>Отчество</label>
+                                    <input title="Отчество" ng-model="query.patronymic" required name="patronymic">
+                                    <div ng-messages="searchForm.patronymic.$error">
+                                        <div ng-message="required">Введите отчество</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <md-button type="submit">Поиск</md-button>
+                        </md-content>
+                    </form>
+                    <md-table-container>
+                        <table md-table ng-hide="results.length === 0">
+                            <thead md-head>
+                                <tr md-row>
+                                    <th md-column>Номер</th>
+                                    <th md-column>ФИО</th>
+                                    <th md-column>Должность</th>
+                                    <th md-column>Рабочее место</th>
+                                    <th md-column ng-show="isLoggedIn">Обновить</th>
+                                    <th md-column ng-show="isLoggedIn">Удалить</th>
+                                </tr>
+                            </thead>
+                            <tbody md-body>
+                                <tr md-row ng-repeat="staff in results">
+                                    <form name="updateForm" ng-submit="updateForm.$valid && update(staff)">
+                                        <td md-cell>{{staff.id}}</td>
+                                        <td md-cell>{{staff.fullname}}</td>
+                                        <td md-cell>
+                                            <md-input-container>
+                                                <md-select title="Должность" ng-model="staff.appointment_fk" required
+                                                           name="appointment" md-on-open="loadAppointments()" ng-disabled="!isLoggedIn">
+                                                    <md-option ng-repeat="appointment in appointments" ng-value="appointment.id">
+                                                        {{appointment.name}}
+                                                    </md-option>
+                                                </md-select>
+                                                <div ng-messages="updateForm.appointment.$error">
+                                                    <div ng-message="required">Выберите должность</div>
+                                                </div>
+                                            </md-input-container>
+                                        </td>
+                                        <td md-cell>
+                                            <md-input-container>
+                                                <md-select title="Рабочее место" ng-model="staff.office_fk" required
+                                                           name="office" md-on-open="loadOffices()" ng-disabled="!isLoggedIn">
+                                                    <md-option ng-repeat="office in offices" ng-value="office.id">
+                                                        {{office.assignment}}
+                                                    </md-option>
+                                                </md-select>
+                                                <div ng-messages="updateForm.office.$error">
+                                                    <div ng-message="required">Выберите рабочее место</div>
+                                                </div>
+                                            </md-input-container>
+                                        </td>
+                                        <td md-cell ng-show="isLoggedIn">
+                                            <md-input-container>
+                                                <md-button type="submit">Обновить</md-button>
+                                            </md-input-container>
+                                        </td>
+                                        <td md-cell ng-show="isLoggedIn">
+                                            <md-input-container>
+                                                <md-button type="submit">Удалить</md-button>
+                                            </md-input-container>
+                                        </td>
+                                    </form>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </md-table-container>
+                </md-content>
+            </md-tab>
+            <md-tab label="Создание" ng-disabled="!isLoggedIn">
+                <md-content class="md-padding">
+                    <div layout="column" ng-cloak class="md-inline-form" ng-show="isLoggedIn">
+                        <form name="createForm" novalidate ng-submit="createForm.$valid && sendStaff()">
+                            <md-content layout-gt-sm="row" layout-padding>
+                                <div>
+                                    <md-input-container>
+                                        <label>Фамилия</label>
+                                        <input title="Фамилия" ng-model="data.surname" required name="surname">
+                                        <div ng-messages="createForm.surname.$error">
+                                            <div ng-message="required">Введите фамилию</div>
+                                        </div>
+                                    </md-input-container>
+                                    <md-input-container>
+                                        <label>Имя</label>
+                                        <input title="Имя" ng-model="data.name" required name="name">
+                                        <div ng-messages="createForm.name.$error">
+                                            <div ng-message="required">Введите имя</div>
+                                        </div>
+                                    </md-input-container>
+                                    <md-input-container>
+                                        <label>Отчество</label>
+                                        <input title="Отчество" ng-model="data.patronymic" required name="patronymic">
+                                        <div ng-messages="createForm.patronymic.$error">
+                                            <div ng-message="required">Введите отчество</div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                            </md-content>
+                            <md-content layout-gt-sm="row" layout-padding>
+                                <div>
+                                    <md-input-container>
+                                        <label>Должность</label>
+                                        <md-select title="Должность" ng-model="data.appointment_fk" required name="appointment" md-on-open="loadAppointments()">
+                                            <md-option ng-repeat="appointment in appointments" ng-value="appointment.id">
+                                                {{appointment.name}}
+                                            </md-option>
+                                        </md-select>
+                                        <div ng-messages="createForm.appointment.$error">
+                                            <div ng-message="required">Выберите должность</div>
+                                        </div>
+                                    </md-input-container>
+                                    <md-input-container>
+                                        <label>Рабочее место</label>
+                                        <md-select title="Рабочее место" ng-model="data.office_fk" required name="office" md-on-open="loadOffices()">
+                                            <md-option ng-repeat="office in offices" ng-value="office.id">
+                                                {{office.assignment}}
+                                            </md-option>
+                                        </md-select>
+                                        <div ng-messages="createForm.office.$error">
+                                            <div ng-message="required">Выберите рабочее место</div>
+                                        </div>
+                                    </md-input-container>
+                                    <md-input-container>
+                                        <md-button type="submit">Добавить</md-button>
+                                    </md-input-container>
+                                </div>
+                            </md-content>
+                        </form>
+                    </div>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-content>
+</div>

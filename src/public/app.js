@@ -1,6 +1,6 @@
 (function() {
     const app = angular.module('myApp', ['ngRoute', 'tables', 'prisoner', 'prisonerSearch',
-        'login', 'staff', 'staffSearch', 'contraband', 'contrabandSearch', 'objectSearch',
+        'login', 'staff', 'contraband', 'contrabandSearch', 'objectSearch',
         'room', 'roomSearch', 'menu', 'object', 'queue', 'ngMaterial']);
 
     app.controller('AppController', function() {});
@@ -21,16 +21,6 @@
                     templateUrl: 'prisoner/prisonerSearch.html',
                     controller: 'prisonerSearchController',
                     controllerAs: 'search'
-                })
-                .when('/crud/staff/create', {
-                    templateUrl: 'staff/staffCreate.html',
-                    controller: 'staffController',
-                    controllerAs: 'staff'
-                })
-                .when('/crud/staff/search', {
-                    templateUrl: 'staff/staffSearch.html',
-                    controller: 'staffSearchCtrl',
-                    controllerAs: 'staff'
                 })
                 .when('/crud/object/create', {
                     templateUrl: 'object/objectCreate.html',
@@ -61,6 +51,11 @@
                     templateUrl: 'contraband/contrabandSearch.html',
                     controller: 'contrabandSearchCtrl',
                     controllerAs: 'contraband'
+                })
+                .when('/crud/staff', {
+                    templateUrl: 'staff/staff.html',
+                    controller: 'staffCtrl',
+                    controllerAs: 'staff'
                 })
                 .when('/', {
                     templateUrl: 'tables/tables.html',
