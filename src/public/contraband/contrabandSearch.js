@@ -40,11 +40,11 @@
         }, serverError);
 
         $http.get('/contraband/staff').then(function (res) {
-            $scope.types = res.data;
+            $scope.staff = res.data;
         }, serverError);
 
         $http.get('/contraband/objects').then(function (res) {
-            $scope.types = res.data;
+            $scope.objects = res.data;
         }, serverError);
 
         $scope.update = function (contraband) {

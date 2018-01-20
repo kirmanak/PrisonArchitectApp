@@ -63,10 +63,10 @@ module.exports = (sendToMQ, router, models) => {
                 office_fk: req.body.office_fk
             }, {
                 where: { id: req.body.id }
-            }).then((results) => {
+            }).then((result) => {
                 res.sendStatus(200);
                 sendToMQ(new Buffer('Пользователем ' + req.user.username +
-                    ' изменён сотрудник с id ' + result.dataValues.id));
+                    ' изменён сотрудник с id ' + req.body.id));
             }, (error) => {
                 console.error(error);
                 res.sendStatus(500);
@@ -78,10 +78,10 @@ module.exports = (sendToMQ, router, models) => {
                 return;
             }
 
-            models.staff.destroy({ where: { id: req.body.id }}).then((results) => {
+            models.staff.destroy({ where: { id: req.body.id }}).then((result) => {
                 res.sendStatus(200);
                 sendToMQ(new Buffer('Пользователем ' + req.user.username +
-                    ' удалён сотрудник с id ' + result.dataValues.id));
+                    ' удалён сотрудник с id ' + req.body.id));
             }, (error) => {
                 console.error(error);
                 res.sendStatus(500);
