@@ -1,9 +1,22 @@
 (function () {
-    const contraband = angular.module('contrabandSearch', []);
+    const contraband = angular.module('contrabandSearch', ['ui-notification']);
 
-    contraband.controller('contrabandSearchCtrl', function($http, $log, $scope) {
-        const errorLog = function (error) {
+    contraband.controller('contrabandSearchCtrl', function($http, $log, $scope, Notification) {
+        const showSuccess = function (message) {
+            Notification.success({ message: message, delay: 3000});
+        };
+
+        const showInfo = function (message) {
+            Notification.info({ message: message, delay: 1000});
+        };
+
+        const clientError = function (message) {
+            Notification.error({ message: message, delay: 1000});
+        };
+
+        const serverError = function (error) {
             $log.error(error);
+            Notification.error({ message: 'Что-то пошло не так...', delay: 5000});
         };
 
         $scope.data = {};
@@ -11,49 +24,50 @@
         $scope.prisoners = [];
         $scope.staff = [];
         $scope.objects = [];
-        $scope.status = '';
 
         $scope.searchContraband = function() {
-            $scope.status = 'Общаемся с сервером...';
+            showInfo('Общаемся с сервером...');
             $http.post('/contraband/search', {
                 owner_fk: $scope.data.owner_fk
             }).then(function (res) {
-                $scope.status = 'Результаты поиска перед Вами';
+                showSuccess('Найдено ' + res.data.length + ' записей');
                 $scope.results = res.data;
-            }, errorLog);
+            }, serverError);
         };
 
         $http.get('/contraband/prisoners').then(function (res) {
             $scope.prisoners = res.data;
-        }, errorLog);
+        }, serverError);
 
         $http.get('/contraband/staff').then(function (res) {
             $scope.types = res.data;
-        }, errorLog);
+        }, serverError);
 
         $http.get('/contraband/objects').then(function (res) {
             $scope.types = res.data;
-        }, errorLog);
+        }, serverError);
 
         $scope.update = function (contraband) {
             if (!contraband.owner_fk) {
-                $scope.status = 'Укажите владельца!';
+                clientError('Укажите владельца!');
                 return;
             }
+            showInfo('Общаемся с сервером...');
             $http.patch('/contraband', {
                 id: contraband.id,
                 owner_fk: contraband.owner_fk
-            }).then(function (res) {
-                $scope.status = 'Данные успешно обновлены';
+            }).then(function () {
+                showSuccess('Данные успешно обновлены');
                 $scope.searchContraband();
-            }, errorLog);
+            }, serverError);
         };
 
         $scope.delete = function (contraband) {
-            $http.post('/contraband', { id: contraband.id }).then(function (res) {
-                $scope.status = 'Запись успешно удалена';
+            showInfo('Общаемся с сервером...');
+            $http.post('/contraband', { id: contraband.id }).then(function () {
+                Notification.success({ message: 'Запись успешно удалена', delay: 3000});
                 $scope.searchContraband();
-            }, errorLog);
+            }, serverError);
         };
     });
 })();

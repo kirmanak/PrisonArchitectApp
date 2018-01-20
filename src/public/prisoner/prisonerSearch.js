@@ -1,24 +1,28 @@
 (function () {
-    const search = angular.module('prisonerSearch', []);
+    const search = angular.module('prisonerSearch', ['ui-notification']);
 
-    search.controller('prisonerSearchController', function ($log, $http, $scope) {
+    search.controller('prisonerSearchController', function ($log, $http, $scope, Notification) {
+        const showSuccess = function (message) { Notification.success({ message: message, delay: 3000}); };
+        const showInfo = function (message) { Notification.info({ message: message, delay: 1000}); };
+        const clientError = function (message) { Notification.error({ message: message, delay: 1000}); };
+        const serverError = function (error) {
+            $log.error(error);
+            Notification.error({ message: 'Что-то пошло не так...', delay: 5000});
+        };
+
         // variables
         $scope.data = {};
         $scope.results = [];
         $scope.reputations = [];
         $scope.regimes = [];
-        $scope.status = '';
-
-        // functions
-        const errorLog = function (error) { $log.error(error); };
 
         $http.get('/prisoner/regimes').then(function (res) {
             $scope.regimes = res.data;
-        }, errorLog);
+        }, serverError);
 
         $http.get('/prisoner/reputations').then(function (res) {
             $scope.reputations = res.data;
-        }, errorLog);
+        }, serverError);
 
         // calls when regime changes
         $scope.regimeChanged = function (prisoner) {
@@ -29,24 +33,24 @@
         $scope.loadPrograms = function (prisoner) {
             $http.post('/prisoner/programs', {id: prisoner.regime.id}).then(function (res) {
                 prisoner.availablePrograms = res.data;
-            }, errorLog);
+            }, serverError);
         };
 
         $scope.loadWards = function (prisoner) {
             $http.post('/prisoner/wards', {id: prisoner.regime.id}).then(function (res) {
                 prisoner.availableWards = res.data;
-            }, errorLog);
+            }, serverError);
         };
 
         $scope.searchPrisoners = function () {
-            $scope.status = 'Выполняю поиск...';
+            showInfo('Выполняю поиск...');
             $http.post('/prisoner/search', {
                 fullname:
                     $scope.data.surname + ' ' +
                     $scope.data.name + ' ' +
                     $scope.data.patronymic
             }).then(function (res) {
-                $scope.status = 'Поиск завершён!';
+                showSuccess('Найдено ' + res.data.length + ' записей');
                 $scope.results = res.data;
                 $scope.results.forEach(function (prisoner) {
                     prisoner.arrivement = new Date(prisoner.arrivement);
@@ -54,19 +58,19 @@
                     $scope.loadPrograms(prisoner);
                     $scope.loadWards(prisoner);
                 });
-            }, errorLog);
+            }, serverError);
         };
 
         $scope.delete = function (prisoner) {
-            $scope.status = 'Отправляю данные...';
+            showInfo('Отправляю данные...');
             $http.post('/prisoner', {id: prisoner.id}).then(function () {
-                $scope.status = 'Данные о заключённом удалены';
+                showSuccess('Данные о заключённом удалены');
                 $scope.searchPrisoners();
-            }, errorLog);
+            }, serverError);
         };
 
         $scope.update = function (prisoner) {
-            $scope.status = 'Отправляю данные...';
+            showInfo('Отправляю данные...');
             const programs = [], reputations = [];
             prisoner.programs.forEach(function (program) {
                 programs.push(program.id);
@@ -83,9 +87,9 @@
                 programs: programs,
                 reputations: reputations
             }).then(function(res) {
-                $scope.status = 'Данные успешно обновлены!';
+                showSuccess('Данные успешно обновлены!');
                 $scope.searchPrisoners();
-            }, errorLog);
+            }, serverError);
         }
     });
 }) ();

@@ -1,24 +1,22 @@
 (function () {
-    const login = angular.module('login', ['ngRoute']);
+    const login = angular.module('login', ['ngRoute', 'ui-notification']);
 
-    login.controller('loginController', function ($http, $scope, $location, $rootScope, $window) {
+    login.controller('loginController', function ($http, $scope, $location, $rootScope, $window, Notification) {
         $scope.vk = function () {
             $window.location.assign('/vkontakte');
         };
         $scope.data = {};
-        $scope.status = '';
         $scope.authorize = function () {
             $http.post('/login', {
                 username: $scope.data.username,
                 password: $scope.data.password
             }).then(
                 function () {
-                    $scope.status = '';
                     $rootScope.$broadcast('login');
                     $location.url('/');
                 },
                 function () {
-                    $scope.status = 'Неправильный логин или пароль!';
+                    Notification.error({message: 'Неправильный логин или пароль!', delay: 1000})
                 }
             );
         };
@@ -27,12 +25,10 @@
                 username: $scope.data.username,
                 password: $scope.data.password
             }).then(function () {
-                    $scope.status = '';
-                    $scope.login();
-                }, function (error) {
-                    $scope.status = 'Логин занят!';
-                }
-            );
+                $scope.login();
+            }, function () {
+                Notification.error({message: 'Логин занят!', delay: 1000});
+            });
         };
     });
-})();
+}) ();

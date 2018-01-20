@@ -1,5 +1,5 @@
 (function() {
-    const queue = angular.module('queue', []);
+    const queue = angular.module('queue', ['ui-notification']);
 
     queue.directive('queue', function() {
         return {
@@ -10,14 +10,12 @@
         };
     });
 
-    queue.controller('queueController', function ($scope) {
-        $scope.message = '';
+    queue.controller('queueController', function ($scope, Notification) {
         // noinspection ES6ModulesDependencies
         const client = Stomp.client('ws://localhost:15674/ws');
         client.connect('guest', 'guest', function() {
             client.subscribe('/exchange/staffEx', function (message) {
-                $scope.message = message.body;
-                $scope.$apply();
+                Notification.warning({ message: message.body, delay: 3000});
             });
         });
     });

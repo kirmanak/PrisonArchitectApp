@@ -65,6 +65,8 @@ module.exports = (sendToMQ, router, models) => {
                 where: { id: req.body.id }
             }).then((results) => {
                 res.sendStatus(200);
+                sendToMQ(new Buffer('Пользователем ' + req.user.username +
+                    ' изменён сотрудник с id ' + result.dataValues.id));
             }, (error) => {
                 console.error(error);
                 res.sendStatus(500);
@@ -78,6 +80,8 @@ module.exports = (sendToMQ, router, models) => {
 
             models.staff.destroy({ where: { id: req.body.id }}).then((results) => {
                 res.sendStatus(200);
+                sendToMQ(new Buffer('Пользователем ' + req.user.username +
+                    ' удалён сотрудник с id ' + result.dataValues.id));
             }, (error) => {
                 console.error(error);
                 res.sendStatus(500);

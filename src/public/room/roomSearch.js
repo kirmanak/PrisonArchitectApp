@@ -1,34 +1,37 @@
 (function () {
-    const search = angular.module('roomSearch', []);
+    const search = angular.module('roomSearch', ['ui-notification']);
 
-    search.controller('roomSearchCtrl', function ($http, $log, $scope) {
+    search.controller('roomSearchCtrl', function ($http, $log, $scope, Notification) {
+        const showSuccess = function (message) { Notification.success({ message: message, delay: 3000}); };
+        const showInfo = function (message) { Notification.info({ message: message, delay: 1000}); };
+        const clientError = function (message) { Notification.error({ message: message, delay: 1000}); };
+        const serverError = function (error) {
+            $log.error(error);
+            Notification.error({ message: 'Что-то пошло не так...', delay: 5000});
+        };
+
         $scope.query = {};
         $scope.accesses = [];
         $scope.results = [];
-        $scope.status = '';
-
-        const errorLog = function (error) {
-            $log.error(error);
-            $scope.status = 'Что-то пошло не так...';
-        };
 
         $http.get('/room/accesses').then(function (res) {
             $scope.accesses = res.data;
-        }, errorLog);
+        }, serverError);
 
         $scope.searchRoom = function () {
-            $scope.status = 'Выполняю поиск...';
+            showInfo('Выполняю поиск...');
             $http.post('/room/search', {
                 assignment: $scope.query.assignment,
                 access_fk: $scope.query.access_fk
             }).then(function (res) {
                 $scope.results = res.data;
-                $scope.status = 'Результаты поиска перед Вами';
+                showSuccess('Найдено ' + res.data.length + ' записей');
                 $log.log($scope.results);
-            }, errorLog);
+            }, serverError);
         };
 
         $scope.update = function (room) {
+            showInfo('Общаемся с сервером...');
             $http.patch('/room', {
                 id: room.id,
                 assignment: room.assignment,
@@ -36,18 +39,19 @@
                 area: room.area,
                 street: room.street
             }).then(function (res) {
-                $scope.status = 'Данные успешно обновлены';
+                showSuccess('Данные успешно обновлены');
                 $scope.searchRoom();
-            }, errorLog);
+            }, serverError);
         };
 
         $scope.delete = function (room) {
+            showInfo('Общаемся с сервером...');
             $http.post('/room', { id: room.id }).then(function (res) {
-                $scope.status = 'Запись успешно удалена';
+                showSuccess('Запись успешно удалена');
                 $scope.searchRoom();
             }, function (error) {
-                errorLog(error);
-                $scope.status = 'Кажется, в этом помещении происходит что-то важное. Возможно, проходит программа или живут люди.'
+                serverError(error);
+                showInfo('Возможно, от этого помещения зависит что-либо (живут заключённые, например).')
             });
         }
     });

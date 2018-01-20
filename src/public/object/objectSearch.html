@@ -1,6 +1,6 @@
 <a href="/crud/object/create">Добавление объектов</a>
 <form name="searchForm" novalidate ng-submit="searchForm.$valid && searchObjects()">
-    <label  for="type">Тип вещи: </label>
+    <label for="type">Тип вещи: </label>
     <select id="type" name="type" ng-model="data.thing_type_fk" required>
         <option ng-repeat="type in types" ng-value="type.id">
             {{type.name}}
@@ -14,7 +14,6 @@
     </select><br>
     <input type="submit" value="Поиск" ng-show="searchForm.$valid">
 </form>
-{{status}}
 <table ng-hide="results.length === 0">
     <thead>
     <tr>

@@ -1,7 +1,15 @@
 (function () {
-    const prisoner = angular.module('prisoner', []);
+    const prisoner = angular.module('prisoner', ['ui-notification']);
 
-    prisoner.controller('prisonerController', function ($http, $log, $location, $scope) {
+    prisoner.controller('prisonerController', function ($http, $log, $location, $scope, Notification) {
+        const showSuccess = function (message) { Notification.success({ message: message, delay: 3000}); };
+        const showInfo = function (message) { Notification.info({ message: message, delay: 1000}); };
+        const clientError = function (message) { Notification.error({ message: message, delay: 1000}); };
+        const serverError = function (error) {
+            $log.error(error);
+            Notification.error({ message: 'Что-то пошло не так...', delay: 5000});
+        };
+
         // variables
         $scope.maxArrivement = new Date();
         $scope.minFreedom = new Date();
@@ -10,13 +18,9 @@
         $scope.programs = [];
         $scope.wards = [];
         $scope.regimes = [];
-        $scope.status = '';
-
-        // functions
-        const errorLog = function (error) { $log.error(error); };
 
         $scope.sendPrisoner = function () {
-            $scope.status = 'Общаемся с сервером...';
+            showInfo('Общаемся с сервером...');
             $http.put('/prisoner', {
                 fullname:
                     $scope.data.surname + ' ' +
@@ -28,26 +32,22 @@
                 regime_fk: $scope.data.regime_fk,
                 programs: $scope.data.programs,
                 reputations: $scope.data.reputations
-            }).then(
-                function () {
-                    $scope.status = 'Успешно добавлен новый заключённый.';
+            }).then(function () {
+                    showSuccess('Успешно добавлен новый заключённый.');
                     $scope.data = {};
                 },
                 function (error) {
-                    if (status.status === 403) {
-                        $scope.status = 'Вы не авторизованы!';
+                    if (error.status === 403) {
+                        clientError('Вы не авторизованы!');
                         $location.url('/login');
-                    } else {
-                        $scope.status = 'Что-то пошло не так...';
-                        errorLog(error);
-                    }
+                    } else { serverError(error); }
                 }
             );
         };
 
         $http.get('/prisoner/reputations').then(function (res) {
             $scope.reputations = res.data;
-        }, errorLog);
+        }, serverError);
 
         // calls when regime changes
         $scope.regimeChanged = function () {
@@ -58,18 +58,18 @@
         $scope.loadPrograms = function () {
             $http.post('/prisoner/programs', {id: $scope.data.regime_fk}).then(function (res) {
                 $scope.programs = res.data;
-            }, errorLog);
+            }, serverError);
         };
 
         $scope.loadWards = function () {
             $http.post('/prisoner/wards', {id: $scope.data.regime_fk}).then(function (res) {
                 $scope.wards = res.data;
-            }, errorLog);
+            }, serverError);
         };
 
         $http.get('/prisoner/regimes').then(function (res) {
             $scope.regimes = res.data;
-        }, errorLog);
+        }, serverError);
 
         $scope.minFree = function () {
             $scope.minFreedom = $scope.data.arrivement;

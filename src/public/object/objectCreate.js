@@ -1,43 +1,52 @@
 (function () {
-    const object = angular.module('object', []);
+    const object = angular.module('object', ['ui-notification']);
 
-    object.controller('objectController', function($http, $log, $location, $scope) {
+    object.controller('objectController', function($http, $log, $location, $scope, Notification) {
+        const showSuccess = function (message) {
+            Notification.success({ message: message, delay: 3000});
+        };
+
+        const showInfo = function (message) {
+            Notification.info({ message: message, delay: 1000});
+        };
+
+        const clientError = function (message) {
+            Notification.error({ message: message, delay: 1000});
+        };
+
+        const serverError = function (error) {
+            $log.error(error);
+            Notification.error({ message: 'Что-то пошло не так...', delay: 5000});
+        };
+
         $scope.data = {};
         $scope.types = [];
         $scope.rooms = [];
-        $scope.status = '';
 
         $scope.sendObject = function() {
-            $scope.status = 'Общаемся с сервером...';
+            showInfo('Общаемся с сервером');
             $http.put('/object', {
                 thing_type_fk: $scope.data.thing_type_fk,
                 room_fk: $scope.data.room_fk
             }).then(function () {
-                $scope.status = 'Новый объект успешно добавлен';
+                showSuccess('Новый объект успешно добавлен');
                 $scope.data = {};
             }, function (error) {
                 if (error.status = 403) {
-                    $scope.status = 'Вы не авторизованы';
+                    clientError('Вы не авторизованы');
                     $location.url = '/login';
                 } else {
-                    $scope.status = 'Что-то пошло не так...';
-                    $log.error(error);
+                    serverError(error);
                 }
             });
         };
 
         $http.get('/object/rooms').then(function (res) {
             $scope.rooms = res.data;
-        }, function (error) {
-            $scope.status = 'Что-то пошло не так...';
-            $log.error(error);
-        });
+        }, serverError);
 
         $http.get('/object/types').then(function (res) {
             $scope.types = res.data;
-        }, function (error) {
-            $scope.status = 'Что-то пошло не так...';
-            $log.error(error);
-        });
+        }, serverError);
     });
 })();
