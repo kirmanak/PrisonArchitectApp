@@ -1,5 +1,5 @@
 (function () {
-    const staff = angular.module('staff', ['ui-notification']);
+    const staff = angular.module('staff', ['ui-notification', 'ngMaterial', 'ngMessages']);
 
     staff.controller('staffController', function($http, $log, $location, $scope, Notification) {
         const showSuccess = function (message) { Notification.success({ message: message, delay: 3000}); };
@@ -24,6 +24,8 @@
             }).then(function () {
 	            showSuccess('Новый сотрудник успешно добавлен');
 	            $scope.data = {};
+	            $scope.createForm.$setPristine();
+                $scope.createForm.$setUntouched();
 			}, function (error) {
 	            if (error.status = 403) {
 	                clientError('Вы не авторизованы');

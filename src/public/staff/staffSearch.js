@@ -1,5 +1,5 @@
 (function () {
-    const search = angular.module('staffSearch', ['ui-notification']);
+    const search = angular.module('staffSearch', ['ui-notification', 'ngMaterial']);
 
     search.controller('staffSearchCtrl', function ($http, $log, $scope, Notification) {
         const showSuccess = function (message) { Notification.success({ message: message, delay: 3000}); };
