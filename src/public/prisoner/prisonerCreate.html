@@ -21,8 +21,7 @@
     <select ng-show="createForm.freedom.$valid" id="reputations" name="reputations" size="2"
             ng-model="data.reputations" multiple>
         <!--suppress Annotator -->
-        <option ng-repeat="reputation in reputations"
-                value="{{reputation.id}}"
+        <option ng-repeat="reputation in reputations" ng-value="reputation.id"
                 title="{{reputation.effect}}">
             {{reputation.name}}
         </option>
@@ -31,24 +30,21 @@
     <select ng-show="createForm.freedom.$valid" id="regime" name="regime" required
             ng-change="regimeChanged()"
             ng-model="data.regime_fk">
-        <option ng-repeat="regime in regimes"
-            value="{{regime.id}}">
+        <option ng-repeat="regime in regimes" ng-value="regime.id">
             {{regime.name}}
         </option>
     </select><br>
     <label ng-show="createForm.regime.$valid" for="programs">Программы: </label>
     <select ng-show="createForm.regime.$valid" id="programs" name="programs" size="2"
             ng-model="data.programs" multiple>
-        <option ng-repeat="program in programs"
-                value="{{program.id}}">
+        <option ng-repeat="program in programs" ng-value="program.id">
             {{program.name}}
         </option>
     </select><br>
     <label ng-show="createForm.regime.$valid" for="ward">Камера: </label>
     <select ng-show="createForm.regime.$valid" id="ward" name="ward" required
             ng-model="data.ward_fk">
-        <option ng-repeat="ward in wards"
-            value="{{ward.id}}">
+        <option ng-repeat="ward in wards" ng-value="ward.id">
             {{ward.id}}
         </option>
     </select><br>

@@ -1,31 +1,28 @@
 <a href="/crud/staff/search">Поиск</a><br>
 <b ng-hide="isLoggedIn">Только авторизованные пользователи могут добавлять новые данные!</b>
 <div ng-show="isLoggedIn">
-<form name="CRUDForm" novalidate ng-submit="CRUDForm.$valid && sendStaff()">
+<form name="createForm" novalidate ng-submit="createForm.$valid && sendStaff()">
     <label for="surname">Фамилия: </label>
     <input type="text" id="surname" name="surname" ng-model="data.surname" required><br>
-    <label ng-show="CRUDForm.surname.$valid" for="name">Имя: </label>
-    <input ng-show="CRUDForm.surname.$valid" type="text" id="name" name="name"
+    <label ng-show="createForm.surname.$valid" for="name">Имя: </label>
+    <input ng-show="createForm.surname.$valid" type="text" id="name" name="name"
            ng-model="data.name" required><br>
-    <label ng-show="CRUDForm.name.$valid" for="patronymic">Отчество: </label>
-    <input ng-show="CRUDForm.name.$valid" type="text" id="patronymic" name="patronymic"
+    <label ng-show="createForm.name.$valid" for="patronymic">Отчество: </label>
+    <input ng-show="createForm.name.$valid" type="text" id="patronymic" name="patronymic"
            ng-model="data.patronymic" required><br>
-    <label ng-show="CRUDForm.patronymic.$valid" for="appointment">Должность: </label>
-    <select ng-show="CRUDForm.patronymic.$valid" id="appointment" name="appointment" ng-model="data.appointment_fk" required>
-        <option ng-repeat="appointment in appointments"
-            value="{{appointment.id}}">
+    <label ng-show="createForm.patronymic.$valid" for="appointment">Должность: </label>
+    <select ng-show="createForm.patronymic.$valid" id="appointment" name="appointment" ng-model="data.appointment_fk" required>
+        <option ng-repeat="appointment in appointments" ng-value="appointment.id">
             {{appointment.name}}
         </option>
     </select><br>
-    <label ng-show="CRUDForm.appointment.$valid" for="office">Рабочее место: </label>
-    <select ng-show="CRUDForm.appointment.$valid" id="office" name="office" ng-model="data.office_fk" required>
-        <option ng-repeat="office in offices"
-                title="{{office.id}}"
-                value="{{office.id}}">
+    <label ng-show="createForm.appointment.$valid" for="office">Рабочее место: </label>
+    <select ng-show="createForm.appointment.$valid" id="office" name="office" ng-model="data.office_fk" required>
+        <option ng-repeat="office in offices" title="{{office.id}}" ng-value="office.id">
             {{office.assignment}}
         </option>
     </select><br>
-    <input ng-show="CRUDForm.$valid" type="submit" value="Добавить">
+    <input ng-show="createForm.$valid" type="submit" value="Добавить">
 </form>
 {{status}}
 </div>

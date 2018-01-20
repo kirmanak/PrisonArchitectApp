@@ -172,27 +172,27 @@ module.exports = (router, models) => {
                 models.prisoner_program.destroy({ where: { prisoner_fk: req.body.id } });
                 // noinspection Annotator
                 models.reputation_prisoner.destroy({ where: { prisoner_fk: req.body.id } });
+                const promises = [];
                 req.body.programs.forEach((program_fk) => {
                     // noinspection Annotator
-                    models.prisoner_program.create({
+                    promises.push(models.prisoner_program.create({
                         prisoner_fk: req.body.id,
                         program_fk: program_fk
-                    }).then(() => {}, (error) => {
-                        console.error(error);
-                        res.sendStatus(500);
-                    });
+                    }));
                 });
                 req.body.reputations.forEach((reputation_fk) => {
                     // noinspection Annotator
-                    models.reputation_prisoner.create({
+                    promises.push(models.reputation_prisoner.create({
                         prisoner_fk: req.body.id,
                         reputation_fk: reputation_fk
-                    }).then(() => {}, (error) => {
-                        console.error(error);
-                        res.sendStatus(500);
-                    });
+                    }))
                 });
-                res.sendStatus(200);
+                Promise.all(promises).then(() => {
+                    res.sendStatus(200);
+                }, (error) => {
+                    console.error(error);
+                    res.sendStatus(500);
+                });
             }, (error) => {
                 console.error(error);
                 res.sendStatus(500);
@@ -212,7 +212,8 @@ module.exports = (router, models) => {
                 include: [
                     models.regime,
                     models.program,
-                    models.reputation
+                    models.reputation,
+                    models.room,
                 ]
             }).then((results) => {
                 res.send(results);

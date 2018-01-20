@@ -1,29 +1,28 @@
 <a href="/crud/contraband/search">Поиск</a>
 <b ng-hide="isLoggedIn">Только авторизованные пользователи могут добавлять новые данные!</b>
 <div ng-show="isLoggedIn">
-    <form name="CRUDForm" novalidate ng-submit="CRUDForm.$valid && sendContraband()">
+    <form name="createForm" novalidate ng-submit="createForm.$valid && sendContraband()">
         <label  for="thing">Вещь: </label>
         <select id="thing" name="thing" ng-model="data.object_fk" required>
-            <option ng-repeat="object in objects"
-                    value="{{object.id}}">
+            <option ng-repeat="object in objects" ng-value="object.id">
                 {{object.thing_type.name}}
             </option>
         </select><br>
-        <label ng-show="CRUDForm.thing.$valid" for="owner">Владелец: </label>
-        <select ng-show="CRUDForm.thing.$valid" id="owner" name="owner" ng-model="data.owner_fk" required>
-            <option ng-repeat="prisoner in prisoners" value="{{prisoner.id}}">
+        <label ng-show="createForm.thing.$valid" for="owner">Владелец: </label>
+        <select ng-show="createForm.thing.$valid" id="owner" name="owner" ng-model="data.owner_fk" required>
+            <option ng-repeat="prisoner in prisoners" ng-value="prisoner.id">
                 {{prisoner.fullname}}
             </option>
         </select><br>
-        <label ng-show="CRUDForm.owner.$valid" for="staff">Обнаружил: </label>
-        <select ng-show="CRUDForm.owner.$valid" id="staff" name="staff" ng-model="data.discovered_by_fk" required>
-            <option ng-repeat="security in staff" value="{{security.id}}">
+        <label ng-show="createForm.owner.$valid" for="staff">Обнаружил: </label>
+        <select ng-show="createForm.owner.$valid" id="staff" name="staff" ng-model="data.discovered_by_fk" required>
+            <option ng-repeat="security in staff" ng-value="security.id">
                 {{security.fullname}}
             </option>
         </select><br>
-        <label ng-show="CRUDForm.staff.$valid" for="date">Дата обнаружения: </label>
-        <input ng-show="CRUDForm.staff.$valid"  name="date" id="date" type="date" ng-model="data.discovered_on" max="{{maxDate}}" required><br>
-        <input ng-show="CRUDForm.$valid" type="submit" value="Добавить">
+        <label ng-show="createForm.staff.$valid" for="date">Дата обнаружения: </label>
+        <input ng-show="createForm.staff.$valid"  name="date" id="date" type="date" ng-model="data.discovered_on" max="{{maxDate}}" required><br>
+        <input ng-show="createForm.$valid" type="submit" value="Добавить">
     </form>
     {{status}}
 </div>

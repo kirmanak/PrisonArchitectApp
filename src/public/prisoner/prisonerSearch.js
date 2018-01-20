@@ -27,13 +27,13 @@
         };
 
         $scope.loadPrograms = function (prisoner) {
-            $http.post('/prisoner/programs', {id: prisoner.regime_fk}).then(function (res) {
+            $http.post('/prisoner/programs', {id: prisoner.regime.id}).then(function (res) {
                 prisoner.availablePrograms = res.data;
             }, errorLog);
         };
 
         $scope.loadWards = function (prisoner) {
-            $http.post('/prisoner/wards', {id: prisoner.regime_fk}).then(function (res) {
+            $http.post('/prisoner/wards', {id: prisoner.regime.id}).then(function (res) {
                 prisoner.availableWards = res.data;
             }, errorLog);
         };
@@ -51,14 +51,6 @@
                 $scope.results.forEach(function (prisoner) {
                     prisoner.arrivement = new Date(prisoner.arrivement);
                     prisoner.freedom = new Date(prisoner.freedom);
-                    prisoner.programs.forEach(function (program) {
-                        // noinspection JSUnusedAssignment
-                        program = program.id;
-                    });
-                    prisoner.reputations.forEach(function (reputation) {
-                        // noinspection JSUnusedAssignment
-                        reputation = reputation.id;
-                    });
                     $scope.loadPrograms(prisoner);
                     $scope.loadWards(prisoner);
                 });
@@ -68,24 +60,31 @@
         $scope.delete = function (prisoner) {
             $scope.status = 'Отправляю данные...';
             $http.post('/prisoner', {id: prisoner.id}).then(function () {
-                $scope.searchPrisoners();
                 $scope.status = 'Данные о заключённом удалены';
+                $scope.searchPrisoners();
             }, errorLog);
         };
 
         $scope.update = function (prisoner) {
             $scope.status = 'Отправляю данные...';
+            const programs = [], reputations = [];
+            prisoner.programs.forEach(function (program) {
+                programs.push(program.id);
+            });
+            prisoner.reputations.forEach(function (reputation) {
+                reputations.push(reputation.id);
+            });
             $http.patch('/prisoner', {
                 id: prisoner.id,
                 arrivement: prisoner.arrivement,
                 freedom: prisoner.freedom,
-                ward_fk: prisoner.ward_fk,
-                regime_fk: prisoner.regime_fk,
-                programs: prisoner.programs,
-                reputations: prisoner.reputations
+                ward_fk: prisoner.room.id,
+                regime_fk: prisoner.regime.id,
+                programs: programs,
+                reputations: reputations
             }).then(function(res) {
-                $scope.searchPrisoners();
                 $scope.status = 'Данные успешно обновлены!';
+                $scope.searchPrisoners();
             }, errorLog);
         }
     });

@@ -44,40 +44,28 @@
             <td>{{prisoner.regime.name}}</td>
             <td>{{prisoner.arrivement | date}}</td>
             <td>{{prisoner.freedom | date}}</td>
-            <td>{{prisoner.ward_fk}}</td>
+            <td>{{prisoner.room.id}}</td>
         </tr>
     </tbody>
     <tbody ng-show="isLoggedIn">
     <tr ng-repeat="prisoner in results">
-        <form name="updateForm" novalidate>
-            <td>{{prisoner.id}}</td>
-            <td>{{prisoner.fullname}}</td>
-            <td><select size="2" ng-model="prisoner.programs" multiple>
-                <option ng-repeat="program in prisoner.availablePrograms" value="{{program.id}}">
-                    {{program.name}}
-                </option>
-            </select></td>
-            <td><select size="2" ng-model="prisoner.reputations" multiple>
-                <!--suppress Annotator -->
-                <option ng-repeat="reputation in reputations" value="{{reputation.id}}" title="{{reputation.effect}}">
-                    {{reputation.name}}
-                </option>
-            </select></td>
-            <td><select required ng-change="regimeChanged(prisoner)" ng-model="prisoner.regime_fk">
-                <option ng-repeat="regime in regimes" value="{{regime.id}}">
-                    {{regime.name}}
-                </option>
-            </select></td>
-            <td>{{prisoner.arrivement | date}}</td>
-            <td><input type="date" ng-model="prisoner.freedom" required min="{{prisoner.arrivement}}"></td>
-            <td><select required ng-model="prisoner.ward_fk">
-                <option ng-repeat="ward in prisoner.availableWards" value="{{ward.id}}">
-                    {{ward.id}}
-                </option>
-            </select></td>
-            <td><input type="submit" value="Обновить" ng-click="updateForm.$valid && update(prisoner)"></td>
-            <td><input type="submit" value="Удалить" ng-click="delete(prisoner)"></td>
-        </form>
+        <td>{{prisoner.id}}</td>
+        <td>{{prisoner.fullname}}</td>
+        <td><select size="2" ng-model="prisoner.programs" multiple title="Программы"
+                    ng-options="program.name for program in prisoner.availablePrograms track by program.id">
+        </select></td>
+        <td><select size="2" ng-model="prisoner.reputations" multiple title="Репутации"
+                    ng-options="reputation.name for reputation in reputations track by reputation.id">
+        </select></td>
+        <td><select required ng-change="regimeChanged(prisoner)" ng-model="prisoner.regime" title="Режим"
+                    ng-options="regime.name for regime in regimes track by regime.id">
+        </select></td>
+        <td>{{prisoner.arrivement | date}}</td>
+        <td><input type="date" ng-model="prisoner.freedom" required min="{{prisoner.arrivement}}" title="Дата прибытия"></td>
+        <td><select required ng-model="prisoner.room" title="Камера"
+                    ng-options="ward.id for ward in prisoner.availableWards track by ward.id"></select></td>
+        <td><input type="submit" value="Обновить" ng-click="update(prisoner)"></td>
+        <td><input type="submit" value="Удалить" ng-click="delete(prisoner)"></td>
     </tr>
     </tbody>
 </table>

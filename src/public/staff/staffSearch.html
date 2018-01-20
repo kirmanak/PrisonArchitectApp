@@ -37,14 +37,14 @@
             <td>{{staff.fullname}}</td>
             <td>
                 <select ng-model="staff.appointment_fk" required>
-                    <option ng-repeat="appointment in appointments" value="{{appointment.id}}">
+                    <option ng-repeat="appointment in appointments" ng-value="appointment.id">
                         {{appointment.name}}
                     </option>
                 </select>
             </td>
             <td>
                 <select ng-model="staff.office_fk" required>
-                    <option ng-repeat="office in offices" value="{{office.id}}">
+                    <option ng-repeat="office in offices" ng-value="office.id">
                         {{office.assignment}}
                     </option>
                 </select>

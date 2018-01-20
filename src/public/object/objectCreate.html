@@ -4,14 +4,13 @@
     <form name="CRUDForm" novalidate ng-submit="CRUDForm.$valid && sendObject()">
         <label  for="type">Тип вещи: </label>
         <select id="type" name="type" ng-model="data.thing_type_fk" required>
-            <option ng-repeat="type in types"
-                    value="{{type.id}}">
+            <option ng-repeat="type in types" ng-value="type.id">
                 {{type.name}}
             </option>
         </select><br>
         <label ng-show="CRUDForm.type.$valid" for="room">Комната: </label>
         <select ng-show="CRUDForm.type.$valid" id="room" name="room" ng-model="data.room_fk" required>
-            <option ng-repeat="room in rooms" value="{{room.id}}">
+            <option ng-repeat="room in rooms" ng-value="room.id">
                 {{room.assignment}}
             </option>
         </select><br>

@@ -36,7 +36,11 @@
         }, errorLog);
 
         $scope.update = function (contraband) {
-            $http.patch('/object', {
+            if (!contraband.owner_fk) {
+                $scope.status = 'Укажите владельца!';
+                return;
+            }
+            $http.patch('/contraband', {
                 id: contraband.id,
                 owner_fk: contraband.owner_fk
             }).then(function (res) {

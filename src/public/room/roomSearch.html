@@ -4,7 +4,7 @@
     <input name="assignment" id="assignment" type="text" required ng-model="query.assignment"><br>
     <label ng-show="searchForm.assignment.$valid" for="access">Доступ: </label>
     <select id="access" name="access" ng-model="query.access_fk" required ng-show="searchForm.assignment.$valid">
-        <option ng-repeat="access in accesses" value="{{access.id}}">
+        <option ng-repeat="access in accesses" ng-value="access.id">
             {{access.name}}
         </option>
     </select><br>
@@ -39,7 +39,7 @@
                 <td><input type="text" ng-model="room.assignment" required></td>
                 <td>
                     <select ng-model="room.access_fk" required>
-                        <option ng-repeat="access in accesses" value="{{access.id}}">
+                        <option ng-repeat="access in accesses" ng-value="access.id">
                             {{access.name}}
                         </option>
                     </select>

@@ -2,16 +2,17 @@
     const contraband = angular.module('contraband', []);
 
     contraband.controller('contrabandController', function($http, $log, $location, $scope) {
-        const errorLog = function (error) {
-            $log.error(error);
-        };
-
         $scope.maxDate = (new Date()).toISOString();
         $scope.data = {};
         $scope.staff = [];
         $scope.prisoners = [];
         $scope.objects = [];
         $scope.status = '';
+
+        const errorLog = function (error) {
+            $log.error(error);
+            $scope.status = 'Что-то пошло не так...';
+        };
 
         $scope.sendContraband = function() {
             $scope.status = 'Общаемся с сервером...';
@@ -28,31 +29,21 @@
                     $scope.status = 'Вы не авторизованы';
                     $location.url = '/login';
                 } else {
-                    $scope.status = 'Что-то пошло не так...';
-                    $log.error(error);
+                    errorLog(error);
                 }
             });
         };
 
         $http.get('/contraband/objects').then(function (res) {
             $scope.objects = res.data;
-        }, function (error) {
-            $scope.status = 'Что-то пошло не так...';
-            $log.error(error);
-        });
+        }, errorLog);
 
         $http.get('/contraband/prisoners').then(function (res) {
             $scope.prisoners = res.data;
-        }, function (error) {
-            $scope.status = 'Что-то пошло не так...';
-            $log.error(error);
-        });
+        }, errorLog);
 
         $http.get('/contraband/staff').then(function (res) {
             $scope.staff = res.data;
-        }, function (error) {
-            $scope.status = 'Что-то пошло не так...';
-            $log.error(error);
-        });
+        }, errorLog);
     });
 })();

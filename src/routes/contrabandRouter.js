@@ -69,7 +69,7 @@ module.exports = (router, models) => {
                 res.sendStatus(400);
                 return;
             }
-            models.object.update({
+            models.contraband.update({
                 owner_fk: req.body.owner_fk,
             }, {
                 where: {id: req.body.id}
@@ -87,7 +87,7 @@ module.exports = (router, models) => {
                 return;
             }
 
-            models.object.destroy({where: { id: req.body.id }}).then((result) => {
+            models.contraband.destroy({where: { id: req.body.id }}).then((result) => {
                 res.sendStatus(200);
             }, (error) => {
                 console.error(error);
@@ -106,7 +106,10 @@ module.exports = (router, models) => {
                 where: {
                     owner_fk: req.body.owner_fk
                 }, include: [
-                    models.room, models.thing_type, models.object,
+                    {
+                        model: models.object,
+                        include: [ models.room, models.thing_type ]
+                    },
                     models.staff, models.prisoner
                 ]
             }).then((results) => {

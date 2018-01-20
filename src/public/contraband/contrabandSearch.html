@@ -2,7 +2,7 @@
 <form name="searchForm" novalidate ng-submit="searchForm.$valid && searchContraband()">
     <label  for="owner">Владелец: </label>
     <select id="owner" name="owner" ng-model="data.owner_fk" required>
-        <option ng-repeat="prisoner in prisoners" value="{{prisoner.id}}">
+        <option ng-repeat="prisoner in prisoners" ng-value="prisoner.id">
             {{prisoner.fullname}}
         </option>
     </select><br>
@@ -17,6 +17,7 @@
         <td>Обнаружил</td>
         <td>Дата обнаружения</td>
         <td>Вещь</td>
+        <td>Помещение</td>
         <td ng-show="isLoggedIn">Обновить</td>
         <td ng-show="isLoggedIn">Удалить</td>
     </tr>
@@ -28,25 +29,25 @@
         <td>{{contraband.staff.fullname}}</td>
         <td>{{contraband.discovered_on | date}}</td>
         <td>{{contraband.object.thing_type.name}}</td>
+        <td>{{contraband.object.room.assignment}}</td>
     </tr>
     </tbody>
     <tbody ng-show="isLoggedIn">
     <tr ng-repeat="contraband in results">
-        <form name="updateForm" novalidate>
-            <td>{{contraband.id}}</td>
-            <td>
-                <select required ng-model="contraband.owner_fk">
-                    <option ng-repeat="prisoner in prisoners" value="{{prisoner.id}}">
-                        {{prisoner.fullname}}
-                    </option>
-                </select>
-            </td>
-            <td>{{contraband.staff.fullname}}</td>
-            <td>{{contraband.discovered_on | date}}</td>
-            <td>{{contraband.object.thing_type.name}}</td>
-            <td><input type="submit" ng-click="updateForm.$valid && update(contraband)" value="Обновить"></td>
-            <td><input type="submit" ng-click="delete(contraband)" value="Удалить"></td>
-        </form>
+        <td>{{contraband.id}}</td>
+        <td>
+            <select title="Владелец" ng-model="contraband.owner_fk" required>
+                <option ng-repeat="prisoner in prisoners" ng-value="prisoner.id">
+                    {{prisoner.fullname}}
+                </option>
+            </select>
+        </td>
+        <td>{{contraband.staff.fullname}}</td>
+        <td>{{contraband.discovered_on | date}}</td>
+        <td>{{contraband.object.thing_type.name}}</td>
+        <td>{{contraband.object.room.assignment}}</td>
+        <td><input type="submit" ng-click="update(contraband)" value="Обновить"></td>
+        <td><input type="submit" ng-click="delete(contraband)" value="Удалить"></td>
     </tr>
     </tbody>
 </table>
