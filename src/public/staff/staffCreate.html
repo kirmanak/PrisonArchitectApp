@@ -1,6 +1,7 @@
 <a href="/crud/staff/search">Поиск</a><br>
 <b ng-hide="isLoggedIn">Только авторизованные пользователи могут добавлять новые данные!</b>
 <div ng-show="isLoggedIn">
+    Введите данные о новом сотруднике:
 <form name="createForm" novalidate ng-submit="createForm.$valid && sendStaff()">
     <label for="surname">Фамилия: </label>
     <input type="text" id="surname" name="surname" ng-model="data.surname" required><br>
@@ -24,5 +25,4 @@
     </select><br>
     <input ng-show="createForm.$valid" type="submit" value="Добавить">
 </form>
-{{status}}
 </div>

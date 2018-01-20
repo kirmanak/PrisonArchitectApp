@@ -1,11 +1,9 @@
 (function() {
-    const app = angular.module('myApp', ['ngRoute', 'tables',
-        'prisoner', 'prisonerSearch', 'login', 'staff', 'staffSearch', 'contraband',
-        'contrabandSearch', 'objectSearch', 'room', 'roomSearch', 'menu', 'object', 'queue']);
+    const app = angular.module('myApp', ['ngRoute', 'tables', 'prisoner', 'prisonerSearch',
+        'login', 'staff', 'staffSearch', 'contraband', 'contrabandSearch', 'objectSearch',
+        'room', 'roomSearch', 'menu', 'object', 'queue']);
 
-    app.controller('AppController',
-        function() {
-    });
+    app.controller('AppController', function() {});
 
     app.config(function ($routeProvider, $locationProvider) {
             $routeProvider

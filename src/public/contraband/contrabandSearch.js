@@ -22,8 +22,6 @@
         $scope.data = {};
         $scope.results = [];
         $scope.prisoners = [];
-        $scope.staff = [];
-        $scope.objects = [];
 
         $scope.searchContraband = function() {
             showInfo('Общаемся с сервером...');
@@ -37,14 +35,6 @@
 
         $http.get('/contraband/prisoners').then(function (res) {
             $scope.prisoners = res.data;
-        }, serverError);
-
-        $http.get('/contraband/staff').then(function (res) {
-            $scope.types = res.data;
-        }, serverError);
-
-        $http.get('/contraband/objects').then(function (res) {
-            $scope.types = res.data;
         }, serverError);
 
         $scope.update = function (contraband) {
