@@ -1,0 +1,113 @@
+<div ng-cloak>
+    <md-content>
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="Поиск">
+                <md-content>
+                    <form name="searchForm" novalidate ng-submit="searchForm.$valid && searchObjects()">
+                        <md-content>
+                            <md-input-container>
+                                <label>Тип вещи: </label>
+                                <md-select name="type" ng-model="query.thing_type_fk" required md-on-open="loadTypes()">
+                                    <md-option ng-repeat="type in types" ng-value="type.id">
+                                        {{type.name}}
+                                    </md-option>
+                                </md-select><br>
+                                <div ng-messages="searchForm.type.$error">
+                                    <div ng-message="required">Выберите тип вещи</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container>
+                                <label>Комната</label>
+                                <md-select name="room" ng-model="query.room_fk" required md-on-open="loadRooms()">
+                                    <md-option ng-repeat="room in rooms" ng-value="room.id" title="{{room.id}}">
+                                        {{room.assignment}}
+                                    </md-option>
+                                </md-select><br>
+                                <div ng-messages="searchForm.room.$error">
+                                    <div ng-message="required">Выберите помещение</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container>
+                                <md-button type="submit">Поиск</md-button>
+                            </md-input-container>
+                        </md-content>
+                    </form>
+                    <md-table-container>
+                        <table md-table ng-hide="results.length === 0">
+                            <thead md-head>
+                            <tr md-row>
+                                <th md-column>Номер</th>
+                                <th md-column>Тип вещи</th>
+                                <th md-column>Помещение</th>
+                                <th md-column ng-show="isLoggedIn">Обновить</th>
+                                <th md-column ng-show="isLoggedIn">Удалить</th>
+                            </tr>
+                            </thead>
+                            <tbody md-body>
+                            <tr md-row ng-repeat="object in results">
+                                <td md-cell>{{object.id}}</td>
+                                <td md-cell>{{object.thing_type.name}}</td>
+                                <td md-cell>
+                                    <md-input-container>
+                                        <label>Комната</label>
+                                        <md-select ng-model="object.room_fk" required>
+                                            <md-option ng-repeat="room in rooms" ng-value="room.id" title="{{room.id}}">
+                                                {{room.assignment}}
+                                            </md-option>
+                                        </md-select><br>
+                                    </md-input-container>
+                                </td>
+                                <td md-cell ng-show="isLoggedIn">
+                                    <md-input-container>
+                                        <md-button ng-click="update(object)">Обновить</md-button>
+                                    </md-input-container>
+                                </td>
+                                <td md-cell ng-show="isLoggedIn">
+                                    <md-input-container>
+                                        <md-button ng-click="delete(object, $index)">Удалить</md-button>
+                                    </md-input-container>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </md-table-container>
+                </md-content>
+            </md-tab>
+            <md-tab label="Создание">
+                <md-content>
+                    <form name="createForm" novalidate ng-submit="createForm.$valid && sendObject()">
+                        <md-content>
+                            <md-input-container>
+                                <label >Тип вещи</label>
+                                <md-select name="type" ng-model="data.thing_type_fk" required md-on-open="loadTypes()">
+                                    <md-option ng-repeat="type in types" ng-value="type.id">
+                                        {{type.name}}
+                                    </md-option>
+                                </md-select>
+                                <div ng-messages="createForm.type.$error">
+                                    <div ng-message="required">Выберите тип вещи</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container>
+                                <label>Комната</label>
+                                <md-select name="room" ng-model="data.room_fk" required md-on-open="loadRooms()">
+                                    <md-option ng-repeat="room in rooms" ng-value="room.id" title="{{room.id}}">
+                                        {{room.assignment}}
+                                    </md-option>
+                                </md-select>
+                                <div ng-messages="createForm.room.$error">
+                                    <div ng-message="required">Выберите помещение</div>
+                                </div>
+                            </md-input-container>
+                        </md-content>
+                        <md-content>
+                            <md-input-container>
+                                <md-button type="submit">Добавить</md-button>
+                            </md-input-container>
+                        </md-content>
+                    </form>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-content>
+</div>

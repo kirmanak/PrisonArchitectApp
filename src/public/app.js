@@ -1,7 +1,6 @@
 (function() {
-    const app = angular.module('myApp', ['ngRoute', 'tables', 'prisoner', 'prisonerSearch',
-        'login', 'staff', 'contraband', 'objectSearch',
-        'room', 'roomSearch', 'menu', 'object', 'queue', 'ngMaterial', 'ngMessages']);
+    const app = angular.module('myApp', ['ngRoute', 'tables', 'prisoner', 'login', 'staff', 'contraband',
+        'room', 'menu', 'object', 'queue', 'ngMaterial', 'ngMessages']);
 
     app.controller('AppController', function() {});
 
@@ -12,35 +11,20 @@
                     controller: 'loginController',
                     controllerAs: 'login'
                 })
-                .when('/crud/prisoner/create', {
-                    templateUrl: 'prisoner/prisonerCreate.html',
+                .when('/crud/prisoner', {
+                    templateUrl: 'prisoner/prisoner.html',
                     controller: 'prisonerController',
-                    controllerAs: 'prisoner'
+                    controllerAs: 'pris'
                 })
-                .when('/crud/prisoner/search', {
-                    templateUrl: 'prisoner/prisonerSearch.html',
-                    controller: 'prisonerSearchController',
-                    controllerAs: 'search'
-                })
-                .when('/crud/object/create', {
-                    templateUrl: 'object/objectCreate.html',
+                .when('/crud/object', {
+                    templateUrl: 'object/object.html',
                     controller: 'objectController',
-                    controllerAs: 'object'
+                    controllerAs: 'obj'
                 })
-                .when('/crud/object/search', {
-                    templateUrl: 'object/objectSearch.html',
-                    controller: 'objectSearchCtrl',
-                    controllerAs: 'object'
-                })
-                .when('/crud/room/create', {
-                    templateUrl: 'room/roomCreate.html',
+                .when('/crud/room', {
+                    templateUrl: 'room/room.html',
                     controller: 'roomCreate',
-                    controllerAs: 'room'
-                })
-                .when('/crud/room/search', {
-                    templateUrl: 'room/roomSearch.html',
-                    controller: 'roomSearchCtrl',
-                    controllerAs: 'room'
+                    controllerAs: 'r'
                 })
                 .when('/crud/contraband', {
                     templateUrl: 'contraband/contraband.html',

@@ -37,6 +37,8 @@
             }).then(function () {
                 showSuccess('Новая запись успешно добавлена');
                 $scope.data = {};
+                $scope.createForm.$setPristine();
+                $scope.createForm.$setUntouched();
             }, function (error) {
                 if (error.status = 403) {
                     clientError('Вы не авторизованы');
@@ -88,8 +90,13 @@
             $http.post('/contraband/search', {
                 owner_fk: $scope.query.owner_fk
             }).then(function (res) {
-                showSuccess('Найдено ' + res.data.length + ' записей');
                 $scope.results = res.data;
+                $scope.query = {};
+                $scope.searchForm.$setPristine();
+                $scope.searchForm.$setUntouched();
+                loadPrisoners().then(function () {
+                    showSuccess('Найдено ' + res.data.length + ' записей');
+                }, serverError);
             }, serverError);
         };
 
