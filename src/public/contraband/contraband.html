@@ -4,7 +4,7 @@
             <md-tab label="Поиск">
                 <md-content>
                     <form name="searchForm" novalidate ng-submit="searchForm.$valid && searchContraband()">
-                        <md-content>
+                        <md-content layout-gt-sm="row" layout-padding>
                             <md-input-container>
                                 <label>Владелец: </label>
                                 <md-select name="owner" ng-model="query.owner_fk" required md-on-open="loadPrisoners()">
@@ -71,7 +71,7 @@
             <md-tab label="Создание" ng-disabled="!isLoggedIn">
                 <md-content>
                     <form name="createForm" novalidate ng-submit="createForm.$valid && sendContraband()">
-                        <md-content>
+                        <md-content layout-gt-sm="row" layout-padding>
                             <md-input-container>
                                 <label>Вещь</label>
                                 <md-select name="thing" ng-model="data.object_fk" required md-on-open="loadObjects()">
@@ -96,7 +96,7 @@
                                 </div>
                             </md-input-container>
                         </md-content>
-                        <md-content>
+                        <md-content layout-gt-sm="row" layout-padding>
                             <md-input-container>
                                 <label>Обнаружил</label>
                                 <md-select name="staff" md-on-open="loadStaff()"

@@ -1,5 +1,5 @@
 (function () {
-    const object = angular.module('object', ['ui-notification', 'ngMaterial', 'ngMessages']);
+    const object = angular.module('object', ['ui-notification', 'ngMaterial', 'ngMessages', 'md.data.table']);
 
     object.controller('objectController', function($http, $log, $location, $scope, Notification) {
         const showSuccess = function (message) {

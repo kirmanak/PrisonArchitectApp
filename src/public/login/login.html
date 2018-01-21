@@ -4,7 +4,7 @@
             <md-tab label="Вход">
                 <md-content>
                     <form name="loginForm" ng-submit="loginForm.$valid && authorize()" novalidate>
-                        <md-content>
+                        <md-content layout-gt-sm="row" layout-padding>
                             <md-input-container>
                                 <label>Логин</label>
                                 <input name="login" ng-model="data.username" required>
@@ -13,7 +13,7 @@
                                 </div>
                             </md-input-container>
                         </md-content>
-                        <md-content>
+                        <md-content layout-gt-sm="row" layout-padding>
                             <md-input-container>
                                 <label>Пароль</label>
                                 <input type="password" required ng-model="data.password">
@@ -22,7 +22,7 @@
                                 </div>
                             </md-input-container>
                         </md-content>
-                        <md-content>
+                        <md-content layout-gt-sm="row" layout-padding>
                             <md-input-container>
                                 <md-button type="submit">Войти</md-button>
                             </md-input-container>
@@ -33,7 +33,7 @@
             <md-tab label="Регистрация">
                 <md-content>
                     <form name="registerForm" ng-submit="registerForm.$valid && register()" novalidate>
-                        <md-content>
+                        <md-content layout-gt-sm="row" layout-padding>
                             <md-input-container>
                                 <label>Логин</label>
                                 <input name="login" ng-model="data.username" required>
@@ -42,7 +42,7 @@
                                 </div>
                             </md-input-container>
                         </md-content>
-                        <md-content>
+                        <md-content layout-gt-sm="row" layout-padding>
                             <md-input-container>
                                 <label>Пароль</label>
                                 <input type="password" required ng-model="data.password">
@@ -51,7 +51,7 @@
                                 </div>
                             </md-input-container>
                         </md-content>
-                        <md-content>
+                        <md-content layout-gt-sm="row" layout-padding>
                             <md-input-container>
                                 <md-button type="submit">Зарегистрироваться</md-button>
                             </md-input-container>

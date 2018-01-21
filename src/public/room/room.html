@@ -4,7 +4,7 @@
             <md-tab label="Поиск">
                 <md-content>
                     <form name="searchForm" ng-submit="searchForm.$valid && searchRoom()">
-                        <md-content>
+                        <md-content layout-gt-sm="row" layout-padding>
                             <md-input-container>
                                 <label>Назначение</label>
                                 <input name="assignment" required ng-model="query.assignment">
@@ -80,7 +80,7 @@
             <md-tab label="Создание" ng-disabled="!isLoggedIn">
                 <md-content>
                     <form name="createForm" novalidate ng-submit="createForm.$valid && sendRoom()">
-                        <md-content>
+                        <md-content layout-gt-sm="row" layout-padding>
                             <md-input-container>
                                 <label>Назначение</label>
                                 <input name="assignment" required ng-model="data.assignment">
@@ -89,7 +89,7 @@
                                 </div>
                             </md-input-container>
                         </md-content>
-                        <md-content>
+                        <md-content layout-gt-sm="row" layout-padding>
                             <md-input-container>
                                 <label>Доступ</label>
                                 <md-select name="access" md-on-open="loadAccesses()" ng-model="data.access_fk" required>
@@ -102,7 +102,7 @@
                                 </div>
                             </md-input-container>
                         </md-content>
-                        <md-content>
+                        <md-content layout-gt-sm="row" layout-padding>
                             <md-input-container>
                                 <label>Площадь</label>
                                 <input name="area" type="number" min="1" max="1000" required ng-model="data.area">
@@ -113,12 +113,12 @@
                                 </div>
                             </md-input-container>
                         </md-content>
-                        <md-content>
+                        <md-content layout-gt-sm="row" layout-padding>
                             <md-input-container>
                                 <md-switch class="md-primary" name="street" ng-model="data.street">Уличное помещение?</md-switch>
                             </md-input-container>
                         </md-content>
-                        <md-content>
+                        <md-content layout-gt-sm="row" layout-padding>
                             <md-input-container>
                                 <md-button type="submit">Отправить</md-button>
                             </md-input-container>

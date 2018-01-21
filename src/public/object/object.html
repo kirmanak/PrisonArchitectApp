@@ -4,7 +4,7 @@
             <md-tab label="Поиск">
                 <md-content>
                     <form name="searchForm" novalidate ng-submit="searchForm.$valid && searchObjects()">
-                        <md-content>
+                        <md-content layout-gt-sm="row" layout-padding>
                             <md-input-container>
                                 <label>Тип вещи: </label>
                                 <md-select name="type" ng-model="query.thing_type_fk" required md-on-open="loadTypes()">
@@ -76,7 +76,7 @@
             <md-tab label="Создание" ng-disabled="!isLoggedIn">
                 <md-content>
                     <form name="createForm" novalidate ng-submit="createForm.$valid && sendObject()">
-                        <md-content>
+                        <md-content layout-gt-sm="row" layout-padding>
                             <md-input-container>
                                 <label >Тип вещи</label>
                                 <md-select name="type" ng-model="data.thing_type_fk" required md-on-open="loadTypes()">
@@ -100,7 +100,7 @@
                                 </div>
                             </md-input-container>
                         </md-content>
-                        <md-content>
+                        <md-content layout-gt-sm="row" layout-padding>
                             <md-input-container>
                                 <md-button type="submit">Добавить</md-button>
                             </md-input-container>

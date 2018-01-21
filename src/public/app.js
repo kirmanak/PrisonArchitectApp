@@ -1,6 +1,6 @@
 (function() {
     const app = angular.module('myApp', ['ngRoute', 'tables', 'prisoner', 'login', 'staff', 'contraband',
-        'room', 'menu', 'object', 'queue', 'ngMaterial', 'ngMessages']);
+        'room', 'menu', 'object', 'queue', 'ngMaterial', 'ngMessages', 'md.data.table']);
 
     app.controller('AppController', function() {});
 

@@ -1,5 +1,5 @@
 (function () {
-    const prisoner = angular.module('prisoner', ['ui-notification', 'ngMaterial', 'ngMessages']);
+    const prisoner = angular.module('prisoner', ['ui-notification', 'ngMaterial', 'ngMessages', 'md.data.table']);
 
     prisoner.controller('prisonerCtrl', function ($http, $log, $location, $scope, Notification) {
         const showSuccess = function (message) { Notification.success({ message: message, delay: 3000}); };

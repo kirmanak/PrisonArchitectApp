@@ -1,5 +1,5 @@
 (function() {
-    const menu = angular.module('menu', ['login', 'ngMaterial', 'ngRoute', 'ngMessages']);
+    const menu = angular.module('menu', ['login', 'ngMaterial', 'ngRoute', 'ngMessages', 'md.data.table']);
 
     menu.directive('menu', function() {
         return {

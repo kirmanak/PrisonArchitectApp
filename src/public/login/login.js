@@ -1,5 +1,5 @@
 (function () {
-    const login = angular.module('login', ['ngRoute', 'ngMaterial', 'ngMessages', 'ui-notification']);
+    const login = angular.module('login', ['ngRoute', 'ngMaterial', 'ngMessages', 'ui-notification', 'md.data.table']);
 
     login.controller('loginController', function ($http, $scope, $location, $rootScope, $window, Notification) {
         $scope.vk = function () {

@@ -1,5 +1,5 @@
 (function () {
-    const room = angular.module('room', ['ui-notification', 'ngMaterial', 'ngMessages']);
+    const room = angular.module('room', ['ui-notification', 'ngMaterial', 'ngMessages', 'md.data.table']);
 
     room.controller('roomCtrl', function ($http, $log, $scope, Notification) {
         const showSuccess = function (message) { Notification.success({ message: message, delay: 3000}); };
