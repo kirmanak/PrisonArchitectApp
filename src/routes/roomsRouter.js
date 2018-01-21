@@ -42,16 +42,14 @@ module.exports = (router, models) => {
                 });
         })
         .patch(isLoggedIn, (req, res) => {
-            if (!req.body.id || !req.body.assignment || !req.body.access_fk ||
-                !req.body.area || typeof req.body.street === 'undefined') {
+            if (!req.body.id || !req.body.assignment || !req.body.access_fk) {
                 res.sendStatus(400);
                 return;
             }
+
             models.room.update({
                 assignment: req.body.assignment,
-                access_fk: req.body.access_fk,
-                area: req.body.area,
-                street: req.body.street
+                access_fk: req.body.access_fk
             }, {
                 where: { id: req.body.id }
             }).then((result) => {

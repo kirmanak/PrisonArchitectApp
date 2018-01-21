@@ -11,7 +11,7 @@
                                     <md-option ng-repeat="type in types" ng-value="type.id">
                                         {{type.name}}
                                     </md-option>
-                                </md-select><br>
+                                </md-select>
                                 <div ng-messages="searchForm.type.$error">
                                     <div ng-message="required">Выберите тип вещи</div>
                                 </div>
@@ -22,7 +22,7 @@
                                     <md-option ng-repeat="room in rooms" ng-value="room.id" title="{{room.id}}">
                                         {{room.assignment}}
                                     </md-option>
-                                </md-select><br>
+                                </md-select>
                                 <div ng-messages="searchForm.room.$error">
                                     <div ng-message="required">Выберите помещение</div>
                                 </div>
@@ -54,7 +54,7 @@
                                             <md-option ng-repeat="room in rooms" ng-value="room.id" title="{{room.id}}">
                                                 {{room.assignment}}
                                             </md-option>
-                                        </md-select><br>
+                                        </md-select>
                                     </md-input-container>
                                 </td>
                                 <td md-cell ng-show="isLoggedIn">
@@ -73,7 +73,7 @@
                     </md-table-container>
                 </md-content>
             </md-tab>
-            <md-tab label="Создание">
+            <md-tab label="Создание" ng-disabled="!isLoggedIn">
                 <md-content>
                     <form name="createForm" novalidate ng-submit="createForm.$valid && sendObject()">
                         <md-content>

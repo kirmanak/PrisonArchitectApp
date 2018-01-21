@@ -68,7 +68,7 @@
                     </md-table-container>
                 </md-content>
             </md-tab>
-            <md-tab label="Создание">
+            <md-tab label="Создание" ng-disabled="!isLoggedIn">
                 <md-content>
                     <form name="createForm" novalidate ng-submit="createForm.$valid && sendContraband()">
                         <md-content>

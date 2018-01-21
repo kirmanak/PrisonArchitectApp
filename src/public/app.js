@@ -23,7 +23,7 @@
                 })
                 .when('/crud/room', {
                     templateUrl: 'room/room.html',
-                    controller: 'roomCreate',
+                    controller: 'roomCtrl',
                     controllerAs: 'r'
                 })
                 .when('/crud/contraband', {

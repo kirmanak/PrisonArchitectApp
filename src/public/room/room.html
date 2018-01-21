@@ -1,0 +1,131 @@
+<div ng-cloak>
+    <md-content>
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="Поиск">
+                <md-content>
+                    <form name="searchForm" ng-submit="searchForm.$valid && searchRoom()">
+                        <md-content>
+                            <md-input-container>
+                                <label>Назначение</label>
+                                <input name="assignment" required ng-model="query.assignment">
+                                <div ng-messages="searchForm.assignment.$error">
+                                    <div ng-message="required">Укажите назначение помещения</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container>
+                                <label>Доступ</label>
+                                <md-select name="access" ng-model="query.access_fk" required md-on-open="loadAccesses()">
+                                    <md-option ng-repeat="access in accesses" ng-value="access.id">
+                                        {{access.name}}
+                                    </md-option>
+                                </md-select>
+                                <div ng-messages="searchForm.access.$error">
+                                    <div ng-message="required">Укажите уровень доступа в помещение</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container>
+                                <md-button type="submit">Поиск</md-button>
+                            </md-input-container>
+                        </md-content>
+                    </form>
+                </md-content>
+                <md-content>
+                    <md-table-container>
+                        <table md-table ng-hide="results.length === 0">
+                            <thead md-head>
+                            <tr md-row>
+                                <th md-column>Номер</th>
+                                <th md-column>Назначение</th>
+                                <th md-column>Доступ</th>
+                                <th md-column>Уличное?</th>
+                                <th md-column>Площадь</th>
+                                <th md-column ng-show="isLoggedIn">Обновить</th>
+                                <th md-column ng-show="isLoggedIn">Удалить</th>
+                            </tr>
+                            </thead>
+                            <tbody md-body>
+                            <tr md-row ng-repeat="room in results">
+                                <td md-cell>{{room.id}}</td>
+                                <td md-cell>
+                                    <input name="assignment" required ng-model="room.assignment" ng-disabled="!isLoggedIn">
+                                </td>
+                                <td md-cell>
+                                    <md-input-container>
+                                        <label>Доступ</label>
+                                        <md-select ng-model="room.access_fk" required>
+                                            <md-option ng-repeat="access in accesses" ng-value="access.id">
+                                                {{access.name}}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </td>
+                                <td md-cell>{{room.street ? 'Да':'Нет'}}</td>
+                                <td md-cell>{{room.area}}</td>
+                                <td md-cell ng-show="isLoggedIn">
+                                    <md-input-container>
+                                        <md-button ng-click="update(room)">Обновить</md-button>
+                                    </md-input-container>
+                                </td>
+                                <td md-cell ng-show="isLoggedIn">
+                                    <md-input-container>
+                                        <md-button ng-click="delete(room, $index)">Удалить</md-button>
+                                    </md-input-container>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </md-table-container>
+                </md-content>
+            </md-tab>
+            <md-tab label="Создание" ng-disabled="!isLoggedIn">
+                <md-content>
+                    <form name="createForm" novalidate ng-submit="createForm.$valid && sendRoom()">
+                        <md-content>
+                            <md-input-container>
+                                <label>Назначение</label>
+                                <input name="assignment" required ng-model="data.assignment">
+                                <div ng-messages="createForm.assignment.$error">
+                                    <div ng-message="required">Укажите назначение помещения</div>
+                                </div>
+                            </md-input-container>
+                        </md-content>
+                        <md-content>
+                            <md-input-container>
+                                <label>Доступ</label>
+                                <md-select name="access" md-on-open="loadAccesses()" ng-model="data.access_fk" required>
+                                    <md-option ng-repeat="access in accesses" ng-value="access.id">
+                                        {{access.name}}
+                                    </md-option>
+                                </md-select>
+                                <div ng-messages="createForm.access.$error">
+                                    <div ng-message="required">Укажите уровень доступа в помещение</div>
+                                </div>
+                            </md-input-container>
+                        </md-content>
+                        <md-content>
+                            <md-input-container>
+                                <label>Площадь</label>
+                                <input name="area" type="number" min="1" max="1000" required ng-model="data.area">
+                                <div ng-messages="createForm.area.$error">
+                                    <div ng-message="required">Укажите площадь помещения</div>
+                                    <div ng-message="min">Площадь не может быть такой маленькой!</div>
+                                    <div ng-message="max">Площадь не может быть такой большой!</div>
+                                </div>
+                            </md-input-container>
+                        </md-content>
+                        <md-content>
+                            <md-input-container>
+                                <md-switch class="md-primary" name="street" ng-model="data.street">Уличное помещение?</md-switch>
+                            </md-input-container>
+                        </md-content>
+                        <md-content>
+                            <md-input-container>
+                                <md-button type="submit">Отправить</md-button>
+                            </md-input-container>
+                        </md-content>
+                    </form>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-content>
+</div>
