@@ -20,7 +20,7 @@ const express = require('express'),
     db = require('./services/db.js')(config);
 
 if (!process.env.VK_ID || !process.env.VK_SECURE) {
-    throw new Error('You have to specify vk app id and secret');
+    throw new Error('You have to specify vk id and secure');
 }
 
 // noinspection NpmUsedModulesInstalled
