@@ -12,7 +12,7 @@
 
     queue.controller('queueController', function ($scope, Notification, $location) {
         // noinspection ES6ModulesDependencies
-        const client = Stomp.client('ws://' + $location.host() + ':15674/ws');
+        const client = Stomp.client('ws://' + $location.host() + ':15674/stomp/websocket');
         client.connect('guest', 'guest', function() {
             client.subscribe('/exchange/staffEx', function (message) {
                 Notification.warning({

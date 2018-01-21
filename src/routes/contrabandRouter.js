@@ -8,7 +8,6 @@ module.exports = (router, models) => {
         .get((req, res) => {
             // noinspection Annotator
             models.object.findAll({
-                limit: 100,
                 include: [models.thing_type]
             }).then((results) => {
                 res.send(results);
@@ -21,7 +20,6 @@ module.exports = (router, models) => {
     router.route('/contraband/prisoners')
         .get((req, res) => {
             models.prisoner.findAll({
-                limit: 100
             }).then((results) => {
                 res.send(results);
             }, (error) => {
@@ -32,9 +30,7 @@ module.exports = (router, models) => {
 
     router.route('/contraband/staff')
         .get((req, res) => {
-            models.staff.findAll({
-                limit: 100
-            }).then((results) => {
+            models.staff.findAll().then((results) => {
                 res.send(results);
             }, (error) => {
                 console.error(error);
@@ -108,7 +104,6 @@ module.exports = (router, models) => {
             }
 
             models.contraband.findAll({
-                limit: 100,
                 where: {
                     owner_fk: req.body.owner_fk
                 }, include: [
