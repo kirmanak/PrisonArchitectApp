@@ -1,0 +1,130 @@
+<div ng-cloak>
+    <md-content>
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="Поиск">
+                <md-content>
+                    <form name="searchForm" novalidate ng-submit="searchForm.$valid && searchContraband()">
+                        <md-content>
+                            <md-input-container>
+                                <label>Владелец: </label>
+                                <md-select name="owner" ng-model="query.owner_fk" required md-on-open="loadPrisoners()">
+                                    <md-option ng-repeat="prisoner in prisoners" ng-value="prisoner.id">
+                                        {{prisoner.fullname}}
+                                    </md-option>
+                                    <div ng-messages="searchForm.owner.$error">
+                                        <div ng-message="required">Укажите заключённого</div>
+                                    </div>
+                                </md-select><br>
+                            </md-input-container>
+                            <md-input-container>
+                                <md-button type="submit">Поиск</md-button>
+                            </md-input-container>
+                        </md-content>
+                    </form>
+                    <md-table-container>
+                        <table md-table ng-hide="results.length === 0">
+                            <thead md-head>
+                            <tr md-row>
+                                <th md-column>Номер</th>
+                                <th md-column>Владелец</th>
+                                <th md-column>Обнаружил</th>
+                                <th md-column>Дата обнаружения</th>
+                                <th md-column>Вещь</th>
+                                <th md-column>Помещение</th>
+                                <th md-column ng-show="isLoggedIn">Обновить</th>
+                                <th md-column ng-show="isLoggedIn">Удалить</th>
+                            </tr>
+                            </thead>
+                            <tbody md-body>
+                            <tr md-row ng-repeat="contraband in results">
+                                <td md-cell>{{contraband.id}}</td>
+                                <td md-cell>
+                                    <md-input-container>
+                                        <md-select title="Владелец" ng-model="contraband.owner_fk" required
+                                                   name="appointment" ng-disabled="!isLoggedIn">
+                                            <md-option ng-repeat="prisoner in prisoners" ng-value="prisoner.id">
+                                                {{prisoner.fullname}}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </td>
+                                <td md-cell>{{contraband.staff.fullname}}</td>
+                                <td md-cell>{{contraband.discovered_on | date}}</td>
+                                <td md-cell>{{contraband.object.thing_type.name}}</td>
+                                <td md-cell>{{contraband.object.room.assignment}}</td>
+                                <td md-cell ng-show="isLoggedIn">
+                                    <md-input-container>
+                                        <md-button ng-click="update(contraband)">Обновить</md-button>
+                                    </md-input-container>
+                                </td>
+                                <td md-cell ng-show="isLoggedIn">
+                                    <md-input-container>
+                                        <md-button ng-click="delete(contraband, $index)">Удалить</md-button>
+                                    </md-input-container>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </md-table-container>
+                </md-content>
+            </md-tab>
+            <md-tab label="Создание">
+                <md-content>
+                    <form name="createForm" novalidate ng-submit="createForm.$valid && sendContraband()">
+                        <md-content>
+                            <md-input-container>
+                                <label>Вещь</label>
+                                <md-select name="thing" ng-model="data.object_fk" required md-on-open="loadObjects()">
+                                    <md-option ng-repeat="object in objects" ng-value="object.id" title="{{object.id}}">
+                                        {{object.thing_type.name}}
+                                    </md-option>
+                                </md-select><br>
+                                <div ng-messages="createForm.thing.$error">
+                                    <div ng-message="required">Укажите украденную вещь</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container>
+                                <label>Владелец</label>
+                                <md-select name="owner" ng-model="data.owner_fk"
+                                           required md-on-open="loadPrisoners()">
+                                    <md-option ng-repeat="prisoner in prisoners" ng-value="prisoner.id">
+                                        {{prisoner.fullname}}
+                                    </md-option>
+                                </md-select><br>
+                                <div ng-messages="createForm.owner.$error">
+                                    <div ng-message="required">Укажите владельца контрабанды</div>
+                                </div>
+                            </md-input-container>
+                        </md-content>
+                        <md-content>
+                            <md-input-container>
+                                <label>Обнаружил</label>
+                                <md-select name="staff" md-on-open="loadStaff()"
+                                        ng-model="data.discovered_by_fk" required>
+                                    <md-option ng-repeat="security in staff" ng-value="security.id">
+                                        {{security.fullname}}
+                                    </md-option>
+                                </md-select><br>
+                                <div ng-messages="createForm.staff.$error">
+                                    <div ng-message="required">Укажите обнаружившего контрабанду</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container>
+                                <label>Дата обнаружения</label>
+                                <md-datepicker ng-model="data.discovered_on" required md-max-date="maxDate"
+                                               md-min-date="minDate" name="date"></md-datepicker>
+                                <div ng-messages="createForm.date.$error">
+                                    <div ng-message="required">Укажите дату обнаружения</div>
+                                    <div ng-message="maxdate">Дата не позднее, чем сегодня</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container>
+                                <md-button type="submit">Добавить</md-button>
+                            </md-input-container>
+                        </md-content>
+                    </form>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-content>
+</div>
