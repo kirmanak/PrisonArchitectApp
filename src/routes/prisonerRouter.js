@@ -7,7 +7,9 @@ module.exports = (router, models) => {
     router.route('/prisoner/reputations')
         .get((req, res) => {
             // noinspection Annotator
-            models.reputation.findAll().then(
+            models.reputation.findAll({
+                limit: 100
+            }).then(
                 (reputations) => {
                     res.send(reputations);
                 },
@@ -24,6 +26,7 @@ module.exports = (router, models) => {
                 return;
             }
             models.room.findAll({
+                limit: 100,
                 required: true,
                 where: {assignment: 'Камера'},
                 include: [
@@ -47,7 +50,9 @@ module.exports = (router, models) => {
 
     router.route('/prisoner/regimes')
         .get((req, res) => {
-            models.regime.findAll().then(
+            models.regime.findAll({
+                limit: 100
+            }).then(
                 (regimes) => {
                     res.send(regimes);
                 },
@@ -64,6 +69,7 @@ module.exports = (router, models) => {
                 return;
             }
             models.program.findAll({
+                limit: 100,
                 include: [{
                     model: models.room,
                     include: [{
@@ -208,6 +214,7 @@ module.exports = (router, models) => {
             }
             // noinspection Annotator
             models.prisoner.findAll({
+                limit: 100,
                 where: { fullname: req.body.fullname },
                 include: [
                     models.regime,

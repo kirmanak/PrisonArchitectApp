@@ -6,7 +6,9 @@ module.exports = (router, models) => {
 
     router.route('/room/accesses')
         .get((req, res) => {
-            models.access.findAll().then((results) => {
+            models.access.findAll({
+                limit: 100
+            }).then((results) => {
                 res.send(results);
             }, (error) => {
                 console.error(error);
@@ -80,6 +82,7 @@ module.exports = (router, models) => {
             }
 
             models.room.findAll({
+                limit: 100,
                 where: {
                     assignment: req.body.assignment,
                     access_fk: req.body.access_fk

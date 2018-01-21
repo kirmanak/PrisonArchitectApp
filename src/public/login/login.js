@@ -1,5 +1,5 @@
 (function () {
-    const login = angular.module('login', ['ngRoute', 'ui-notification']);
+    const login = angular.module('login', ['ngRoute', 'ngMaterial', 'ngMessages', 'ui-notification']);
 
     login.controller('loginController', function ($http, $scope, $location, $rootScope, $window, Notification) {
         $scope.vk = function () {
@@ -16,7 +16,10 @@
                     $location.url('/');
                 },
                 function () {
-                    Notification.error({message: 'Неправильный логин или пароль!', delay: 1000})
+                    Notification.error({
+                        message: 'Неправильный логин или пароль',
+                        delay: 2000
+                    });
                 }
             );
         };
@@ -25,9 +28,15 @@
                 username: $scope.data.username,
                 password: $scope.data.password
             }).then(function () {
-                $scope.login();
+                Notification.success({
+                    message: 'Учётная запись создана',
+                    delay: 2000
+                });
             }, function () {
-                Notification.error({message: 'Логин занят!', delay: 1000});
+                Notification.warning({
+                    message: 'Логин занят',
+                    delay: 2000
+                });
             });
         };
     });

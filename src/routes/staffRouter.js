@@ -6,7 +6,9 @@ module.exports = (sendToMQ, router, models) => {
 
     router.route('/staff/appointments')
         .get((req, res) => {
-            models.appointment.findAll().then((results) => {
+            models.appointment.findAll({
+                limit: 100
+            }).then((results) => {
                 res.send(results);
             }, (error) => {
                 console.error(error);
@@ -16,7 +18,9 @@ module.exports = (sendToMQ, router, models) => {
 
     router.route('/staff/offices')
         .get((req, res) => {
-            models.room.findAll().then((results) => {
+            models.room.findAll({
+                limit: 100
+            }).then((results) => {
                 res.send(results);
             }, (error) => {
                 console.error(error);
@@ -96,6 +100,7 @@ module.exports = (sendToMQ, router, models) => {
             }
 
             models.staff.findAll({
+                limit: 100,
                 where: { fullname: req.body.fullname },
                 include: [
                     models.room, models.appointment

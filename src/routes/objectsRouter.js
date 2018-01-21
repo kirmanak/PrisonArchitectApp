@@ -7,7 +7,9 @@ module.exports = (router, models) => {
     router.route('/object/types')
         .get((req, res) => {
             // noinspection Annotator
-            models.thing_type.findAll().then((results) => {
+            models.thing_type.findAll({
+                limit: 100
+            }).then((results) => {
                 res.send(results);
             }, (error) => {
                 console.error(error);
@@ -17,7 +19,9 @@ module.exports = (router, models) => {
 
     router.route('/object/rooms')
         .get((req, res) => {
-            models.room.findAll().then((results) => {
+            models.room.findAll({
+                limit: 100
+            }).then((results) => {
                 res.send(results);
             }, (error) => {
                 console.error(error);
@@ -88,6 +92,7 @@ module.exports = (router, models) => {
             }
 
             models.object.findAll({
+                limit: 100,
                 where: {
                     thing_type_fk: req.body.thing_type_fk,
                     room_fk: req.body.room_fk

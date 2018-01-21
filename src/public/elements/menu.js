@@ -1,5 +1,5 @@
 (function() {
-    const menu = angular.module('menu', ['login', 'ngMaterial', 'ngRoute']);
+    const menu = angular.module('menu', ['login', 'ngMaterial', 'ngRoute', 'ngMessages']);
 
     menu.directive('menu', function() {
         return {
@@ -10,16 +10,13 @@
         };
     });
 
-    menu.controller('MenuController', function ($http, $rootScope, $scope, $location) {
+    menu.controller('MenuController', function ($http, $rootScope) {
         const store = this;
         $rootScope.isLoggedIn = false;
-        $scope.currentPage = 'tables';
         store.logout = function() {
             $http.get('/logout').then(function() {},
                 function () {
                 store.check();
-                $location.url('/');
-                $scope.currentPage = 'tables';
             });
         };
         store.check = function() {

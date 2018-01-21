@@ -1,7 +1,7 @@
 (function() {
     const app = angular.module('myApp', ['ngRoute', 'tables', 'prisoner', 'prisonerSearch',
         'login', 'staff', 'contraband', 'contrabandSearch', 'objectSearch',
-        'room', 'roomSearch', 'menu', 'object', 'queue', 'ngMaterial']);
+        'room', 'roomSearch', 'menu', 'object', 'queue', 'ngMaterial', 'ngMessages']);
 
     app.controller('AppController', function() {});
 

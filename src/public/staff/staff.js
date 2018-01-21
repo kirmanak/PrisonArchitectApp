@@ -1,31 +1,31 @@
 (function () {
-    const staff = angular.module('staff', ['ngMaterial', 'ngMessages', 'md.data.table']);
+    const staff = angular.module('staff', ['ngMaterial', 'ngMessages', 'md.data.table', 'ui-notification']);
 
-    staff.controller('staffCtrl', function ($http, $log, $location, $scope, $mdToast) {
+    staff.controller('staffCtrl', function ($http, $log, $location, $scope, Notification) {
         const showSuccess = function (message) {
-            $mdToast.show($mdToast.simple()
-                .textContent(message)
-                .position('top right')
-                .hideDelay(3000));
+            Notification.success({
+                message: message,
+                delay: 3000
+            });
         };
         const showInfo = function (message) {
-            $mdToast.show($mdToast.simple()
-                .textContent(message)
-                .position('top right')
-                .hideDelay(1000));
+            Notification.info({
+                message: message,
+                delay: 1000
+            });
         };
         const clientError = function (message) {
-            $mdToast.show($mdToast.simple()
-                .textContent(message)
-                .position('top right')
-                .hideDelay(1000));
+            Notification.error({
+                message: message,
+                delay: 1000
+            });
         };
         const serverError = function (error) {
+            Notification.error({
+                message: 'Что-то пошло не так...',
+                delay: 1000
+            });
             $log.error(error);
-            $mdToast.show($mdToast.simple()
-                .textContent(message)
-                .position('top right')
-                .hideDelay(5000));
         };
 
         $scope.data = {};
