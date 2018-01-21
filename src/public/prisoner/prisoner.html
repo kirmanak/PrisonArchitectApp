@@ -1,0 +1,219 @@
+<div ng-cloak>
+    <md-content>
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="Поиск">
+                <md-content class="md-padding">
+                    <form name="searchForm" novalidate ng-submit="searchForm.$valid && searchPrisoners()">
+                        <md-content layout-gt-sm="row" layout-padding>
+                            <md-input-container>
+                                <label>Фамилия</label>
+                                <input name="surname" ng-model="query.surname" required><br>
+                                <div ng-messages="searchForm.surname.$error">
+                                    <div ng-message="required">Введите фамилию</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container>
+                                <label>Имя</label>
+                                <input name="name" ng-model="query.name" required><br>
+                                <div ng-messages="searchForm.name.$error">
+                                    <div ng-message="required">Введите имя</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container>
+                                <label>Отчество</label>
+                                <input name="patronymic" ng-model="query.patronymic" required><br>
+                                <div ng-messages="searchForm.patronymic.$error">
+                                    <div ng-message="required">Введите отчество</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container>
+                                <md-button type="submit">Поиск</md-button>
+                            </md-input-container>
+                        </md-content>
+                    </form>
+                    <md-table-container>
+                        <table md-table ng-hide="results.length === 0">
+                            <thead md-head>
+                                <tr md-row>
+                                    <th md-cell>Номер</th>
+                                    <th md-cell>ФИО</th>
+                                    <th md-cell>Программы</th>
+                                    <th md-cell>Репутации</th>
+                                    <th md-cell>Режим</th>
+                                    <th md-cell>Дата прибытия</th>
+                                    <th md-cell>Дата освобождения</th>
+                                    <th md-cell>Камера</th>
+                                    <th md-cell ng-show="isLoggedIn">Обновить</th>
+                                    <th md-cell ng-show="isLoggedIn">Удалить</th>
+                                </tr>
+                            </thead>
+                            <tbody md-body>
+                                <tr md-row ng-repeat="prisoner in results">
+                                    <td md-cell>{{prisoner.id}}</td>
+                                    <td md-cell>{{prisoner.fullname}}</td>
+                                    <td md-cell>
+                                        <md-input-container>
+                                            <md-select multiple ng-disabled="!isLoggedIn" ng-model="prisoner.programs">
+                                                <md-option ng-repeat="program in prisoner.availablePrograms" ng-value="program.id">
+                                                    {{program.name}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </td>
+                                    <td md-cell>
+                                        <md-input-container>
+                                            <md-select multiple ng-disabled="!isLoggedIn" ng-model="prisoner.reputations">
+                                                <md-option ng-repeat="reputation in reputations" ng-value="reputation.id">
+                                                    {{reputation.name}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </td>
+                                    <td md-cell>
+                                        <md-input-container>
+                                            <md-select required ng-disabled="!isLoggedIn"
+                                                       ng-change="searchRegimeChanged(prisoner)" ng-model="prisoner.regime_fk">
+                                                <md-option ng-repeat="regime in regimes" ng-value="regime.id">
+                                                    {{regime.name}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </td>
+                                    <td md-cell>{{prisoner.arrivement | date}}</td>
+                                    <td md-cell>
+                                        <md-input-container>
+                                            <md-datepicker ng-model="prisoner.freedom" ng-disabled="!isLoggedIn"
+                                                           required md-min-date="prisoner.arrivement"></md-datepicker>
+                                        </md-input-container>
+                                    </td>
+                                    <td md-cell>
+                                        <md-input-container>
+                                            <md-select required ng-disabled="!isLoggedIn" ng-model="prisoner.ward_fk">
+                                                <md-option ng-repeat="ward in prisoner.availableWards" ng-value="ward.id">
+                                                    {{ward.id}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </td>
+                                    <td md-cell ng-show="isLoggedIn">
+                                        <md-input-container>
+                                            <md-button ng-click="update(prisoner)">Обновить</md-button>
+                                        </md-input-container>
+                                    </td>
+                                    <td md-cell ng-show="isLoggedIn">
+                                        <md-input-container>
+                                            <md-button ng-click="delete(prisoner, $index)">Удалить</md-button>
+                                        </md-input-container>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </md-table-container>
+                </md-content>
+            </md-tab>
+            <md-tab label="Создание" ng-disabled="!isLoggedIn">
+                <md-content>
+                    <form name="createForm" novalidate ng-submit="createForm.$valid && sendPrisoner()">
+                        <md-content layout-gt-sm="row" layout-padding>
+                            <div>
+                                <md-input-container>
+                                    <label>Фамилия</label>
+                                    <input title="Фамилия" ng-model="data.surname" required name="surname">
+                                    <div ng-messages="createForm.surname.$error">
+                                        <div ng-message="required">Введите фамилию</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container>
+                                    <label>Имя</label>
+                                    <input title="Имя" ng-model="data.name" required name="name">
+                                    <div ng-messages="createForm.name.$error">
+                                        <div ng-message="required">Введите имя</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container>
+                                    <label>Отчество</label>
+                                    <input title="Отчество" ng-model="data.patronymic" required name="patronymic">
+                                    <div ng-messages="createForm.patronymic.$error">
+                                        <div ng-message="required">Введите отчество</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                        </md-content>
+                        <md-content layout-gt-sm="row" layout-padding>
+                            <md-input-container>
+                                <label>Дата прибытия</label>
+                                <md-datepicker md-max-date="today" ng-model="data.arrivement" required
+                                               name="arrivement">Дата прибытия</md-datepicker>
+                                <div ng-messages="createForm.arrivement.$error">
+                                    <div ng-message="required">Введите дату прибытия</div>
+                                    <div ng-message="maxdate">Дата прибытия не позднее, чем сегодня</div>
+                                </div>
+                            </md-input-container>
+                        </md-content>
+                        <md-content layout-gt-sm="row" layout-padding>
+                            <md-input-container>
+                                <label>Дата освобождения</label>
+                                <md-datepicker md-min-date="today" required
+                                               ng-model="data.freedom" name="freedom"></md-datepicker>
+                                <div ng-messages="createForm.freedom.$error">
+                                    <div ng-message="required">Введите дату освобождения</div>
+                                    <div ng-message="mixdate">Дата освобождения не ранее, чем прибытие</div>
+                                </div>
+                            </md-input-container>
+                        </md-content>
+                        <md-content layout-gt-sm="row" layout-padding>
+                            <md-input-container>
+                                <label>Режим</label>
+                                <md-select ng-model="data.regime_fk" ng-change="regimeChanged()" name="regime"
+                                           required md-on-open="loadRegimes()">
+                                    <md-option ng-repeat="regime in regimes" ng-value="regime.id">
+                                        {{regime.name}}
+                                    </md-option>
+                                </md-select>
+                                <div ng-messages="createForm.regime.$error">
+                                    <div ng-message="required">Выберите режим</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container>
+                                <label>Камера</label>
+                                <md-select ng-model="data.ward_fk" required md-on-open="loadWards()" name="ward"
+                                           ng-disabled="!regimeChoosen">
+                                    <md-option ng-repeat="ward in wards" ng-value="ward.id">
+                                        {{ward.id}}
+                                    </md-option>
+                                </md-select>
+                                <div ng-messages="createForm.ward.$error">
+                                    <div ng-message="required">Выберите камеру</div>
+                                </div>
+                            </md-input-container>
+                        </md-content>
+                        <md-content layout-gt-sm="row" layout-padding>
+                            <md-input-container>
+                                <label>Репутации</label>
+                                <md-select ng-model="data.reputations" multiple md-on-open="loadReputations()">
+                                    <md-option ng-repeat="reputation in reputations" title="{{reputation.effect}}"
+                                               ng-value="reputation.id">
+                                        {{reputation.name}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container>
+                                <label>Программы</label>
+                                <md-select ng-model="data.programs" multiple
+                                           md-on-open="loadPrograms()" ng-disabled="!regimeChoosen">
+                                    <md-option ng-repeat="program in programs" ng-value="program.id">
+                                        {{program.name}}
+                                    </md-option>
+                                </md-select>
+                        </md-content>
+                        <md-content layout-gt-sm="row" layout-padding>
+                            <md-input-container>
+                                <md-button type="submit">Добавить</md-button>
+                            </md-input-container>
+                        </md-content>
+                    </form>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-content>
+</div>

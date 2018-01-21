@@ -13,7 +13,7 @@
                 })
                 .when('/crud/prisoner', {
                     templateUrl: 'prisoner/prisoner.html',
-                    controller: 'prisonerController',
+                    controller: 'prisonerCtrl',
                     controllerAs: 'pris'
                 })
                 .when('/crud/object', {
