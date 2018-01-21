@@ -1,5 +1,5 @@
 (function() {
-    const tables = angular.module('tables', ['ngRoute']);
+    const tables = angular.module('tables', ['ngRoute', 'ngMaterial', 'ngMessages']);
 
     tables.controller('tablesController',
         function($http, $log, $location) {
@@ -21,6 +21,10 @@
 
     function load($http, $log, $location, store) {
         const errorLog = function (error) {
+            Notification.error({
+                message: 'Что-то пошло не так...',
+                delay: 5000
+            });
             $log.error(error);
         };
 
