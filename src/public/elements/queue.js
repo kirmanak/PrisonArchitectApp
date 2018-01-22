@@ -26,6 +26,7 @@
                 });
                 $log.error(error);
             });
+            client.heartbeat.incoming = 0;
         });
     });
 }) ();
