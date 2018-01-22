@@ -13,6 +13,7 @@
     queue.controller('queueController', function ($scope, Notification, $location, $log) {
         // noinspection ES6ModulesDependencies
         const client = Stomp.client('ws://' + $location.host() + ':15674/stomp/websocket');
+        client.heartbeat.incoming = 0;
         client.connect('guest', 'guest', function() {
             client.subscribe('/exchange/staffEx', function (message) {
                 Notification.warning({
@@ -26,7 +27,6 @@
                 });
                 $log.error(error);
             });
-            client.heartbeat.incoming = 0;
         });
     });
 }) ();
