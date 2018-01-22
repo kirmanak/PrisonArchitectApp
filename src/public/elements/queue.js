@@ -10,7 +10,7 @@
         };
     });
 
-    queue.controller('queueController', function ($scope, Notification, $location) {
+    queue.controller('queueController', function ($scope, Notification, $location, $log) {
         // noinspection ES6ModulesDependencies
         const client = Stomp.client('ws://' + $location.host() + ':15674/stomp/websocket');
         client.connect('guest', 'guest', function() {
@@ -19,6 +19,12 @@
                     message: message.body,
                     delay: 3000
                 });
+            }, function(error) {
+                Notification.error({
+                    message: 'RabbitMQ отвалился',
+                    delay: 3000
+                });
+                $log.error(error);
             });
         });
     });
